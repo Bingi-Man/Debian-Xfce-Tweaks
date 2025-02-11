@@ -544,12 +544,12 @@ sudo nvidia-smi --power-limit=XXX
 
 - Graphics overclocking (replace XXX with the desired offset, starting with small values like 10):
 ```
-sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'
+sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'  #  Where XXX is the value added to the maximum Memory clocks (exp:120 = +120MHZ)
 ```
 
 - Memory overclocking (replace XXXX with the desired offset, starting with small values like 100):
 ```
-sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX'
+sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX' #  Where XXXX is the value added to the maximum Memory clocks (exp:1000 = +1000MHz) 
 ```
 
 #### 4.6.3 Make changes permanents
@@ -602,12 +602,6 @@ Set Command: /home/$USER/GpuTweaks.sh
 - Reboot
 
 
-
-### 4.7 Install FFmpeg
-```
-sudo apt install libffmpeg-nvenc-dev
-sudo apt install ffmpeg
-```
 
 
 
