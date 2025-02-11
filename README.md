@@ -1,10 +1,19 @@
 
 
 
+
+
 Debian  Tweaks Xfce4 - Nvidia Overclocking Install Guide
+
+
+
 
 This guide will allow you to install a minimal Xfce desktop, adding additional 
 packages as needed and max performance for Nvidia GPU.
+
+
+
+
 
 
 
