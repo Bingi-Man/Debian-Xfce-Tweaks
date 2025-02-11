@@ -15,6 +15,13 @@
 
 This tutorial guides you through optimizing a Debian 12 XFCE system with an NVIDIA GPU for maximum performance.
 It covers system installation, essential utilities, performance tuning, NVIDIA Oveclocking and CUDA setup.
+    pre {
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+
+
 
 
 This is for experienced Linux users who want to testing the performances and understanding the system modifications. 
