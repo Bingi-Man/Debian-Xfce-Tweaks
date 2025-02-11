@@ -64,10 +64,10 @@ https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-ne
 ### 1.2 Install Xfce4
 
 - After the base system installation, log in as root and install XFCE:
-<sub>
+```
 su -
 apt install xfce4
-</sub>
+```
 
 - Reboot
 
