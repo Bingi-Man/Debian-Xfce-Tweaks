@@ -523,7 +523,7 @@ after each overclocking step.
 
 #### 4.6.2 Overclock
 
-EXTREME CAUTION: Increase offset values incrementally and RUN BENCHMARK AFTER EACH CHANGE.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
+EXTREME CAUTION: Increase offset values incrementally and run benchmark after each change.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
 
 
 - Set maximum performance:
