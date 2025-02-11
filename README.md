@@ -105,9 +105,9 @@ sudo apt update
 ### 1.5 Set Timezone
 
 - List available timezones:
-
+```
 sudo timedatectl list-timezones
-
+```
 
 - Set your timezone (replace `Your/Timezone` with your actual timezone, e.g., `Europe/Paris`):
 ```
