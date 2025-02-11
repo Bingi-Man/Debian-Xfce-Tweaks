@@ -4,10 +4,10 @@
 
 
 
-                                              Tweaks Debian Xfce Nvidia
 
 
 
+##                             Tweaks Debian Xfce Nvidia
 
                                               
 
@@ -72,7 +72,7 @@ reboot
 ### 1.4 Configure apt sources
 
 
-Edit the apt sources list to include `contrib`, `non-free`, and `non-free-firmware` repositories:
+# Edit the apt sources list to include `contrib`, `non-free`, and `non-free-firmware` repositories:
 
 
 su -
@@ -105,7 +105,6 @@ deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non
 
 Update the package lists:
 
-
 sudo apt update
 
 
@@ -115,12 +114,10 @@ sudo apt update
 
 List available timezones:
 
-
 sudo timedatectl list-timezones
 
 
 Set your timezone (replace `Your/Timezone` with your actual timezone, e.g., `Europe/Paris`):
-
 
 sudo timedatectl set-timezone Your/Timezone
 
