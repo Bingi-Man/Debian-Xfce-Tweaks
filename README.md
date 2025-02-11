@@ -72,7 +72,7 @@ reboot
 ### 1.4 Configure apt sources
 
 
-# Edit the apt sources list to include `contrib`, `non-free`, and `non-free-firmware` repositories:
+Edit the apt sources list to include `contrib`, `non-free`, and `non-free-firmware` repositories:
 
 
 su -
