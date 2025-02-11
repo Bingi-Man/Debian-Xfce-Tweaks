@@ -27,8 +27,6 @@ This guide focuses on achieving the highest possible performance, potentially at
 
 *   A computer with an NVIDIA graphics card.
 
-*   A bootable Debian 12 Netinst image.
-
 *   Basic knowledge of Linux command-line operations.
 
 *   Understanding of system configuration files.
