@@ -437,7 +437,6 @@ sudo nano /etc/sudoers
 - Create or edit /etc/X11/xorg.conf.d/20-nvidia.conf (create the directory and file if they don't exist):
 
 ```
-sudo mkdir -p /etc/X11/xorg.conf.d
 sudo nano /etc/X11/xorg.conf.d/20-nvidia.conf
 ```
 
