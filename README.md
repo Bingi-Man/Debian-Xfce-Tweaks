@@ -616,10 +616,9 @@ Configure filesystem options, disable journaling (with extreme caution), set up 
 ```
 sudo nano /etc/fstab
 ```
-
-- Add the noatime option to your root filesystem entry.  The barrier=0 option is generally not recommended for modern filesystems and hardware.  Example (replace YOUR_ROOT_PARTITION_UUID with the actual UUID of your root partition, found using lsblk -f):
+- Add options
 ```
-UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,errors=remount-ro 0 1
+UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,barrier=0,errors=remount-ro 0 1
 ```
 
 #### 5.1.1 Relload systemctl
