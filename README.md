@@ -659,7 +659,7 @@ sudo dd if=~/Downloads /rescuezilla-2.5.1-64bit.noble.iso of=/dev/nvme0n1 bs=1M 
 (USB drive, external hard drive, etc.).  Do not proceed without a complete backup.
 
 
-#### 5.2.5 Disable journalling on Ext4
+#### 5.2.2 Disable journalling on Ext4
 
 WARNING: This can lead to data loss!  Ensure you have a complete backup before proceeding.
 ```
