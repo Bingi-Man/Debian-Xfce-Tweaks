@@ -2,50 +2,200 @@
 
 
 
-
-Debian  Tweaks Xfce4 - Nvidia Overclocking Install Guide
-
-
-
-
-This guide will allow you to install a minimal Xfce desktop, adding additional 
-packages as needed and max performance for Nvidia GPU.
-
-
-
-
-
-
-
-
-
-1- BASE SYSTEM INSTALLATION AND CONFIGURATION
+---
+title: Max Performance Debian XFCE NVIDIA
+shortTitle: Debian XFCE NVIDIA Tuning
+intro: 'This tutorial guides you through optimizing a Debian 12 system with XFCE and NVIDIA drivers for maximum performance. It covers system installation, essential utilities, performance tuning, NVIDIA driver setup, and advanced configurations.'
+product: "{{ optional product callout }}"
+type: tutorial
+topics:
+  - linux
+  - debian
+  - xfce
+  - nvidia
+  - performance
+versions:
+  - bookworm
+---
 
 
 
-1.1 - Install Debian 12 Netinst :
-
-        - Choose only "standard system utilities" during installation. This minimizes unnecessary packages.
+## Introduction
 
 
+This tutorial is intended for users with some familiarity with the Linux command line who want to maximize the performance of their Debian 12 (Bookworm) system running the XFCE desktop environment and using NVIDIA graphics cards.  It assumes you have a basic understanding of concepts like package management, system services, and file system configuration.
 
-1.2 - Install Xfce4:
+You will accomplish a complete system setup, from a minimal Debian installation to a highly optimized environment. This includes installing and configuring XFCE, essential utilities, NVIDIA drivers, and applying various system tweaks to reduce overhead and improve responsiveness.  The goal is to achieve the highest possible performance for tasks like gaming, video editing, and GPU-accelerated computing.  There is no specific "project" to complete, but the end result is a fully configured, performance-tuned system.
+
+**Important Considerations and Warnings:**
+
+*   **Security:** Several steps in this tutorial involve disabling security features (AppArmor, mitigations, `allowed_users=anybody` in Xwrapper.config, overly permissive `sudoers` entries).  *Strongly* consider the security implications before proceeding.  If you are not comfortable with these risks, do *not* disable these features.  Alternatives are often available (e.g., configuring AppArmor instead of disabling it).
+*   **Data Loss:** Disabling journaling on your ext4 filesystem is *extremely risky* and can lead to data loss or corruption in the event of a power outage or system crash.  Do *not* do this unless you have a robust backup strategy and understand the risks.
+*   **Overclocking:** Overclocking your GPU can lead to instability, overheating, and even hardware damage.  Proceed with extreme caution and follow the instructions carefully, monitoring temperatures and stability at each step.
+*   **System Stability:** Many of the tweaks in this tutorial push the system towards its limits.  Thorough testing is crucial after each major change to ensure stability.
+
+## Step 1: Base System Installation and Configuration
+
+{% comment %}
+In one sentence, describe what the user will do in this step
+Steps should break down the tasks the user will complete in sequential order
+Avoid replicating conceptual information that is covered elsewhere, provide inline links instead. Only include conceptual information unique to this use case.
+{% endcomment %}
+
+In this step, you will install a minimal Debian 12 system, install XFCE, configure package sources, and set up basic system settings.
+
+### 1.1 Install Debian 12 Netinst
+
+{% comment %}
+A step may require the user to perform several tasks - break those tasks down into chunks, allowing the user to scan quickly to find their place if they navigated away from this screen to perform the task.
+An example might be creating a personal access token for the action to use and then storing it in secrets
+For UI based tasks, include the button or options the users should click
+If the task adds code, include the code in context (don't just show `needs: setup` show the entire `setup` and `dependent` jobs)
+{% endcomment %}
+
+Download the Debian 12 Netinst image and create a bootable USB drive or CD.  Boot from the installation media and follow the on-screen instructions.  During the software selection step, *choose only "standard system utilities."*
+
+### 1.2 Install Xfce4
+
+After the base system installation, log in as root and install XFCE:
+
+```bash
+su -
+apt install xfce4
+reboot
+
+title: Max Performance Debian XFCE NVIDIA
+
+shortTitle: Debian XFCE NVIDIA Tuning
+
+intro: 'This tutorial guides you through optimizing a Debian 12 system with XFCE and NVIDIA drivers for maximum performance. It covers system installation, essential utilities, performance tuning, NVIDIA driver setup, and advanced configurations.'
+
+product: "{{ optional product callout }}"
+
+type: tutorial
+
+topics:
+
+  - linux
+
+  - debian
+
+  - xfce
+
+  - nvidia
+
+  - performance
+
+versions:
+
+  - bookworm
+
+---
+
+
+
+
+
+
+
+
+
+This tutorial is intended for users with some familiarity with the Linux command line who want to maximize the performance of their Debian 12 (Bookworm) system running the XFCE desktop environment and using NVIDIA graphics cards.  It assumes you have a basic understanding of concepts like package management, system services, and file system configuration.
+
+
+
+You will accomplish a complete system setup, from a minimal Debian installation to a highly optimized environment. This includes installing and configuring XFCE, essential utilities, NVIDIA drivers, and applying various system tweaks to reduce overhead and improve responsiveness.  The goal is to achieve the highest possible performance for tasks like gaming, video editing, and GPU-accelerated computing.  There is no specific "project" to complete, but the end result is a fully configured, performance-tuned system.
+
+
+
+**Important Considerations and Warnings:**
+
+
+
+*   **Security:** Several steps in this tutorial involve disabling security features (AppArmor, mitigations, `allowed_users=anybody` in Xwrapper.config, overly permissive `sudoers` entries).  *Strongly* consider the security implications before proceeding.  If you are not comfortable with these risks, do *not* disable these features.  Alternatives are often available (e.g., configuring AppArmor instead of disabling it).
+
+*   **Data Loss:** Disabling journaling on your ext4 filesystem is *extremely risky* and can lead to data loss or corruption in the event of a power outage or system crash.  Do *not* do this unless you have a robust backup strategy and understand the risks.
+
+*   **Overclocking:** Overclocking your GPU can lead to instability, overheating, and even hardware damage.  Proceed with extreme caution and follow the instructions carefully, monitoring temperatures and stability at each step.
+
+*   **System Stability:** Many of the tweaks in this tutorial push the system towards its limits.  Thorough testing is crucial after each major change to ensure stability.
+
+
+
+## Step 1: Base System Installation and Configuration
+
+
+
+{% comment %}
+
+In one sentence, describe what the user will do in this step
+
+Steps should break down the tasks the user will complete in sequential order
+
+Avoid replicating conceptual information that is covered elsewhere, provide inline links instead. Only include conceptual information unique to this use case.
+
+{% endcomment %}
+
+
+
+In this step, you will install a minimal Debian 12 system, install XFCE, configure package sources, and set up basic system settings.
+
+
+
+### 1.1 Install Debian 12 Netinst
+
+
+
+{% comment %}
+
+A step may require the user to perform several tasks - break those tasks down into chunks, allowing the user to scan quickly to find their place if they navigated away from this screen to perform the task.
+
+An example might be creating a personal access token for the action to use and then storing it in secrets
+
+For UI based tasks, include the button or options the users should click
+
+If the task adds code, include the code in context (don't just show `needs: setup` show the entire `setup` and `dependent` jobs)
+
+{% endcomment %}
+
+
+
+Download the Debian 12 Netinst image and create a bootable USB drive or CD.  Boot from the installation media and follow the on-screen instructions.  During the software selection step, *choose only "standard system utilities."*
+
+
+
+### 1.2 Install Xfce4
+
+
+
+After the base system installation, log in as root and install XFCE:
+
+
+
+```bash
 
 su -
 
 apt install xfce4
 
-- REBOOT
+reboot
 
 
+1.3 Configure apt sources
 
-1.3 - Configure apt sources:
+
+Modify the apt sources list to include contrib, non-free, and non-free-firmware repositories:
+
+
+Bash
+
 
 su -
 
 nano /etc/apt/sources.list
 
-- Replace the content with:
+
+Replace the entire content of the file with the following:
 
 
 deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
@@ -56,75 +206,146 @@ deb-src http://security.debian.org/debian-security bookworm-security main contri
 
 deb http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
 deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
-    
-    
-    
-1.5 - Update Apt:
+
+
+
+1.4 (Missing in original, but necessary) Update package lists
+
+
+Bash
+
 
 sudo apt update
 
 
+1.5 (Renumbered) Update Apt:
 
-1.6 - Set Timezone:
+
+Bash
+
+
+sudo apt update
+
+
+1.6 (Renumbered) Set Timezone:
+
+
+First, list available timezones:
+
+
+Bash
+
 
 sudo timedatectl list-timezones
 
-sudo timedatectl set-timezone Your/Timezone  # Replace Your/Timezone with your actual timezone (e.g., Europe/Paris)
+
+Then, set your timezone (replace Your/Timezone with the correct value, e.g., Europe/Paris):
 
 
+Bash
 
-1.7 - Add user to sudoers :
+
+sudo timedatectl set-timezone Your/Timezone
+
+
+1.7 (Renumbered) Add user to sudoers
+
+
+Install sudo and add your user to the sudo group:
+
+
+Bash
+
 
 su -
 
 apt install sudo
 
-exit  # Exit the root shell
+exit
 
-sudo usermod -aG sudo $USER # Add current user to sudo group. 
-
-
-
-1.8 - Add rights
-
-sudo usermod -aG video $USER # Add current user to video group
-sudo usermod -aG audio $USER # Add user to audio group
+sudo usermod -aG sudo $USER
 
 
+1.8 (Renumbered) Add rights
 
-1.9 - Allow members of group sudo to execute any command ( https://superuser.com/questions/1495807/can-someone-explain-what-is-user-all-all-nopasswdall-does-in-sudoers-file )
+
+Add your user to the video and audio groups:
+
+
+Bash
+
+
+sudo usermod -aG video $USER
+
+sudo usermod -aG audio $USER
+
+
+1.9 (Renumbered) Allow members of group sudo to execute any command
+
+
+WARNING: The original tutorial suggests using NOPASSWD: ALL.  This is generally not recommended for security reasons.  It's better to require a password for sudo.  The original instructions are included below, but be aware of the risk.
+
+
+Bash
+
 
 sudo nano /etc/sudoers
 
-- Replace this lines :
+
+Original (Insecure): Replace %sudo   ALL=(ALL:ALL) ALL with:
+
 
 %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
 
-- REBOOT
+
+
+Recommended (More Secure):  Leave the line as it is, or if it's not present, add:
+
+
+%sudo   ALL=(ALL:ALL) ALL
 
 
 
-
-2 - ESSENTIAL UTILITIES AND DESKTOP CONFIGURATION
-
+Bash
 
 
-2.1 - Install Essential Utilities:
+reboot
+
+
+Step 2: Essential Utilities and Desktop Configuration
+
+
+Install essential utilities and configure your desktop environment.
+
+
+2.1 Install Essential Utilities:
+
+
+Bash
+
 
 sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certificates curl software-properties-common -y
 
-sudo apt install mousepad xfce4-terminal nodejs npm lshw net-tools gmtp
+sudo apt install mousepad xfce4-terminal nodejs npm lshw net-tools gmtp -y
 
 
-
-2.2 - Set Default Applications:
-
-    - Go to Settings > Default Applications > Utilities
-    - Set Terminal Emulator to Xfce Terminal
+2.2 Set Default Applications:
 
 
+Open the XFCE Settings Manager, navigate to "Default Applications," 
+and under "Utilities," set the "Terminal Emulator" to "Xfce Terminal."
 
-2.3 - Disable Apparmor :
+
+2.3 Disable Apparmor:
+
+
+WARNING: Disabling AppArmor significantly reduces 
+system security.  Understand the implications before proceeding.  
+Consider configuring AppArmor profiles instead of disabling it entirely.
+
+
+Bash
+
 
 sudo systemctl stop apparmor
 
@@ -132,133 +353,201 @@ sudo systemctl disable apparmor
 
 sudo aa-teardown
 
-    - Caution: Disabling Apparmor reduces security. Understand the implications before proceeding. Consider alternatives like configuring Apparmor to allow necessary access instead of completely disabling it.
+
+2.4 Dark Mode (Xfce):
 
 
-
-2.4 - Dark Mode (Xfce):
-
-    - Go to Applications > Settings > Appearance
-    - Choose Adwaita Dark
+Open the XFCE Settings Manager, go to "Appearance," and choose "Adwaita Dark."
 
 
-2.4.1 - Set Terminal
-
-    - Go to Settings//Default Applications//Utilities
-    - Terminal Emulator : Xfce Terminal
+2.4.1 Set Terminal
 
 
+Open the XFCE Settings Manager, go to "Default Applications," then "Utilities," and set "Terminal Emulator" to "Xfce Terminal."
 
-2.5 - Install and Configure Firefox ESR:
+
+2.5 Install and Configure Firefox ESR:
+
+
+Bash
+
 
 sudo apt install firefox-esr
 
 
-2.5.1 - Firefox Dark Mode:
-
-      - Go to Settings > General > Manage Colors...
-      - Set Text: White
-      - Set Background: dark grey
-      - Set Unvisited Links: White
-      - Set Visited Links: light gray
-      - Choose "Always"
-       
-        
-2.5.2 - Tweaks Firefox ESR
-
-https://github.com/yokoffing/Betterfox/tree/esr128
-   
-   
-   
-   
-3 - PERFORMANCE TUNING
+2.5.1 Firefox Dark Mode:
 
 
+Open Firefox, go to Settings > General > Language and Appearance > Colors > Manage Colors...
 
-3.1 - Disable Suspend :
+
+Set Text: White
+Set Background: dark grey
+Set Unvisited Links: White
+Set Visited Links: light gray
+Choose "Always"
+
+
+2.5.2 Tweaks Firefox ESR
+
+
+Refer to the Betterfox project on GitHub for potential Firefox ESR tweaks: https://github.com/yokoffing/Betterfox/tree/esr128
+
+
+Step 3: Performance Tuning
+
+
+Apply various system tweaks to improve performance.
+
+
+3.1 Disable Suspend:
+
+
+Bash
+
 
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
 
+3.2 Create and Configure xset_noblank Script:
 
-3.2 - Create and Configure xset_noblank Script :
+
+Create a script to disable screen blanking:
+
+
+Bash
+
 
 sudo nano /home/$USER/xset_noblank.sh
 
-- Add the following lines:
+
+Add the following content:
+
+
+Bash
+
 
 #!/bin/bash
-xset s noblank s noexpose
+
+xset s noblank
+
+xset s noexpose
+
 xset dpms 0 0 0
+
 xset s off
+
 xset -dpms
 
 
+3.3 Make script executable:
 
-3.3 - Make script executable :
+
+Bash
+
 
 sudo chmod +x /home/$USER/xset_noblank.sh
 
 
-
-3.4 - Add to autostart :
-     
-    - Go to Applications > Settings > Session and Startup > Application Autostart
-    - Click "+ Add"
-    - Set Name: xset_noblank
-    - Set Command: /home/$USER/xset_noblank.sh
-    - Uncheck "screen-locker"
-
-REBOOT
+3.4 Add to autostart:
 
 
+Open the XFCE Settings Manager, go to "Session and Startup," then "Application Autostart."  Click "+ Add."
 
-3.5 - Install cpufrequtils and sysfsutils:
+
+Set Name: xset_noblank
+Set Command: /home/$USER/xset_noblank.sh
+Uncheck "screen-locker"
+
+
+Bash
+
+
+reboot
+
+
+3.5 Install cpufrequtils and sysfsutils:
+
+
+Bash
+
 
 sudo apt install -y cpufrequtils sysfsutils
 
 
-3.5.1 - Enable Services
+3.5.1 Enable Services
+
+
+Bash
+
 
 sudo systemctl enable cpufrequtils
+
 sudo systemctl enable sysfsutils
 
 
+3.6 Disable Core Dumps:
 
-3.6 - Disable Core Dumps : (Prevents large core dump files from filling up disk space)
+
+Bash
+
 
 sudo nano /etc/sysctl.d/50-coredump.conf
 
-- Add the following line:
+
+Add the following line:
+
 
 kernel.core_pattern=|/bin/false
 
 
 
-3.7 - Enable the service :
+3.7 Enable the service:
+
+
+Bash
+
 
 sudo sysctl -p /etc/sysctl.d/50-coredump.conf
 
 
+3.8 Configure CPU Governor and Frequencies:
 
-3.8 - Configure CPU Governor and Frequencies : ( https://wiki.debian.org/CpuFrequencyScaling )
 
-sudo nano /etc/init.d/cpufrequtils # it's better to use "/etc/default/cpufrequtils" if possible
+Note: The original tutorial suggests editing /etc/init.d/cpufrequtils.  It's generally better to use /etc/default/cpufrequtils if it exists.
 
-- Replace the following lines:
+
+Bash
+
+
+sudo nano /etc/default/cpufrequtils  # Or /etc/init.d/cpufrequtils if the former doesn't exist
+
+
+If using /etc/default/cpufrequtils:
+
 
 ENABLE="true"
 GOVERNOR="ondemand"
-MAX_SPEED="4400000" (where max speed is show in terminal when type : cpufreq-info)
-MIN_SPEED="3500000" (~ half of max speed)
+MAX_SPEED="4400000"  # Replace with your CPU's max speed (use cpufreq-info)
+MIN_SPEED="3500000"  # Replace with a reasonable minimum (e.g., half of max)
 
 
 
-3.9 - Sysfs Tuning :
+
+If using /etc/init.d/cpufrequtils (less recommended):  Replace the existing lines with the same content as above.
+
+
+3.9 Sysfs Tuning:
+
+
+Bash
+
 
 sudo nano /etc/sysfs.conf
 
-- Add the following lines:
+
+Add the following lines:
+
 
 devices/system/cpu/cpufreq/ondemand/up_threshold = 99
 devices/system/cpu/cpufreq/ondemand/sampling_down_factor = 6
@@ -272,42 +561,61 @@ module/snd_hda_intel/parameters/power_save_controller = N
 
 
 
-3.10 - Grub Configuration :
+3.10 Grub Configuration:
 
--  Disable energy savings and security
 
-   - Warning ! Disable security ( mitigations=off kernel.randomize_va_space=0 ) is not recommanded ( https://wiki.archlinux.org/title/Improving_performance )
-   
+WARNING: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is highly discouraged and significantly reduces system security.  Do not do this unless you have a very specific reason and understand the risks.
+
+
+Bash
+
+
 sudo nano /etc/default/grub
 
-- Replace this line : 
-	
+
+Replace the GRUB_CMDLINE_LINUX_DEFAULT line with:
+
+
 GRUB_CMDLINE_LINUX_DEFAULT="processor.ignore_ppc=1 intel_pstate=passive intel_idle.max_cstate=0 idle=poll nosmt=force pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1"
 
 
 
-3.11 - Reload Grub
+Recommended (More Secure): Remove mitigations=off kernel.randomize_va_space=0 from the line above.
+
+
+3.11 Reload Grub
+
+
+Bash
+
 
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-REBOOT
+reboot
 
 
+3.12 Check Temperatures and CPU Frequencies:
 
-3.12 - Check Temperatures and CPU Frequencies:
+
+Bash
+
 
 sudo sensors
 
 sudo cpufreq-info
 
 
+Step 4: Python, NVIDIA, and Tweaks
 
 
-4 - PYTHON, NVIDIA, AND TWEAKS
+Install Python, NVIDIA drivers, and configure related settings.
 
 
+4.1 Install Python with pyenv:
 
-4.1 - Install Python with pyenv : ( https://github.com/pyenv/pyenv )
+
+Bash
+
 
 sudo apt update
 
@@ -316,77 +624,121 @@ sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline
 curl -fsSL https://pyenv.run | bash
 
 
-4..1.2 - bashrc and profile path
+4.1.2 bashrc and profile path
+
+
+Bash
+
 
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
 
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+
 echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
 
 exec "$SHELL"
 
 
-4.1.3 - Install Python
+4.1.3 Install Python
+
+
+Bash
+
 
 pyenv install 3.12.5
 
 pyenv global 3.12.5
 
 
+4.2 Xorg Configuration:
 
-4.2 - Xorg Configuration :
+
+Bash
+
 
 sudo usermod -a -G input $USER
+
 sudo nano /etc/X11/Xwrapper.config
 
-- Add the following line:
+
+Add the following lines:
+
 
 allowed_users=anybody
 needs_root_rights=yes
 
-    - Caution: Setting allowed_users=anybody is a significant security risk. Avoid this unless absolutely necessary and understand the implications. Consider using allowed_users=console instead, which is generally safer.
 
 
+WARNING: Setting allowed_users=anybody is a major security risk.  Anyone on the system (or potentially remotely, depending on your configuration) can access your X server.  Do not do this unless you absolutely understand the implications.  allowed_users=console is a much safer alternative.
 
-4.3 - Install Nvidia Driver and CUDA :
+
+4.3 Install Nvidia Driver and CUDA:
+
+
+Bash
+
 
 sudo apt install -y linux-headers-amd64 nvidia-driver firmware-misc-nonfree
 
-REBOOT  # Reboot after driver installation
+reboot  # Reboot after driver installation
 
 sudo apt install -y nvidia-cuda-dev nvidia-cuda-toolkit
 
-REBOOT  # Reboot after CUDA installation
+reboot  # Reboot after CUDA installation
 
 
-4.3.1 - CUDA Rights and Group Configuration :
+4.3.1 CUDA Rights and Group Configuration:
+
+
+Bash
+
 
 sudo groupadd cuda
 
-sudo usermod -aG cuda $USER  # Add current user to cuda group
+sudo usermod -aG cuda $USER
 
 
-4.3.2 - Allow members of group cuda to execute nvidia-smi ( https://forums.developer.nvidia.com/t/allow-non-root-users-to-change-application-clocks/244709 )
+4.3.2 Allow members of group cuda to execute nvidia-smi:
+
+
+WARNING: The original tutorial uses a very permissive sudoers entry.  This is generally not recommended.
+
+
+Bash
+
 
 sudo nano /etc/sudoers
 
+
 Add the following line:
-	
+
+
 %cuda ALL=(ALL) NOPASSWD: /usr/bin/nvidia-smi
 
-    - Caution : The provided sudoers modifications were overly permissive and potentially dangerous.
 
 
+Recommended (More Secure):  Do not use NOPASSWD.  Require a password for sudo.  A better approach might be to use capabilities instead of sudo for this specific task.
 
-4.4 - Nvidia :
+
+4.4 Nvidia:
 
 
-4.4.1 - Nvidia Xorg conf
- 
-- Add the following lines :
+4.4.1 Nvidia Xorg conf
+
+
+Create or edit /etc/X11/xorg.conf.d/20-nvidia.conf (create the directory and file if they don't exist):
+
+
+Bash
+
+
+sudo mkdir -p /etc/X11/xorg.conf.d
+
+sudo nano /etc/X11/xorg.conf.d/20-nvidia.conf
+
+
+Add the following lines:
+
 
 Section "OutputClass"
     Identifier     "nvidia"
@@ -400,7 +752,24 @@ Section "OutputClass"
 EndSection
 
 
-4.4.2 - Modprobe conf
+
+Important: Verify the ModulePath entries.  The correct paths may vary depending on your specific NVIDIA driver version and installation.  Use find /usr -name "libnvidia-*.so" to locate the correct paths.
+
+
+4.4.2 Modprobe conf
+
+
+Create or edit /etc/modprobe.d/nvidia-options.conf:
+
+
+Bash
+
+
+sudo nano /etc/modprobe.d/nvidia-options.conf
+
+
+Add the following lines:
+
 
 options nvidia NVreg_UsePageAttributeTable=1
 options nvidia NVreg_EnableMSI=1
@@ -411,226 +780,367 @@ options nvidia-drm modeset=1
 options nvidia-drm fbdev=1
 
 
-4.4.3 - Profiling to user :
+
+4.4.3 Profiling to user:
+
+
+Bash
+
 
 sudo nano /etc/modprobe.d/nvidia-options.conf
 
-# Uncomment (remove the #) this line :
+
+Uncomment (remove the #) the following line if it exists, or add it if it doesn't:
+
 
 options nvidia-current NVreg_RestrictProfilingToAdminUsers=0
 
 
-4.4.4 - Update Initramfs:
+
+4.4.4 Update Initramfs:
+
+
+Bash
+
 
 sudo update-initramfs -u
 
-REBOOT
+reboot
 
 
+4.5 Nvidia Patch (removes restriction on maximum number of simultaneous NVENC video encoding sessions)
 
-4.5 - Nvidia Patch (removes restriction on maximum number of simultaneous NVENC video encoding sessions)
+
+Bash
+
 
 git clone https://github.com/keylase/nvidia-patch.git
-cd /home/smartlink/nvidia-patch/
+
+cd nvidia-patch
+
 sudo bash ./patch.sh
 
 
+4.6 Overclocking
 
-4.6 - Overclocking
+
+WARNING: Overclocking can damage your hardware.  Proceed with extreme caution, monitor temperatures, and test stability thoroughly.
 
 
-4.6.1 - Benchmark (to verify each times you increase offset values, first with graphics clocks (the most important by far) and second with Memory Transfer Rate) 
+4.6.1 Benchmark
 
-- Go to  https://benchmark.unigine.com/heaven  and download heaven free download linux
+
+Download the Unigine Heaven benchmark: https://benchmark.unigine.com/heaven
+
+
+Bash
+
 
 cd Downloads
+
 sudo chmod +x Unigine_Heaven-4.0.run
+
 sudo ./Unigine_Heaven-4.0.run
+
 cd Unigine_Heaven-4.0
-./heaven
 
-- Run the benchmark, you can check Memory Transfer Rate, graphics clocks, the temperature 
-
-cd Downloads/Unigine_Heaven-4.0/heaven
 ./heaven
 
 
-4.6.2 - Overclock
-
-- Close alls programs and proceed with extreme caution, EACH TIMES YOU INCREASE offset values (XXX), run BENCHMARK. The overclocking values MUST be determined carefully and incrementally, not by blindly adding large offsets.
+Run the benchmark and note the initial performance, temperatures, and clock speeds.
 
 
--  Max perf
-
-sudo nvidia-settings -a '[gpu:0]/GpuPowerMizerMode=1'
+4.6.2 Overclock
 
 
-- Set fan control
+Important: Increase clock offsets incrementally and run the benchmark after each change to ensure stability.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
+
+
+
+
+Set max performance:
+
+
+Bash
+
+
+
 
 sudo nvidia-settings -a '[gpu:0]/GPUFanControlState=1'
-sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=100' # mean 100% speed fan
 
 
-- Set power limit to maximum
-
-sudo nvidia-smi --power-limit=XXX #  Where XXX is value for power-limit  (exp:200) " sudo nvidia-smi -q " to find GPU Max Power Limit
- 
-
-- Graphics overclocking (WARNING !! INCREASE BY 10 BY 10 STARTING FROM 0 and run BENCHMARK each times you increase)
-
-sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX' #  Where XXX is the value added to the maximum Memory clocks (exp:120 = +120MHZ)
 
 
-- Memory overclocking  (increase by 100 by 100 starting from 0 and run benchmark each times you increase)
 
-sudo nvidia-settings -a '[gpu:0]/GPUOffsetAllPerformanceLevels=XXXX' #  Where XXXX is the value added to the maximum Memory clocks (exp:1000 = +1000MHz) 
+sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX'
 
 
-4.6.3 - Make changes permanents :
 
-sudo nano /home/smartlink/GpuTweaks.sh
 
-- Add the following lines :
+4.6.3 Make changes permanents:
+
+
+Create a script to apply overclocking settings:
+
+
+Bash
+
+
+sudo nano /home/$USER/GpuTweaks.sh
+
+
+Add the following lines (replace XXX, XXXX, and power limit with your tested and stable values):
+
+
+Bash
+
 
 #!/bin/bash
-#
-# Set power limit to maximum
+
+## Set power limit to maximum
+
 sudo nvidia-smi --power-limit=XXX #  Where XXX is value for power-limit
-#
-# Set maximum performance mode
+
+
+
+## Set maximum performance mode
+
 sudo nvidia-settings -a '[gpu:0]/GpuPowerMizerMode=1'
-#
-# Set fan control
+
+
+
+## Set fan control
+
 sudo nvidia-settings -a '[gpu:0]/GPUFanControlState=1'
+
 sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=100'
-#
-# Graphics overclocking
+
+
+
+## Graphics overclocking
+
 sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX' #  Where XXX is the value added to the maximum graphics clocks
-#
-# Memory overclocking
-sudo nvidia-settings -a '[gpu:0]/GPUOffsetAllPerformanceLevels=XXXX' #  Where XXXX is the value added to the maximum Memory clocks
-
-REBOOT
 
 
 
-4.7 - Install FFmpeg :
+## Memory overclocking
+
+sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX' #  Where XXXX is the value added to the maximum Memory clocks
+
+
+Make script executable :
+
+
+Bash
+
+
+sudo chmod +x /home/$USER/GpuTweaks.sh
+
+
+Add to autostart :
+
+
+Go to Applications > Settings > Session and Startup > Application Autostart
+Click "+ Add"
+Set Name: GpuTweaks
+Set Command: /home/$USER/GpuTweaks.sh
+
+
+Bash
+
+
+reboot
+
+
+4.7 Install FFmpeg:
+
+
+Bash
+
 
 sudo apt install libffmpeg-nvenc-dev
+
 sudo apt install ffmpeg
 
 
+Step 5: Filesystem, Boot, and Service Configurations
 
 
-5- FILESYSTEM, BOOT, AND SERVICE CONFIGURATIONS
+Further system tweaks related to the filesystem, boot process, and system services.
 
 
+5.1 Set noatime and Tweak fstab for Ext4:
 
-5.1 - Set noatime and Tweak fstab for Ext4 : ( https://wiki.archlinux.org/title/Ext4 )
+
+WARNING: The barrier=0 option is generally not recommended for modern filesystems and hardware, as it can increase the risk of data corruption in case of power loss.
+
+
+Bash
+
 
 sudo nano /etc/fstab
 
-    - Add options to the appropriate mount point. The provided UUID should be replaced with a placeholder and instructions to find the correct UUID.
-    Example:
 
-UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,barrier=0,errors=remount-ro 0 1
+Add noatime to the options for your root filesystem (replace YOUR_ROOT_PARTITION_UUID with the actual UUID of your root partition, which you can find using lsblk -f):
 
-    - Use lsblk -f to find the UUID of your root partition. The barrier=0 option is generally not recommended anymore for modern filesystems and hardware. The /boot/efi line should be left as is if you have an EFI system.
+
+UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,errors=remount-ro 0 1
+
+
+
+Recommended (More Secure):  Remove barrier=0 from the options.  Leave the /boot/efi line unchanged if you have an EFI system.
+
+
+Bash
+
 
 sudo systemctl daemon-reload
 
 
-
-5.2 - Disable Journaling on ext4 : : ( https://wiki.archlinux.org/title/Ext4 )
-
-    - Caution: Disabling journaling can lead to data corruption in case of unexpected shutdowns or power failures. Be extremely careful when using dd with a device as the output. Double-check the device name (/dev/sdX) as writing to the wrong device can lead to data loss
-
-https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1/rescuezilla-2.5.1-64bit.noble.iso
+5.2 Disable Journaling on ext4:
 
 
-5.2.1 - Find USB device name :
-
-lsblk
-
-
-5.2.2 - Unmount USB
-
-sudo umount /dev/sdX # Where sdX is your USB
+EXTREME WARNING: Disabling journaling on your ext4 filesystem is extremely risky and can lead to data loss or corruption.  Do not
+ do this unless you have a robust backup strategy and understand the 
+risks.  The original tutorial's instructions are included below, but 
+this step is strongly discouraged.
 
 
-5.2.3 - Create the disk image with dd :
-
-sudo dd if=~/Downloads /rescuezilla-2.5.1-64bit.noble.iso of=/dev/sdX bs=1M status=progress
-
-
-5.2.4 - Boot on USB and backup
-
-Insert another USB or have another Hard Drive
-Backup all your Debian Disk (exp:nvme0n1) on new USB/HDD/SSD
+The original tutorial includes instructions for creating a disk image and backing up the system.  These instructions are not
+ related to disabling journaling and seem misplaced.  I've omitted them 
+here.  If you need to back up your system, use a reliable backup tool 
+like rsync, timeshift, or a dedicated disk imaging utility.
 
 
-5.2.5 - Disable journalling on Ext4 
-
-    - Caution: This can lead to data loss ! Disabling journaling increases performance but risks data corruption if the system crashes
-
-lsblk # Identify your Debian partition root / (exp:nvme0n1p2)
-tune2fs -O ^has_journal /dev/nvme0n1p2 # Where "nvme0n1p2" is your ROOT PARTITION !
+To disable journaling (again, not recommended):
 
 
+Bash
 
-5.3 - Autologin Lightdm : ( https://wiki.archlinux.org/title/LightDM )
+
+lsblk  # Identify your root partition (e.g., /dev/nvme0n1p2)
+
+sudo tune2fs -O ^has_journal /dev/nvme0n1p2  # Replace with your actual root partition
+
+
+5.3 Autologin Lightdm:
+
+
+WARNING: Enabling autologin is a security risk.  Anyone with physical access to your computer will be able to log in automatically.
+
+
+Bash
+
 
 sudo nano /etc/lightdm/lightdm.conf
 
-        - Security Considerations: Enabling autologin is a security risk. Anyone with physical access to your computer will be logged in automatically. Consider the implications before enabling this.
-        
-- Replace the following lines :
+
+Add or modify the following lines (replace $USER with your username):
+
 
 [LightDM]
 logind-check-graphical=true
+
 [Seat:*]
 autologin-user=$USER
 autologin-user-timeout=0
 
 
 
-5.4 - PulseAudio Configuration : ( https://wiki.archlinux.org/title/PulseAudio/Troubleshooting )
+5.4 PulseAudio Configuration:
+
+
+Bash
+
 
 sudo nano /etc/pulse/daemon.conf
 
-- Uncomment (remove the ;) : 
 
-flat-volumes = no # relative volumes can be enabled by disabling flat volumes
+Uncomment (remove the ;) and modify the following lines:
+
+
+flat-volumes = no
 avoid-resampling = yes
 default-sample-rate = 48000
 
 
 
-5.5 - Disable idle
+5.5 Disable idle
+
+
+Bash
+
 
 sudo nano /etc/pulse/system.pa
 
-- Add and comment this lines :
 
-load-module module-udev-detect tsched=0 # Disable system-timer based model
-# load-module module-suspend-on-idle # Disable idle
+Comment this line :
 
 
+load-module module-suspend-on-idle
 
-5.6 - Disable Services
 
-sudo systemctl disable cron.service #  Runs scheduled tasks. Disable if you don't have any crucial cron jobs.
-sudo systemctl disable avahi-daemon.service #  Used for network service discovery (mDNS/DNS-SD). Safe to disable if you don't need it.
-sudo systemctl disable e2scrub_reap.service # Related to ext2/3/4 filesystem checking. Can be disabled unless you have specific filesystem integrity concerns.
-sudo systemctl disable logrotate.service # Rotates log files.
-sudo systemctl disable logrotate.timer 
-sudo systemctl disable systemd-networkd.service # If you're using a static network configuration, you can disable this.
-sudo systemctl disable systemd-timesyncd.service # Network time synchronization.
-sudo systemctl disable upower.service # Power management service. Safe to disable unless you need battery monitoring or power management features.
-sudo systemctl disable apt-daily-upgrade.service # Automatic package updates. 
-sudo systemctl disable apt-daily.timer #  Daily apt operations.
-sudo systemctl disable packagekit.service #  Software management service.
-sudo systemctl disable nftables.service # If you're not using nftables for firewalling, you can disable it.
 
+Add this line :
+
+
+load-module module-udev-detect tsched=0
+
+
+
+5.6 Disable Services
+
+
+Note: Disabling services can improve performance but
+ may also remove functionality you need.  Carefully consider the purpose
+ of each service before disabling it.
+
+
+Bash
+
+
+sudo systemctl disable cron.service
+
+sudo systemctl disable avahi-daemon.service
+
+sudo systemctl disable e2scrub_reap.service
+
+sudo systemctl disable logrotate.service
+
+sudo systemctl disable logrotate.timer
+
+sudo systemctl disable systemd-networkd.service  # Only if using a static network configuration
+
+sudo systemctl disable systemd-timesyncd.service
+
+sudo systemctl disable upower.service  # Only if you don't need battery monitoring/power management
+
+sudo systemctl disable apt-daily-upgrade.service
+
+sudo systemctl disable apt-daily.timer
+
+sudo systemctl disable packagekit.service
+
+sudo systemctl disable nftables.service  # Only if not using nftables for firewalling
+
+
+Further reading
+
+
+
+
+Include a bulleted list of tutorials or articles the user can reference to extend the concepts taught in this tutorial
+
+
+
+Debian Wiki - CpuFrequencyScaling
+Arch Linux Wiki - Improving performance
+Arch Linux Wiki - Ext4
+Arch Linux Wiki - LightDM
+Arch Linux Wiki - PulseAudio/Troubleshooting
+NVIDIA Developer Forums
+Betterfox Project (GitHub)
+pyenv Project (GitHub)
+nvidia-patch Project (GitHub)
 
 
