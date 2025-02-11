@@ -702,7 +702,7 @@ default-sample-rate = 48000
 ```
 
 
-###  5.5 Disable idle
+#### 5.4.1 Disable idle
 ```
 sudo nano /etc/pulse/system.pa
 ```
@@ -714,7 +714,7 @@ load-module module-udev-detect tsched=0
 ```
 
 
-### 5.6 Disable Services
+### 5.5 Disable Services
 
 - Disable unnecessary services to reduce boot time and resource usage. 
 ```
