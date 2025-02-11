@@ -375,7 +375,7 @@ sudo cpufreq-info
 
 
 
-## Step 4: NVIDIA, and Tweaks
+## Step 4: NVIDIA and Tweaks
 
 Install and configure NVIDIA drivers and CUDA, and apply further NVIDIA-specific tweaks.
 
