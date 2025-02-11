@@ -68,6 +68,7 @@ https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-ne
 su -
 apt install xfce4
 </sub>
+
 - Reboot
 
 
