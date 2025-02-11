@@ -169,11 +169,11 @@ Install essential utilities and configure the desktop environment.
 
 
 ### 2.1 Install Essential Utilities
-
+```
 sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certificates curl software-properties-common -y
 
 sudo apt install mousepad xfce4-terminal nodejs npm lshw net-tools gmtp -y
-
+```
 
 
 ### 2.2 Set Default Applications
@@ -185,11 +185,11 @@ sudo apt install mousepad xfce4-terminal nodejs npm lshw net-tools gmtp -y
 ### 2.3 Disable Apparmor
 
 **WARNING:** Disabling AppArmor reduces system security.  Understand the implications before proceeding.  Consider configuring AppArmor profiles instead of disabling it entirely.
-
+```
 sudo systemctl stop apparmor
 sudo systemctl disable apparmor
 sudo aa-teardown
-
+```
 
 
 ### 2.4 Dark Mode (Xfce)
