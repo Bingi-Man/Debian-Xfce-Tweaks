@@ -178,7 +178,9 @@ sudo apt install mousepad xfce4-terminal nodejs npm lshw net-tools gmtp -y
 
 ### 2.2 Set Default Applications
 
-- Open Settings > Default Applications > Utilities.  Set "Terminal Emulator" to "Xfce Terminal".
+Open Settings > Default Applications > Utilities
+
+*   Set "Terminal Emulator" to "Xfce Terminal".
 
 
 
@@ -194,12 +196,16 @@ sudo aa-teardown
 
 ### 2.4 Dark Mode (Xfce)
 
-Go to Applications > Settings > Appearance and choose "Adwaita Dark".
+Open  Applications > Settings > Appearance
+
+*   choose "Adwaita Dark".
 
 
 ### 2.4.1 Set Terminal
 
-Go to Settings > Default Applications > Utilities. Set "Terminal Emulator" to "Xfce Terminal".
+Go to Settings > Default Applications > Utilities
+
+*   Set "Terminal Emulator" to "Xfce Terminal".
 
 
 
@@ -265,12 +271,12 @@ sudo chmod +x /home/$USER/xset_noblank.sh
 
 ### 3.4 Add to autostart
 
-- Go to Applications > Settings > Session and Startup > Application Autostart.
+Open to Applications > Settings > Session and Startup > Application Autostart.
 
-Click "+ Add".
-Set Name: xset_noblank
-Set Command: /home/$USER/xset_noblank.sh
-Uncheck "screen-locker"
+*   Click "+ Add".
+*   Set Name: xset_noblank
+*   Set Command: /home/$USER/xset_noblank.sh
+*   Uncheck "screen-locker"
 
 - Reboot
 
@@ -375,11 +381,15 @@ sudo cpufreq-info
 
 
 
-## Step 4: NVIDIA and Tweaks
+## Step 4: NVIDIA Tweaks
 
 Install and configure NVIDIA drivers and CUDA, and apply further NVIDIA-specific tweaks.
 
+### 4.1 Disable compositor
 
+Open to Applications > Settings > Windows Manager Tweaks > Compositor
+
+*   Uncheck  "Enable display compositing"
 
 ### 4.2 Xorg Configuration
 ```
@@ -434,13 +444,31 @@ sudo nano /etc/sudoers
 
 #### 4.4.1 Nvidia Xorg conf
 
-- Create or edit /etc/X11/xorg.conf.d/20-nvidia.conf (create the directory and file if they don't exist):
+- Create /usr/share/X11/xorg.conf.d/20-nvidia-screen.conf :
 
 ```
-sudo nano /etc/X11/xorg.conf.d/20-nvidia.conf
+sudo nano /usr/share/X11/xorg.conf.d/20-nvidia-screen.conf
 ```
+This has been reported to reduce the performance of some OpenGL 
+applications and may produce issues in WebGL. It also drastically 
+increases the time the driver needs to clock down after load (NVIDIA Support Thread).
+ForceFullCompositionPipeline is known to break some games using Vulkan under Proton with NVIDIA driver 535.
 
 - Add the following lines:
+```
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    Option         "ForceFullCompositionPipeline" "on"
+    Option         "AllowIndirectGLXProtocol" "off"
+    Option         "TripleBuffer" "on"
+EndSection
+```
+- Configuring the 10-nvidia-drm-outputclass :
+```
+sudo nano /usr/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf
+```
 
 ```
 Section "OutputClass"
