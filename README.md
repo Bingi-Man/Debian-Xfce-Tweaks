@@ -778,3 +778,29 @@ Betterfox github - https://github.com/yokoffing/Betterfox/tree/esr128
 nvidia-patch github - https://github.com/keylase/nvidia-patch.git
 Unigine Heaven benchmark - https://benchmark.unigine.com/heaven
 Rescuezilla - https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1/rescuezilla-2.5.1-64bit.noble.iso
+
+
+
+## Troubleshootings
+
+
+### Sound output is wrong (headphones/lineout...)
+
+- Use pavucontrol to change the port to your desired one. Then find the internal name of the port with this command:
+```
+$ pacmd list | grep "active port"
+    active port: <hdmi-output-0>
+    active port: <analog-output-lineout>
+    active port: <analog-input-linein>
+```
+- Using this information about the internal name of the port, we can change it with the command:
+```
+pacmd set-sink-port 0 analog-output-lineout
+```
+- If you (or someone else with the problem) has multiple cards, try changing the 0 to a 1.
+
+- If this works, you can put:
+```
+set-sink-port 0 analog-output-lineout
+```
+in your /etc/pulse/default.pa file to have it across reboots.
