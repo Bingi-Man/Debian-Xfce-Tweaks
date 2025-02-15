@@ -175,23 +175,25 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 sudo apt install mousepad xfce4-terminal -y
 ```
 
-acpid:  Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
+acpid:                        Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
 
-dbus-x11:  Essential inter-process communication for X11 applications.
+dbus-x11:                     Essential inter-process communication for X11 applications.
 
-accountsservice:  Manages user accounts and login sessions.
+accountsservice:              Manages user accounts and login sessions.
 
-apt-transport-https: Enables APT to download packages over HTTPS for secure updates.
+apt-transport-https:          Enables APT to download packages over HTTPS for secure updates.
 
-ca-certificates:  Provides root certificates for verifying the authenticity of SSL/TLS connections.
+ca-certificates:              Provides root certificates for verifying the authenticity of SSL/TLS connections.
 
-software-properties-common:  Tools for managing software repositories (PPAs).
+software-properties-common:   Tools for managing software repositories (PPAs).
 
-mousepad: A lightweight text editor.
+mousepad:                     Lightweight text editor.
 
-xfce4-terminal: A terminal emulator for running commands.
+xfce4-terminal:               Terminal emulator for running commands.
 
-### 2.2 Set Default Applications
+
+
+### 2.2 Set Default Terminal
 
 Open Settings > Default Applications > Utilities
 
