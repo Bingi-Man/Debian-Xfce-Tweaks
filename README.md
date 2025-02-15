@@ -14,12 +14,12 @@
 
                                               
 
-This tutorial guides you through optimizing and install a Debian 12 XFCE system with an NVIDIA GPU for maximum performance.
+This tutorial guides you through optimizing and install a Debian 12 XFCE system with an NVIDIA GPU.
 It covers system installation, essential utilities, NVIDIA overclocking and CPU tuning.
 
 
 This is for experienced Linux users who want to testing the performances and understanding the system modifications. 
-This guide focuses on achieving the highest possible performance, potentially at the cost of system stability and security.
+This guide focuses on performance, potentially at the cost of system stability and security.
 
 
 
@@ -321,15 +321,18 @@ sudo sysctl -p /etc/sysctl.d/50-coredump.conf
 sudo nano /etc/init.d/cpufrequtils
 ```
 
-- Find and modify (or add) these lines:
+- Find and modify these lines:
 ```
 ENABLE="true"
 GOVERNOR="ondemand"
-MAX_SPEED="4400000"  # Replace with your CPU's maximum speed (use cpufreq-info to find it)
-MIN_SPEED="3500000"  # Replace with approximately half of your CPU's maximum speed
+MAX_SPEED="XXXXXXX"  # Replace with your CPU's maximum speed (use cpufreq-info to find it)
+MIN_SPEED="XXXXXXX"  # Replace with approximately half of your CPU's maximum speed
 ```
 
 - Use cpufreq-info in the terminal to determine your CPU's maximum speed.
+- 
+- Recommendation:
+Even with C-states disabled, the ondemand governor might still be a better choice for gaming due to its ability to manage Turbo Boost and frequency scaling within the available range.  However, the best way to know for sure is to benchmark.
 
 
 
@@ -340,15 +343,13 @@ sudo nano /etc/sysfs.conf
 
 - Add the following lines:
 ```
-devices/system/cpu/cpufreq/ondemand/up_threshold = 99
-devices/system/cpu/cpufreq/ondemand/sampling_down_factor = 6
-devices/system/cpu/cpufreq/ondemand/sampling_rate = 20000000
-vm.swappiness = 10
-vm.dirty_background_ratio = 5
-vm.dirty_ratio = 10
-vm.vfs_cache_pressure = 50
-module/snd_hda_intel/parameters/power_save = 0
-module/snd_hda_intel/parameters/power_save_controller = N
+devices/system/cpu/cpufreq/ondemand/up_threshold = 99 # Percentage CPU utilization before scaling up frequency. Higher values mean more responsiveness.
+devices/system/cpu/cpufreq/ondemand/sampling_down_factor = 6 # How aggressively the CPU scales down frequency. Higher values mean less aggressive scaling down.
+devices/system/cpu/cpufreq/ondemand/sampling_rate = 20000000 # How often the CPU usage is checked. Higher values mean more frequent checks (more responsive).
+vm.swappiness = 10 # Represents the kernel's preference (or avoidance) of swap space.(better performance if enough RAM).
+vm.dirty_background_ratio = 5 # Percentage of "dirty" memory before background write to disk starts.
+vm.dirty_ratio = 10 # # Percentage of "dirty" memory before writes to disk are forced.
+vm.vfs_cache_pressure = 50 # How aggressively the kernel reclaims memory from the VFS cache. Lower values mean less aggressive reclaiming.
 ```
 
 
@@ -361,9 +362,19 @@ sudo nano /etc/default/grub
 
 - Modify the GRUB_CMDLINE_LINUX_DEFAULT line to:
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="processor.ignore_ppc=1 intel_pstate=passive intel_idle.max_cstate=0 idle=poll nosmt=force pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1"
+GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=poll nosmt=force pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1 zswap.enabled=0"
 ```
+- Parameters :
 
+```intel_pstate=passive```          Use the older intel_pstate driver in passive mode (might reduce performance on newer CPUs).
+```intel_idle.max_cstate=0```       Disable all CPU C-states (low-power states).
+```idle=poll```                     Use polling for idle instead of interrupts (can increase power consumption but reduce latency).
+```nosmt=force```                   Disable Symmetric Multi-Threading (Hyperthreading may hurt the performance, do benchmarks).
+```pcie_aspm=off```                 Disable PCIe Active State Power Management (can improve latency but increase power consumption).
+```mitigations=off```               Disable kernel mitigations for CPU vulnerabilities (increases risk but might improve performance).
+```kernel.randomize_va_space=0```   Disable address space layout randomization (security risk, might slightly improve performance).
+```ipv6.disable=1```                Disable IPv6 networking.
+``` zswap.enabled=0```              Disable kernel feature that provides a compressed RAM cache for swap pages (better performance if enough RAM).
 
 ### 3.11 Reload Grub
 ```
