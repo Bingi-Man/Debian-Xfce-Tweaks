@@ -40,7 +40,6 @@ This guide focuses on performance, potentially at the cost of system stability a
 
 ## Step 1: Base System Installation and Configuration
 
-In this step, you will install a minimal Debian 12 system, install XFCE, and configure basic system settings.
 
 
 
@@ -164,7 +163,6 @@ sudo nano /etc/sudoers
 
 ## Step 2: Essential Utilities and Desktop Configuration
 
-Install essential utilities and configure the desktop environment.
 
 
 
@@ -176,6 +174,19 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 sudo apt install mousepad xfce4-terminal -y
 ```
 
+# Core system utilities:
+acpid:  Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
+dbus-x11:  Essential inter-process communication for X11 applications.
+accountsservice:  Manages user accounts and login sessions.
+
+# Package management and security:
+apt-transport-https: Enables APT to download packages over HTTPS for secure updates.
+ca-certificates:  Provides root certificates for verifying the authenticity of SSL/TLS connections.
+software-properties-common:  Tools for managing software repositories (PPAs).
+
+# Basic desktop environment components:
+mousepad: A lightweight text editor.
+xfce4-terminal: A terminal emulator for running commands.
 
 ### 2.2 Set Default Applications
 
@@ -237,7 +248,7 @@ Refer to the Betterfox project for potential Firefox ESR tweaks: [https://github
 
 ## Step 3: Performance Tuning
 
-Implement various system tweaks to improve performance.
+
 
 
 
@@ -395,7 +406,7 @@ sudo cpufreq-info
 
 ## Step 4: NVIDIA Tweaks
 
-Install and configure NVIDIA drivers and CUDA, and apply further NVIDIA-specific tweaks.
+
 
 ### 4.1 Disable compositor
 
