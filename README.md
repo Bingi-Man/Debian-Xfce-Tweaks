@@ -14,8 +14,8 @@
 
                                               
 
-This tutorial guides you through optimizing and install a Debian 12 XFCE system with an NVIDIA GPU.
-It covers system installation, essential utilities, NVIDIA overclocking and CPU tuning.
+This tutorial guides you through optimizing and install a Debian 12 XFCE system.
+It covers system installation, essential utilities, Overclocking and CPU tuning.
 
 
 This is for experienced Linux users who want to testing the performances and understanding the system modifications. 
@@ -26,7 +26,6 @@ This guide focuses on performance, potentially at the cost of system stability a
 **Prerequisites:**
 
 
-*   A computer with an NVIDIA graphics card.
 
 *   Basic knowledge of Linux command-line operations.
 
