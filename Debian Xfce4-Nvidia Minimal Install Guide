@@ -1,11 +1,15 @@
+
+
+
 Minimal Debian Xfce performance tuning Guide
 
 
 
 
 
-This tutorial guides you through optimizing and install a Debian 12 XFCE system with an NVIDIA GPU.
-It covers system installation, essential utilities, NVIDIA overclocking and CPU tuning.
+
+This tutorial guides you through optimizing and install a Debian 12 XFCE system.
+It covers system installation, essential utilities, Overclocking and CPU tuning.
 
 
 This is for experienced Linux users who want to testing the performances and understanding the system modifications.
@@ -21,9 +25,6 @@ Prerequisites:
 
 
 
-A computer with an NVIDIA graphics card.
-
-
 Basic knowledge of Linux command-line operations.
 
 
@@ -33,12 +34,14 @@ Understanding of system configuration files.
 Willingness to accept potential risks associated with advanced system modifications.
 
 
-
-
-
 Step 1: Base System Installation and Configuration
 
+
+
+
 1.1 Install Debian 12 Netinst
+
+
 
 Download lastest Netinst Debian 12 :
 
@@ -68,6 +71,8 @@ Boot from the Debian 12 Netinst image. During the installation process, only sel
 
 1.2 Install Xfce4
 
+
+
 After the base system installation, log in as root and install XFCE:
 
 
@@ -76,10 +81,20 @@ apt install xfce4
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Reboot
 
 
 1.3 Configure apt sources
+
+
 
 Edit the apt sources list to include contrib, non-free, and non-free-firmware repositories:
 
@@ -89,6 +104,14 @@ nano /etc/apt/sources.list
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Replace the entire content of the file with the following:
 
 
@@ -103,7 +126,17 @@ deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non
 
 
     
+      
+    
+
+      
+    
+  
+
+
 1.4 Update Apt
+
+
 
 Update the package lists:
 
@@ -112,7 +145,17 @@ sudo apt update
 
 
     
+      
+    
+
+      
+    
+  
+
+
 1.5 Set Timezone
+
+
 
 List available timezones:
 
@@ -121,6 +164,14 @@ sudo timedatectl list-timezones
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Set your timezone (replace Your/Timezone with your actual timezone, e.g., Europe/Paris):
 
 
@@ -128,7 +179,17 @@ sudo timedatectl set-timezone Your/Timezone
 
 
     
+      
+    
+
+      
+    
+  
+
+
 1.6 Add user to sudoers
+
+
 
 Install sudo:
 
@@ -139,6 +200,14 @@ exit
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add your current user to the sudo group:
 
 
@@ -146,7 +215,17 @@ sudo usermod -aG sudo $USER
 
 
     
+      
+    
+
+      
+    
+  
+
+
 1.7 Add rights
+
+
 
 Add your user to the video and audio groups:
 
@@ -156,7 +235,17 @@ sudo usermod -aG audio $USER
 
 
     
+      
+    
+
+      
+    
+  
+
+
 1.8 Allow members of group sudo to execute any command
+
+
 
 WARNING: This step significantly reduces system security.  Understand the implications before proceeding.  It allows any user in the sudo group to execute any command without a password.
 
@@ -165,6 +254,14 @@ sudo nano /etc/sudoers
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Locate the line:
 
 
@@ -172,6 +269,14 @@ Locate the line:
 
 
     
+      
+    
+
+      
+    
+  
+
+
 And replace with:
 
 
@@ -179,15 +284,27 @@ And replace with:
 
 
     
-Reboot
+      
+    
+
+      
+    
+  
 
 
 NOPASSWD:  This means no password will be required when using sudo to run the following command.
 
 
+Reboot
+
+
 Step 2: Essential Utilities and Desktop Configuration
 
+
+
 2.1 Install Essential Utilities
+
+
 
 sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certificates software-properties-common -y
 
@@ -195,45 +312,54 @@ sudo apt install mousepad xfce4-terminal -y
 
 
     
+      
+    
+
+      
+    
+  
 
 
-Core system utilities:
-acpid:  Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
-dbus-x11:  Essential inter-process communication for X11 applications.
-accountsservice:  Manages user accounts and login sessions.
+acpid:                        Handles ACPI events (e.g., lid close, power button).
 
 
+dbus-x11:                     Essential inter-process communication for X11 applications.
 
 
-Package management and security:
-apt-transport-https: Enables APT to download packages over HTTPS for secure updates.
-ca-certificates:  Provides root certificates for verifying the authenticity of SSL/TLS connections.
-software-properties-common:  Tools for managing software repositories (PPAs).
+accountsservice:              Manages user accounts and login sessions.
 
 
+apt-transport-https:          Enables APT to download packages over HTTPS for secure updates.
 
 
-Basic desktop environment components:
-mousepad: A lightweight text editor.
-xfce4-terminal: A terminal emulator for running commands.
+ca-certificates:              Provides root certificates for verifying the authenticity of SSL/TLS connections.
 
 
+software-properties-common:   Tools for managing software repositories (PPAs).
 
 
-2.2 Set Default Applications
+mousepad:                     Lightweight text editor.
 
-Open Settings > Default Applications > Utilities
+
+xfce4-terminal:               Terminal emulator Xfce.
+
+
+Set Terminal
+
+
+Go to Settings > Default Applications > Utilities
 
 
 Set "Terminal Emulator" to "Xfce Terminal".
 
 
-2.3 Disable Apparmor
+2.2 Disable Apparmor
 
-WARNING:
- Disabling AppArmor reduces system security.  Understand the 
-implications before proceeding.  Consider configuring AppArmor profiles 
-instead of disabling it entirely.
+
+
+WARNING: Disabling AppArmor reduces 
+system security.  Understand the implications before proceeding.  
+Consider configuring AppArmor profiles instead of disabling it entirely.
 
 
 sudo systemctl stop apparmor
@@ -242,28 +368,30 @@ sudo aa-teardown
 
 
     
-2.4 Dark Mode (Xfce)
+      
+    
 
-Open  Applications > Settings > Appearance
-
-
-choose "Adwaita Dark".
-
-
-2.5 Set Terminal
-
-Go to Settings > Default Applications > Utilities
+      
+    
+  
 
 
-Set "Terminal Emulator" to "Xfce Terminal".
+2.3 Install and Configure Firefox ESR
 
 
-2.6 Install and Configure Firefox ESR
 
 sudo apt install firefox-esr
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Firefox Dark Mode
 
 
@@ -285,13 +413,27 @@ Refer to the Betterfox project for potential Firefox ESR tweaks: https://github.
 
 Step 3: Performance Tuning
 
+
+
 3.1 Disable Suspend
+
+
 
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
 
     
+      
+    
+
+      
+    
+  
+
+
 3.2 Create and Configure xset_noblank Script
+
+
 
 Create a script to disable screen blanking and DPMS:
 
@@ -300,6 +442,14 @@ sudo nano /home/$USER/xset_noblank.sh
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add the following content:
 
 
@@ -311,6 +461,14 @@ xset -dpms
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Make script executable
 
 
@@ -318,6 +476,14 @@ sudo chmod +x /home/$USER/xset_noblank.sh
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add to autostart
 
 
@@ -335,10 +501,20 @@ Reboot
 
 3.3 Install cpufrequtils and sysfsutils
 
+
+
 sudo apt install -y cpufrequtils sysfsutils
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Enable Services
 
 
@@ -347,7 +523,17 @@ sudo systemctl enable sysfsutils
 
 
     
+      
+    
+
+      
+    
+  
+
+
 3.4 Disable Core Dumps
+
+
 
 Prevent large core dump files from consuming disk space:
 
@@ -356,6 +542,14 @@ sudo nano /etc/sysctl.d/50-coredump.conf
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add the following line:
 
 
@@ -363,13 +557,32 @@ kernel.core_pattern=|/bin/false
 
 
     
-3.5 Enable the service
+      
+    
+
+      
+    
+  
+
+
+Enable the service
+
 
 sudo sysctl -p /etc/sysctl.d/50-coredump.conf
 
 
     
-3.6 Configure CPU Governor and Frequencies
+      
+    
+
+      
+    
+  
+
+
+3.5 Configure CPU Governor and Frequencies
+
+
 
 Note: It's generally recommended to use /etc/default/cpufrequtils 
 for configuration if it exists.  This tutorial uses 
@@ -381,6 +594,14 @@ sudo nano /etc/init.d/cpufrequtils
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Find and modify these lines:
 
 
@@ -391,6 +612,14 @@ MIN_SPEED="XXXXXXX"  # Replace with approximately half of your CPU's maximum spe
 
 
     
+      
+    
+
+      
+    
+  
+
+
 
 
 Use cpufreq-info in the terminal to determine your CPU's maximum speed.
@@ -407,12 +636,22 @@ know for sure is to benchmark.
 
 
 
-3.7 Sysfs Tuning
+3.6 Sysfs Tuning
+
+
 
 sudo nano /etc/sysfs.conf
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add the following lines:
 
 
@@ -426,6 +665,14 @@ vm.vfs_cache_pressure = 50 # How aggressively the kernel reclaims memory from th
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Check Temperatures and CPU Frequencies
 
 
@@ -434,10 +681,19 @@ sudo cpufreq-info
 
 
     
-3.8 Grub Configuration
+      
+    
 
-WARNING:
- Disabling security mitigations (mitigations=off 
+      
+    
+  
+
+
+3.7 Grub Configuration
+
+
+
+WARNING: Disabling security mitigations (mitigations=off 
 kernel.randomize_va_space=0) is not recommended and significantly 
 reduces system security.  Understand the risks before proceeding.
 
@@ -446,6 +702,14 @@ sudo nano /etc/default/grub
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Modify the GRUB_CMDLINE_LINUX_DEFAULT line to:
 
 
@@ -453,6 +717,14 @@ GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=po
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Parameters :
 
 
@@ -474,12 +746,24 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Reboot
 
 
 Step 4: NVIDIA Tweaks
 
+
+
 4.1 Disable compositor
+
+
 
 Open to Applications > Settings > Windows Manager Tweaks > Compositor
 
@@ -489,11 +773,21 @@ Uncheck  "Enable display compositing"
 
 4.2 Xorg Configuration
 
+
+
 sudo usermod -a -G input $USER
 sudo nano /etc/X11/Xwrapper.config
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add the following lines:
 
 
@@ -502,17 +796,35 @@ needs_root_rights=yes
 
 
     
-WARNING: Setting allowed_users=anybody is a
- major security risk.  Avoid this unless absolutely necessary.  Consider
- using allowed_users=console instead, which is significantly safer.
+      
+    
+
+      
+    
+  
+
+
+WARNING: Setting allowed_users=anybody is a major security
+ risk.  Avoid this unless absolutely necessary.  Consider using 
+allowed_users=console instead, which is significantly safer.
 
 
 4.3 Install Nvidia Driver and CUDA
+
+
 
 sudo apt install -y linux-headers-amd64 nvidia-driver firmware-misc-nonfree
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Reboot
 
 
@@ -520,6 +832,14 @@ sudo apt install -y nvidia-cuda-dev nvidia-cuda-toolkit
 
 
     
+      
+    
+
+      
+    
+  
+
+
 
 
 Reboot
@@ -537,16 +857,29 @@ sudo usermod -aG cuda $USER
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Allow members of group cuda to execute nvidia-smi
-
-
-WARNING: The modification was overly permissive.
 
 
 sudo nano /etc/sudoers
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add the following line:
 
 
@@ -554,9 +887,24 @@ Add the following line:
 
 
     
+      
+    
+
+      
+    
+  
+
+
+WARNING: The modification was overly permissive.
+
+
 4.4 Nvidia
 
+
+
 4.4.1 Nvidia Xorg conf
+
+
 
 Configuring the 10-nvidia-drm-outputclass :
 
@@ -565,6 +913,17 @@ sudo nano /usr/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf
 
 
     
+      
+    
+
+      
+    
+  
+
+
+Important: Verify that the ModulePath entries exist for your system.  Incorrect paths can prevent X from starting.
+
+
 Section "OutputClass"
     Identifier     "nvidia"
     MatchDriver    "nvidia-drm"
@@ -578,15 +937,30 @@ EndSection
 
 
     
-Important: Verify that the ModulePath entries exist for your system.  Incorrect paths can prevent X from starting.
+      
+    
+
+      
+    
+  
 
 
 4.4.2 Modprobe conf
+
+
 
 sudo nano /etc/modprobe.d/nvidia-options.conf
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add the following lines:
 
 
@@ -600,16 +974,36 @@ options nvidia-current NVreg_RestrictProfilingToAdminUsers=0 # Allow non-adminis
 
 
     
+      
+    
+
+      
+    
+  
+
+
 4.4.4 Update Initramfs
+
+
 
 sudo update-initramfs -u
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Reboot
 
 
 4.5 Nvidia Patch (removes restriction on maximum number of simultaneous NVENC video encoding sessions)
+
+
 
 git clone https://github.com/keylase/nvidia-patch.git
 cd nvidia-patch
@@ -617,7 +1011,17 @@ sudo bash ./patch.sh
 
 
     
+      
+    
+
+      
+    
+  
+
+
 4.6 Overclocking
+
+
 
 WARNING: Overclocking can damage your hardware.
 
@@ -626,6 +1030,8 @@ thoroughly after each change.  Monitor temperatures closely.
 
 
 4.6.1 Benchmark
+
+
 
 Download the Unigine Heaven benchmark: https://benchmark.unigine.com/heaven
 
@@ -638,16 +1044,25 @@ cd Unigine_Heaven-4.0
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Run the benchmark and monitor GPU temperature, clock speeds, and
 memory transfer rate to test stability after each overclocking step.
 
 
 4.6.2 Overclock
 
-EXTREME
- CAUTION: Increase offset values incrementally and RUN BENCHMARK AFTER 
-EACH CHANGES.  Start with small increases (e.g., +10 MHz for graphics 
-clock, +100 MHz for memory clock).
+
+
+EXTREME CAUTION: Increase offset values incrementally and 
+RUN BENCHMARK AFTER EACH CHANGES.  Start with small increases (e.g., +10
+ MHz for graphics clock, +100 MHz for memory clock).
 
 
 Set maximum performance:
@@ -657,6 +1072,14 @@ sudo nvidia-settings -a '[gpu:0]/GpuPowerMizerMode=1'
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Set fan control:
 
 
@@ -665,6 +1088,14 @@ sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=100'  # 100% fan speed
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Set power limit (replace XXX with your GPU's maximum power limit, found using sudo nvidia-smi -q):
 
 
@@ -672,6 +1103,14 @@ sudo nvidia-smi --power-limit=XXX
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Graphics overclocking (replace XXX with the desired offset, starting with small values like 10):
 
 
@@ -679,6 +1118,14 @@ sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Memory overclocking (replace XXXX with the desired offset, starting with small values like 100):
 
 
@@ -686,7 +1133,17 @@ sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels
 
 
     
+      
+    
+
+      
+    
+  
+
+
 4.6.3 Make changes permanents
+
+
 
 Create a script to apply overclocking settings on startup:
 
@@ -695,6 +1152,14 @@ sudo nano /home/$USER/GpuTweaks.sh
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add the following lines (replace XXX and XXXX with your stable overclocking values):
 
 
@@ -725,6 +1190,14 @@ sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Make script executable:
 
 
@@ -732,6 +1205,14 @@ sudo chmod +x /home/$USER/GpuTweaks.sh
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add to autostart (Applications > Settings > Session and Startup > Application Autostart)
 
 
@@ -745,12 +1226,24 @@ Reboot
 
 Step 5: Filesystem, Boot, and Service Configurations
 
+
+
 5.1 Set noatime and Tweak fstab for Ext4
+
+
 
 sudo nano /etc/fstab
 
 
     
+      
+    
+
+      
+    
+  
+
+
 UUID=YOUR_ROOT_PARTITION_UUID:  Identify your partition, don't touch it
 
 
@@ -776,6 +1269,14 @@ UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,errors=remount-ro 0 1
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Reload systemctl
 
 
@@ -783,16 +1284,28 @@ sudo systemctl daemon-reload
 
 
     
+      
+    
+
+      
+    
+  
+
+
 5.2 Disable Journaling on ext4
 
-EXTREME
- CAUTION: Disabling journaling significantly increases the risk of data 
-loss in case of a power failure or system crash.  This is not 
-recommended for most users.  The following steps involve creating a 
-backup of your system, which is essential before disabling journaling.
+
+
+EXTREME CAUTION: Disabling journaling significantly 
+increases the risk of data loss in case of a power failure or system 
+crash.  This is not recommended for most users.  The following steps 
+involve creating a backup of your system, which is essential before 
+disabling journaling.
 
 
 5.2.1 Backup your system
+
+
 
 Download Rescuezilla ( https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1/rescuezilla-2.5.1-64bit.noble.iso ).
 
@@ -807,6 +1320,14 @@ lsblk # Identify your Debian disk (e.g., /dev/nvme0n1)
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Unmount USB
 
 
@@ -814,6 +1335,14 @@ sudo umount /dev/sdX # Where sdX is your USB
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Create the disk image with dd :
 
 
@@ -821,11 +1350,21 @@ sudo dd if=~/Downloads /rescuezilla-2.5.1-64bit.noble.iso of=/dev/nvme0n1 bs=1M 
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Boot from it, and back up your entire Debian disk to another storage device
 (USB drive, external hard drive, etc.).  Do not proceed without a complete backup.
 
 
 5.2.2 Disable journalling on Ext4
+
+
 
 WARNING: This can lead to data loss!  Ensure you have a complete backup before proceeding.
 
@@ -836,7 +1375,17 @@ sudo tune2fs -O ^has_journal /dev/nvme0nXXX    # Replace /dev/nvme0nXXX with you
 
 
     
+      
+    
+
+      
+    
+  
+
+
 5.3 Autologin Lightdm
+
+
 
 WARNING: Enabling autologin is a security risk.  Anyone with physical access to your computer will be automatically logged in.
 
@@ -845,6 +1394,14 @@ sudo nano /etc/lightdm/lightdm.conf
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Find or add the following lines within the appropriate sections:
 
 
@@ -857,12 +1414,30 @@ autologin-user-timeout=0
 
 
     
+      
+    
+
+      
+    
+  
+
+
 5.4 PulseAudio Configuration
+
+
 
 sudo nano /etc/pulse/daemon.conf
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Uncomment (remove the leading ;) and modify the following lines:
 
 
@@ -872,12 +1447,30 @@ default-sample-rate = 48000
 
 
     
+      
+    
+
+      
+    
+  
+
+
 5.4.1 Disable idle
+
+
 
 sudo nano /etc/pulse/system.pa
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Add and Comment this lines:
 
 
@@ -886,7 +1479,17 @@ load-module module-udev-detect tsched=0 # disables the timer-based scheduling fe
 
 
     
+      
+    
+
+      
+    
+  
+
+
 5.5 Disable Services
+
+
 
 Disable unnecessary services to reduce boot time and resource usage.
 
@@ -897,7 +1500,17 @@ sudo systemctl disable nftables.service  # Only if you're not using nftables
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Further reading
+
+
 
 Debian Xfce4 Minimal Install Guide - https://github.com/coonrad/Debian-Xfce4-Minimal-Install
 
@@ -916,7 +1529,11 @@ Rescuezilla - https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1
 
 Troubleshootings
 
+
+
 Sound output is wrong (headphones/lineout...)
+
+
 
 Use pavucontrol to change the port to your desired one. Then find the internal name of the port with this command:
 
@@ -928,6 +1545,14 @@ $ pacmd list | grep "active port"
 
 
     
+      
+    
+
+      
+    
+  
+
+
 Using this information about the internal name of the port, change it with :
 
 
@@ -935,6 +1560,14 @@ pacmd set-sink-port 0 analog-output-lineout
 
 
     
+      
+    
+
+      
+    
+  
+
+
 If you have multiple cards, try changing the 0 to a 1.
 
 
@@ -945,4 +1578,14 @@ set-sink-port 0 analog-output-lineout
 
 
     
+      
+    
+
+      
+    
+  
+
+
 in your /etc/pulse/default.pa file to have it across reboots.
+
+
