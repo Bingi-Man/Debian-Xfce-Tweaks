@@ -157,7 +157,7 @@ sudo nano /etc/sudoers
 ```
 - Reboot
 
-
+```NOPASSWD:```  This means no password will be required when using sudo to run the following command.
 
 
 
@@ -174,17 +174,17 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 sudo apt install mousepad xfce4-terminal -y
 ```
 
-# Core system utilities:
+- Core system utilities:
 acpid:  Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
 dbus-x11:  Essential inter-process communication for X11 applications.
 accountsservice:  Manages user accounts and login sessions.
 
-# Package management and security:
+- Package management and security:
 apt-transport-https: Enables APT to download packages over HTTPS for secure updates.
 ca-certificates:  Provides root certificates for verifying the authenticity of SSL/TLS connections.
 software-properties-common:  Tools for managing software repositories (PPAs).
 
-# Basic desktop environment components:
+- Basic desktop environment components:
 mousepad: A lightweight text editor.
 xfce4-terminal: A terminal emulator for running commands.
 
@@ -213,7 +213,7 @@ Open  Applications > Settings > Appearance
 *   choose "Adwaita Dark".
 
 
-### 2.4.1 Set Terminal
+### 2.5 Set Terminal
 
 Go to Settings > Default Applications > Utilities
 
@@ -221,12 +221,12 @@ Go to Settings > Default Applications > Utilities
 
 
 
-### 2.5 Install and Configure Firefox ESR
+### 2.6 Install and Configure Firefox ESR
 ```
 sudo apt install firefox-esr
 ```
 
-#### 2.5.1 Firefox Dark Mode
+- Firefox Dark Mode
 
 
 Go to Settings > General > Manage Colors...
@@ -238,7 +238,7 @@ Go to Settings > General > Manage Colors...
 *   Choose "Always"
 
 
-#### 2.5.2 Tweaks Firefox ESR
+- Tweaks Firefox ESR
 
 Refer to the Betterfox project for potential Firefox ESR tweaks: [https://github.com/yokoffing/Betterfox/tree/esr128](https://github.com/yokoffing/Betterfox/tree/esr128)
 
@@ -260,7 +260,7 @@ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.ta
 
 ### 3.2 Create and Configure xset_noblank Script
 
-- Create a script to disable screen blanking:
+- Create a script to disable screen blanking and DPMS:
 ```
 sudo nano /home/$USER/xset_noblank.sh
 ```
@@ -275,13 +275,13 @@ xset -dpms
 ```
 
 
-### 3.3 Make script executable
+- Make script executable
 ```
 sudo chmod +x /home/$USER/xset_noblank.sh
 ```
 
 
-### 3.4 Add to autostart
+- Add to autostart
 
 Open to Applications > Settings > Session and Startup > Application Autostart.
 
@@ -294,19 +294,19 @@ Open to Applications > Settings > Session and Startup > Application Autostart.
 
 
 
-### 3.5 Install cpufrequtils and sysfsutils
+### 3.3 Install cpufrequtils and sysfsutils
 ```
 sudo apt install -y cpufrequtils sysfsutils
 ```
 
-#### 3.5.1 Enable Services
+- Enable Services
 ```
 sudo systemctl enable cpufrequtils
 sudo systemctl enable sysfsutils
 ```
 
 
-### 3.6 Disable Core Dumps
+### 3.4 Disable Core Dumps
 
 - Prevent large core dump files from consuming disk space:
 ```
@@ -319,13 +319,13 @@ kernel.core_pattern=|/bin/false
 ```
 
 
-### 3.7 Enable the service
+### 3.5 Enable the service
 ```
 sudo sysctl -p /etc/sysctl.d/50-coredump.conf
 ```
 
 
-### 3.8 Configure CPU Governor and Frequencies
+### 3.6 Configure CPU Governor and Frequencies
 
 - Note: It's generally recommended to use /etc/default/cpufrequtils for configuration if it exists.  This tutorial uses /etc/init.d/cpufrequtils for consistency with the original, but check for the preferred file first.
 ```
@@ -341,13 +341,13 @@ MIN_SPEED="XXXXXXX"  # Replace with approximately half of your CPU's maximum spe
 ```
 
 - Use cpufreq-info in the terminal to determine your CPU's maximum speed.
-- 
+  
 - Recommendation:
 Even with C-states disabled, the ondemand governor might still be a better choice for gaming due to its ability to manage Turbo Boost and frequency scaling within the available range.  However, the best way to know for sure is to benchmark.
 
 
 
-### 3.9 Sysfs Tuning
+### 3.7 Sysfs Tuning
 ```
 sudo nano /etc/sysfs.conf
 ```
@@ -362,9 +362,13 @@ vm.dirty_background_ratio = 5 # Percentage of "dirty" memory before background w
 vm.dirty_ratio = 10 # # Percentage of "dirty" memory before writes to disk are forced.
 vm.vfs_cache_pressure = 50 # How aggressively the kernel reclaims memory from the VFS cache. Lower values mean less aggressive reclaiming.
 ```
+- Check Temperatures and CPU Frequencies
+```
+sudo sensors
+sudo cpufreq-info
+```
 
-
-### 3.10 Grub Configuration
+### 3.8 Grub Configuration
 
 WARNING: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is not recommended and significantly reduces system security.  Understand the risks before proceeding.
 ```
@@ -387,20 +391,11 @@ GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=po
 ```ipv6.disable=1```                Disable IPv6 networking.
 ``` zswap.enabled=0```              Disable kernel feature that provides a compressed RAM cache for swap pages (better performance if enough RAM).
 
-### 3.11 Reload Grub
+- Reload Grub
 ```
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 - Reboot
-
-
-
-### 3.12 Check Temperatures and CPU Frequencies
-```
-sudo sensors
-sudo cpufreq-info
-```
-
 
 
 
@@ -442,13 +437,13 @@ sudo apt install -y nvidia-cuda-dev nvidia-cuda-toolkit
 - Reboot
 
 
-#### 4.3.1 CUDA Rights and Group Configuration
+- CUDA Rights and Group Configuration
 ```
 sudo groupadd cuda
 sudo usermod -aG cuda $USER
 ```
 
-#### 4.3.2 Allow members of group cuda to execute nvidia-smi
+- Allow members of group cuda to execute nvidia-smi
 
 WARNING: The modification was overly permissive. 
 ```
@@ -467,27 +462,7 @@ sudo nano /etc/sudoers
 
 #### 4.4.1 Nvidia Xorg conf
 
-- Create /usr/share/X11/xorg.conf.d/20-nvidia-screen.conf :
 
-```
-sudo nano /usr/share/X11/xorg.conf.d/20-nvidia-screen.conf
-```
-This has been reported to reduce the performance of some OpenGL 
-applications and may produce issues in WebGL. It also drastically 
-increases the time the driver needs to clock down after load (NVIDIA Support Thread).
-ForceFullCompositionPipeline is known to break some games using Vulkan under Proton with NVIDIA driver 535.
-
-- Add the following lines:
-```
-Section "Screen"
-    Identifier     "Screen0"
-    Device         "Device0"
-    Monitor        "Monitor0"
-    Option         "ForceFullCompositionPipeline" "on"
-    Option         "AllowIndirectGLXProtocol" "off"
-    Option         "TripleBuffer" "on"
-EndSection
-```
 - Configuring the 10-nvidia-drm-outputclass :
 ```
 sudo nano /usr/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf
@@ -502,11 +477,11 @@ Section "OutputClass"
     Option "DPMS" "false"
     ModulePath "/usr/lib/nvidia/current"    # Verify this path exists and adjust if necessary
     ModulePath "/usr/lib/xorg/modules"
-    Option     "Coolbits" "28"
+    Option     "Coolbits" "28" # Enable Overclocking and FanControl
 EndSection
 ```
 
-- Important: Verify that the ModulePath entries are correct for your system.  Incorrect paths can prevent X from starting.
+- Important: Verify that the ModulePath entries exist for your system.  Incorrect paths can prevent X from starting.
 
 
 #### 4.4.2 Modprobe conf
@@ -517,20 +492,15 @@ sudo nano /etc/modprobe.d/nvidia-options.conf
 - Add the following lines:
 
 ```
-options nvidia NVreg_UsePageAttributeTable=1
-options nvidia NVreg_EnableMSI=1
-options nvidia NVreg_EnableStreamMemOPs=1
-options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
-options nvidia NVreg_RegistryDwords="OverrideMaxPerf=0x1"
-options nvidia-drm modeset=1
-options nvidia-drm fbdev=1
-#Uncomment the line below to allow non-admin users to use profiling tools:
-options nvidia-current NVreg_RestrictProfilingToAdminUsers=0
+options nvidia NVreg_UsePageAttributeTable=1 # Can improve performance, especially for graphics-intensive applications, by optimizing memory access patterns.
+options nvidia NVreg_EnableMSI=1 # Reduces CPU overhead associated with handling interrupts from the graphics card, potentially improving system responsiveness.
+options nvidia NVreg_EnableStreamMemOPs=1 # Can improve performance in applications that involve significant data transfer between the CPU and GPU.
+options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222" # Performance level
+options nvidia NVreg_RegistryDwords="OverrideMaxPerf=0x1" # Max performance (caution: heat/power)
+options nvidia-drm modeset=1 # Enable kernel mode setting (modeset)
+options nvidia-current NVreg_RestrictProfilingToAdminUsers=0 # Allow non-administrative users to use NVIDIA profiling tools.  This can be useful for debugging and performance analysis but might pose a security risk in some environments
 ```
 
-- Note: The last line is commented out by default. 
-Uncommenting it allows non-admin users to use NVIDIA profiling tools, 
-which can be useful but also has security implications.
 
 
 #### 4.4.4 Update Initramfs
@@ -568,13 +538,12 @@ cd Unigine_Heaven-4.0
 ```
 
 - Run the benchmark and monitor GPU temperature, clock speeds, and 
-memory transfer rate.  Use this as a baseline and to test stability 
-after each overclocking step.
+memory transfer rate to test stability after each overclocking step.
 
 
 #### 4.6.2 Overclock
 
-EXTREME CAUTION: Increase offset values incrementally and run benchmark after each change.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
+EXTREME CAUTION: Increase offset values incrementally and RUN BENCHMARK AFTER EACH CHANGES.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
 
 
 - Set maximum performance:
@@ -616,6 +585,7 @@ sudo nano /home/$USER/GpuTweaks.sh
 #!/bin/bash
 
 ##Set power limit to maximum
+
 sudo nvidia-smi --power-limit=XXX #  Where XXX is value for power-limit
 
 ##Set maximum performance mode
@@ -625,7 +595,7 @@ sudo nvidia-settings -a '[gpu:0]/GpuPowerMizerMode=1'
 ##Set fan control
 
 sudo nvidia-settings -a '[gpu:0]/GPUFanControlState=1'
-sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=100'
+sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=XXX' # Where XXX is % of Fan Speed
 
 
 ##Graphics overclocking
@@ -636,7 +606,6 @@ sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'
 
 sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX' #  Where XXXX is the value added to the maximum Memory clocks
 
-####################################################### END ###########################################################
 ```
 
 - Make script executable:
@@ -659,7 +628,6 @@ Set Command: /home/$USER/GpuTweaks.sh
 
 ## Step 5: Filesystem, Boot, and Service Configurations
 
-Configure filesystem options, disable journaling (with extreme caution), set up autologin, and configure PulseAudio.
 
 
 
@@ -667,12 +635,29 @@ Configure filesystem options, disable journaling (with extreme caution), set up 
 ```
 sudo nano /etc/fstab
 ```
+
+UUID=YOUR_ROOT_PARTITION_UUID:  Identify your partition, don't touch it
+
+ext4: This specifies the filesystem type.
+
+noatime: This mount option disables updating the access time (atime) for files 
+whenever they are read.  This can improve performance, especially on 
+solid-state drives (SSDs), as it reduces unnecessary writes.
+
+barrier=0:  This option disables write barriers. Write barriers ensure data integrity by
+ forcing writes to be completed in a specific order. Disabling them can 
+significantly improve performance, especially on SSDs, but it comes with
+ a risk: if your system crashes or loses power during a write operation,
+ data corruption can occur.  Use with caution!  If you're unsure, leave barrier=1 (the default).
+
+
 - Add options
 ```
-UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,barrier=0,errors=remount-ro 0 1
+UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,errors=remount-ro 0 1
 ```
 
-#### 5.1.1 Relload systemctl
+
+- Reload systemctl
  
 ```
 sudo systemctl daemon-reload
@@ -715,7 +700,7 @@ WARNING: This can lead to data loss!  Ensure you have a complete backup before p
 ```
 lsblk    # Identify your root partition (e.g., /dev/nvme0n1p2)
 
-sudo tune2fs -O ^has_journal /dev/nvme0n1p2    # Replace /dev/nvme0n1p2 with your actual root partition!
+sudo tune2fs -O ^has_journal /dev/nvme0nXXX    # Replace /dev/nvme0nXXX with your actual root partition! (you can find it with : " lsblk ")
 ```
 
 
@@ -759,7 +744,7 @@ sudo nano /etc/pulse/system.pa
 
 - Add and Comment this lines:
 ```
-load-module module-udev-detect tsched=0
+load-module module-udev-detect tsched=0 # disables the timer-based scheduling feature of the module.  This can improve performance, but might introduce latency
 #load-module module-suspend-on-idle
 ```
 
@@ -807,11 +792,11 @@ $ pacmd list | grep "active port"
     active port: <analog-output-lineout>
     active port: <analog-input-linein>
 ```
-- Using this information about the internal name of the port, we can change it with the command:
+- Using this information about the internal name of the port, change it with :
 ```
 pacmd set-sink-port 0 analog-output-lineout
 ```
-- If you (or someone else with the problem) has multiple cards, try changing the 0 to a 1.
+If you have multiple cards, try changing the 0 to a 1.
 
 - If this works, you can put:
 ```
