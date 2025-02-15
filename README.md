@@ -193,12 +193,6 @@ xfce4-terminal:               Terminal emulator for running commands.
 
 
 
-### 2.2 Set Default Terminal
-
-Open Settings > Default Applications > Utilities
-
-*   Set "Terminal Emulator" to "Xfce Terminal".
-
 
 
 ### 2.3 Disable Apparmor
@@ -324,13 +318,13 @@ kernel.core_pattern=|/bin/false
 ```
 
 
-### 3.5 Enable the service
+- Enable the service
 ```
 sudo sysctl -p /etc/sysctl.d/50-coredump.conf
 ```
 
 
-### 3.6 Configure CPU Governor and Frequencies
+### 3.5 Configure CPU Governor and Frequencies
 
 - Note: It's generally recommended to use /etc/default/cpufrequtils for configuration if it exists.  This tutorial uses /etc/init.d/cpufrequtils for consistency with the original, but check for the preferred file first.
 ```
@@ -352,7 +346,7 @@ Even with C-states disabled, the ondemand governor might still be a better choic
 
 
 
-### 3.7 Sysfs Tuning
+### 3.6 Sysfs Tuning
 ```
 sudo nano /etc/sysfs.conf
 ```
@@ -373,7 +367,7 @@ sudo sensors
 sudo cpufreq-info
 ```
 
-### 3.8 Grub Configuration
+### 3.7 Grub Configuration
 
 WARNING: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is not recommended and significantly reduces system security.  Understand the risks before proceeding.
 ```
