@@ -175,17 +175,14 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 sudo apt install mousepad xfce4-terminal -y
 ```
 
-- Core system utilities:
 acpid:  Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
 dbus-x11:  Essential inter-process communication for X11 applications.
 accountsservice:  Manages user accounts and login sessions.
 
-- Package management and security:
 apt-transport-https: Enables APT to download packages over HTTPS for secure updates.
 ca-certificates:  Provides root certificates for verifying the authenticity of SSL/TLS connections.
 software-properties-common:  Tools for managing software repositories (PPAs).
 
-- Basic desktop environment components:
 mousepad: A lightweight text editor.
 xfce4-terminal: A terminal emulator for running commands.
 
