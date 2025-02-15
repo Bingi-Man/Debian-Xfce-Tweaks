@@ -192,10 +192,14 @@ mousepad:                     Lightweight text editor.
 xfce4-terminal:               Terminal emulator Xfce.
 
 
+- Set Terminal
+
+Go to Settings > Default Applications > Utilities
+
+*   Set "Terminal Emulator" to "Xfce Terminal".
 
 
-
-### 2.3 Disable Apparmor
+### 2.2 Disable Apparmor
 
 **WARNING:** Disabling AppArmor reduces system security.  Understand the implications before proceeding.  Consider configuring AppArmor profiles instead of disabling it entirely.
 ```
@@ -205,22 +209,8 @@ sudo aa-teardown
 ```
 
 
-### 2.4 Dark Mode (Xfce)
 
-Open  Applications > Settings > Appearance
-
-*   choose "Adwaita Dark".
-
-
-### 2.5 Set Terminal
-
-Go to Settings > Default Applications > Utilities
-
-*   Set "Terminal Emulator" to "Xfce Terminal".
-
-
-
-### 2.6 Install and Configure Firefox ESR
+### 2.3 Install and Configure Firefox ESR
 ```
 sudo apt install firefox-esr
 ```
@@ -444,7 +434,7 @@ sudo usermod -aG cuda $USER
 
 - Allow members of group cuda to execute nvidia-smi
 
-WARNING: The modification was overly permissive. 
+
 ```
 sudo nano /etc/sudoers
 ```
@@ -454,7 +444,7 @@ sudo nano /etc/sudoers
 ```
 %cuda ALL=(ALL) NOPASSWD: /usr/bin/nvidia-smi
 ```
-
+WARNING: The modification was overly permissive. 
 
 ### 4.4 Nvidia
 
@@ -466,7 +456,7 @@ sudo nano /etc/sudoers
 ```
 sudo nano /usr/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf
 ```
-
+- Important: Verify that the ModulePath entries exist for your system.  Incorrect paths can prevent X from starting.
 ```
 Section "OutputClass"
     Identifier     "nvidia"
@@ -480,7 +470,7 @@ Section "OutputClass"
 EndSection
 ```
 
-- Important: Verify that the ModulePath entries exist for your system.  Incorrect paths can prevent X from starting.
+
 
 
 #### 4.4.2 Modprobe conf
