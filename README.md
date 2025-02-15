@@ -154,11 +154,13 @@ sudo nano /etc/sudoers
 ```
 %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
 ```
-- Reboot
+
 
 ```NOPASSWD:```  This means no password will be required when using sudo to run the following command.
 
+- Reboot
 
+  
 
 ## Step 2: Essential Utilities and Desktop Configuration
 
