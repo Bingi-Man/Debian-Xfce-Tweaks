@@ -7,14 +7,15 @@
 
 
 
-## Tweaks Debian Xfce Nvidia
+## Minimal Debian Xfce performance tuning Guide
+
 
 
 
                                               
 
-This tutorial guides you through optimizing a Debian 12 XFCE system with an NVIDIA GPU for maximum performance.
-It covers system installation, essential utilities, performance tuning, NVIDIA Oveclocking and CPU tuning.
+This tutorial guides you through optimizing and install a Debian 12 XFCE system with an NVIDIA GPU for maximum performance.
+It covers system installation, essential utilities, NVIDIA overclocking and CPU tuning.
 
 
 This is for experienced Linux users who want to testing the performances and understanding the system modifications. 
@@ -745,17 +746,8 @@ load-module module-udev-detect tsched=0
 
 - Disable unnecessary services to reduce boot time and resource usage. 
 ```
-sudo systemctl disable cron.service
-sudo systemctl disable avahi-daemon.service
-sudo systemctl disable e2scrub_reap.service
-sudo systemctl disable logrotate.service
-sudo systemctl disable logrotate.timer
 sudo systemctl disable systemd-networkd.service  # Only if using a static network configuration
-sudo systemctl disable systemd-timesyncd.service
 sudo systemctl disable upower.service  # Only if you don't need battery monitoring or power management
-sudo systemctl disable apt-daily-upgrade.service
-sudo systemctl disable apt-daily.timer
-sudo systemctl disable packagekit.service
 sudo systemctl disable nftables.service  # Only if you're not using nftables
 ```
 
