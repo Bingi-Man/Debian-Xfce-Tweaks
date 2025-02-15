@@ -1,3 +1,7 @@
+Minimal Debian Xfce performance tuning Guide
+
+
+
 
 
 This tutorial guides you through optimizing and install a Debian 12 XFCE system with an NVIDIA GPU.
@@ -8,6 +12,10 @@ This is for experienced Linux users who want to testing the performances and und
 This guide focuses on performance, potentially at the cost of system stability and security.
 
 
+
+
+
+
 Prerequisites:
 
 
@@ -16,19 +24,14 @@ Prerequisites:
 A computer with an NVIDIA graphics card.
 
 
-
-
 Basic knowledge of Linux command-line operations.
-
-
 
 
 Understanding of system configuration files.
 
 
-
-
 Willingness to accept potential risks associated with advanced system modifications.
+
 
 
 
