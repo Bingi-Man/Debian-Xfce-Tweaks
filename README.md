@@ -175,7 +175,7 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 sudo apt install mousepad xfce4-terminal -y
 ```
 
-acpid:                        Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
+acpid:                        Handles ACPI events (e.g., lid close, power button).
 
 dbus-x11:                     Essential inter-process communication for X11 applications.
 
@@ -189,7 +189,7 @@ software-properties-common:   Tools for managing software repositories (PPAs).
 
 mousepad:                     Lightweight text editor.
 
-xfce4-terminal:               Terminal emulator for running commands.
+xfce4-terminal:               Terminal emulator Xfce.
 
 
 
