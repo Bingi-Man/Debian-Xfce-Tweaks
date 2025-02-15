@@ -176,14 +176,19 @@ sudo apt install mousepad xfce4-terminal -y
 ```
 
 acpid:  Handles Advanced Configuration and Power Interface (ACPI) events (e.g., lid close, power button).
+
 dbus-x11:  Essential inter-process communication for X11 applications.
+
 accountsservice:  Manages user accounts and login sessions.
 
 apt-transport-https: Enables APT to download packages over HTTPS for secure updates.
+
 ca-certificates:  Provides root certificates for verifying the authenticity of SSL/TLS connections.
+
 software-properties-common:  Tools for managing software repositories (PPAs).
 
 mousepad: A lightweight text editor.
+
 xfce4-terminal: A terminal emulator for running commands.
 
 ### 2.2 Set Default Applications
