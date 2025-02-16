@@ -333,7 +333,7 @@ MIN_SPEED="XXXXXXX"  # Replace with approximately half of your CPU's maximum spe
 - Use cpufreq-info in the terminal to determine your CPU's maximum speed.
   
 - Recommendation:
-Even with C-states disabled, the ondemand governor might still be a better choice for gaming due to its ability to manage Turbo Boost and frequency scaling within the available range.  However, the best way to know for sure is to benchmark.
+Even with C-states disabled, the ondemand governor might still be a better choice for performance due to its ability to manage Turbo Boost and frequency scaling within the available range.  However, the best way to know for sure is to benchmark.
 
 
 
