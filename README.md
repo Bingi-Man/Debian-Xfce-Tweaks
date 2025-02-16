@@ -726,7 +726,7 @@ sudo nano /etc/lightdm/lightdm.conf
 logind-check-graphical=true
 
 [Seat:*]
-autologin-user=$USER
+autologin-user=your_user_name # Where "your_user_name" is your user name.
 autologin-user-timeout=0
 ```
 
