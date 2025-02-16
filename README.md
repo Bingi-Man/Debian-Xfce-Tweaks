@@ -494,13 +494,20 @@ sudo nano /etc/modprobe.d/nvidia-options.conf
 - Add the following lines:
 
 ```
-options nvidia NVreg_UsePageAttributeTable=1 # Can improve performance, especially for graphics-intensive applications, by optimizing memory access patterns.
-options nvidia NVreg_EnableMSI=1 # Reduces CPU overhead associated with handling interrupts from the graphics card, potentially improving system responsiveness.
-options nvidia NVreg_EnableStreamMemOPs=1 # Can improve performance in applications that involve significant data transfer between the CPU and GPU.
-options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222" # Performance level
-options nvidia NVreg_RegistryDwords="OverrideMaxPerf=0x1" # Max performance (caution: heat/power)
-options nvidia-drm modeset=1 # Enable kernel mode setting (modeset)
-options nvidia-current NVreg_RestrictProfilingToAdminUsers=0 # Allow non-administrative users to use NVIDIA profiling tools.  This can be useful for debugging and performance analysis but might pose a security risk in some environments
+options nvidia NVreg_UsePageAttributeTable=1
+# Can improve performance, especially for graphics-intensive applications, by optimizing memory access patterns.
+options nvidia NVreg_EnableMSI=1
+# Reduces CPU overhead associated with handling interrupts from the graphics card, potentially improving system responsiveness.
+options nvidia NVreg_EnableStreamMemOPs=1
+# Can improve performance in applications that involve significant data transfer between the CPU and GPU.
+options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
+# Performance level
+options nvidia NVreg_RegistryDwords="OverrideMaxPerf=0x1"
+# Max performance (caution: heat/power)
+options nvidia-drm modeset=1
+# Enable kernel mode setting (modeset)
+options nvidia-current NVreg_RestrictProfilingToAdminUsers=0
+# Allow non-administrative users to use NVIDIA profiling tools.  This can be useful for debugging and performance analysis but might pose a security risk in some environments
 ```
 
 
