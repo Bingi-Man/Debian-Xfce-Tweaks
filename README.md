@@ -487,6 +487,8 @@ Section "OutputClass"
     ModulePath "/usr/lib/xorg/modules"
     Option     "Coolbits" "28" # Enable Overclocking and FanControl
 EndSection
+
+# "Coolbits" "28"  Enable Overclocking and FanControl
 ```
 
 
