@@ -619,7 +619,7 @@ sudo chmod +x /home/$USER/GpuTweaks.sh
 
 Click "+ Add".
 Set Name: GpuTweaks
-Set Command: /home/$USER/GpuTweaks.sh
+Set Command: /home/your_user_name/GpuTweaks.sh # Where your_user_name is your user name
 
 - Reboot
 
