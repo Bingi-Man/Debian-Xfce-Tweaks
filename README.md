@@ -177,21 +177,21 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 sudo apt install mousepad xfce4-terminal -y
 ```
 
-```acpid```:                        > _Handles ACPI events (e.g., lid close, power button)._ 
+> ```acpid```:                        _Handles ACPI events (e.g., lid close, power button)._ 
 
-```dbus-x11```:                     > _Essential inter-process communication for X11 applications._ 
+> ```dbus-x11```:                     _Essential inter-process communication for X11 applications._ 
 
-```accountsservice```:              > _Manages user accounts and login sessions._ 
+> ```accountsservice```:              _Manages user accounts and login sessions._ 
 
-```apt-transport-https```:          > _Enables APT to download packages over HTTPS for secure updates._ 
+> ```apt-transport-https```:          _Enables APT to download packages over HTTPS for secure updates._ 
 
-```ca-certificates```:              > _Provides root certificates for verifying the authenticity of SSL/TLS connections._ 
+> ```ca-certificates```:              _Provides root certificates for verifying the authenticity of SSL/TLS connections._ 
 
-```software-properties-common```:   > _Tools for managing software repositories (PPAs)._ 
+> ```software-properties-common```:   _Tools for managing software repositories (PPAs)._ 
 
-```mousepad```:                     > _Lightweight text editor._ 
+> ```mousepad```:                     _Lightweight text editor._ 
 
-```xfce4-terminal```:               > _Terminal emulator Xfce._ 
+> ```xfce4-terminal```:               _Terminal emulator Xfce._ 
 
 
 - Set Terminal
@@ -375,23 +375,23 @@ GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=po
 ```
 - Parameters :
 
-```intel_pstate=passive```          Use the older intel_pstate driver in passive mode (might reduce performance on newer CPUs).
+> ```intel_pstate=passive```          _Use the older intel_pstate driver in passive mode (might reduce performance on newer CPUs)._
 
-```intel_idle.max_cstate=0```       Disable all CPU C-states (low-power states).
+> ```intel_idle.max_cstate=0```       _Disable all CPU C-states (low-power states)._
 
-```idle=poll```                     Use polling for idle instead of interrupts (can increase power consumption but reduce latency).
+> ```idle=poll```                     _Use polling for idle instead of interrupts (can increase power consumption but reduce latency)._
 
-```nosmt=force```                   Disable Symmetric Multi-Threading (Hyperthreading may hurt the performance, do benchmarks).
+> ```nosmt=force```                   _Disable Symmetric Multi-Threading (Hyperthreading may hurt the performance, do benchmarks)._
 
-```pcie_aspm=off```                 Disable PCIe Active State Power Management (can improve latency but increase power consumption).
+> ```pcie_aspm=off```                 _Disable PCIe Active State Power Management (can improve latency but increase power consumption)._
 
-```mitigations=off```               Disable kernel mitigations for CPU vulnerabilities (increases risk but might improve performance).
+> ```mitigations=off```               _Disable kernel mitigations for CPU vulnerabilities (increases risk but might improve performance)._
 
-```kernel.randomize_va_space=0```   Disable address space layout randomization (security risk, might slightly improve performance).
+> ```kernel.randomize_va_space=0```   _Disable address space layout randomization (security risk, might slightly improve performance)._
 
-```ipv6.disable=1```                Disable IPv6 networking.
+> ```ipv6.disable=1```                _Disable IPv6 networking._
 
-``` zswap.enabled=0```              Disable kernel feature that provides a compressed RAM cache for swap pages (better performance if enough RAM).
+> ``` zswap.enabled=0```              _Disable kernel feature that provides a compressed RAM cache for swap pages (better performance if enough RAM)._
 
 - Reload Grub
 ```
