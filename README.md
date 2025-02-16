@@ -58,7 +58,7 @@ https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-ne
 *   From Windows : https://devtutorial.io/how-to-create-bootable-usb-installer-for-debian-12-p3123.html
 
 
-**Boot from the Debian 12 Netinst image. During the installation process, *only* select "standard system utilities". This ensures a minimal installation with fewer unnecessary packages.**
+*only* select "standard system utilities". This ensures a minimal installation with fewer unnecessary packages.
 
 
 ### 1.2 Add user to sudoers
