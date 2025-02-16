@@ -76,7 +76,7 @@ exit
 **WARNING:** This step significantly reduces system security.  Understand the implications before proceeding.  It allows any user in the `sudo` group to execute *any* command without a password.
 ```
 sudo nano /etc/sudoers
-
+```
 
 - Add and replace with:
 ```
