@@ -335,6 +335,11 @@ MIN_SPEED="XXXXXXX"  # Replace with approximately half of your CPU's maximum spe
 - Recommendation:
 Even with C-states disabled, the ondemand governor might still be a better choice for performance due to its ability to manage Turbo Boost and frequency scaling within the available range.  However, the best way to know for sure is to benchmark.
 
+- Check Temperatures and CPU Frequencies
+```
+sudo sensors
+sudo cpufreq-info
+```
 
 
 ### 3.6 Sysfs Tuning
@@ -358,11 +363,6 @@ vm.dirty_ratio = 10
 # # Percentage of "dirty" memory before writes to disk are forced.
 vm.vfs_cache_pressure = 50
 # How aggressively the kernel reclaims memory from the VFS cache. Lower values mean less aggressive reclaiming.
-```
-- Check Temperatures and CPU Frequencies
-```
-sudo sensors
-sudo cpufreq-info
 ```
 
 ### 3.7 Grub Configuration
