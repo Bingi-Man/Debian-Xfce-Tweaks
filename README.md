@@ -624,9 +624,9 @@ sudo chmod +x /home/$USER/GpuTweaks.sh
 
 - Add to autostart (Applications > Settings > Session and Startup > Application Autostart)
 
-Click "+ Add".
-Set Name: GpuTweaks
-Set Command: /home/your_user_name/GpuTweaks.sh # Where your_user_name is your user name
+*   Click "+ Add".
+*   Set Name: GpuTweaks
+*   Set Command: /home/your_user_name/GpuTweaks.sh # Where your_user_name is your user name
 
 - Reboot
 
