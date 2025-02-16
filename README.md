@@ -426,8 +426,8 @@ allowed_users=anybody
 needs_root_rights=yes
 ```
 
-WARNING: ```allowed_users=anybody```: _This setting allows any user on the system to run X server applications (graphical programs) as root. This means if any user account is compromised, the attacker gains full root access to your graphical environment and, consequently, your entire system._
-```needs_root_rights=yes```: _This explicitly grants root privileges to X server applications. Combined with allowed_users=anybody, a malicious program run by any user would have full root access._
+WARNING: ```allowed_users=anybody```: This setting allows any user on the system to run X server applications (graphical programs) as root. This means if any user account is compromised, the attacker gains full root access to your graphical environment and, consequently, your entire system.
+```needs_root_rights=yes```: This explicitly grants root privileges to X server applications. Combined with allowed_users=anybody, a malicious program run by any user would have full root access.
 
 
     
