@@ -775,17 +775,27 @@ sudo systemctl disable nftables.service  # Only if you're not using nftables
 
   
 Debian Xfce4 Minimal Install Guide - https://github.com/coonrad/Debian-Xfce4-Minimal-Install  
+
 Debian Wiki - CpuFrequencyScaling: https://wiki.debian.org/CpuFrequencyScaling
+
 Arch Linux Wiki - Improving performance: https://wiki.archlinux.org/title/Improving_performance
+
 Arch Linux Wiki - Ext4: https://wiki.archlinux.org/title/Ext4
+
 Arch Linux Wiki - LightDM: https://wiki.archlinux.org/title/LightDM
+
 Arch Linux Wiki - PulseAudio/Troubleshooting: https://wiki.archlinux.org/title/PulseAudio/Troubleshooting
+
 NVIDIA Developer Forums: https://forums.developer.nvidia.com/
-pyenv github - https://github.com/pyenv/pyenv
+
 Betterfox github - https://github.com/yokoffing/Betterfox/tree/esr128
+
 nvidia-patch github - https://github.com/keylase/nvidia-patch.git
+
 Unigine Heaven benchmark - https://benchmark.unigine.com/heaven
+
 Rescuezilla - https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1/rescuezilla-2.5.1-64bit.noble.iso
+
 
 
 
