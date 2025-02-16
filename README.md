@@ -745,14 +745,15 @@ default-sample-rate = 48000
 ```
 
 
-#### 5.4.1 Disable idle
+#### 5.4.1 Disable idle and tsched
 ```
 sudo nano /etc/pulse/system.pa
 ```
 
 - Add and Comment this lines:
 ```
-load-module module-udev-detect tsched=0 # disables the timer-based scheduling feature of the module.  This can improve performance, but might introduce latency
+load-module module-udev-detect tsched=0
+# disables the timer-based scheduling feature of the module. (This can improve performance, but might introduce latency)
 #load-module module-suspend-on-idle
 ```
 
