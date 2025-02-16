@@ -485,7 +485,7 @@ Section "OutputClass"
     Option "DPMS" "false"
     ModulePath "/usr/lib/nvidia/current"    # Verify this path exists and adjust if necessary
     ModulePath "/usr/lib/xorg/modules"
-    Option     "Coolbits" "28" # Enable Overclocking and FanControl
+    Option     "Coolbits" "28"
 EndSection
 
 # "Coolbits" "28"  Enable Overclocking and FanControl
