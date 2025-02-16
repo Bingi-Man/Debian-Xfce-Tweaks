@@ -80,7 +80,7 @@ sudo nano /etc/sudoers
 
 - Add and replace with:
 ```
-your_user_name ALL=(ALL:ALL) ALL # Replace your_user_name with your username. 
+your_user_name ALL=(ALL:ALL) NOPASSWD: ALL # Replace your_user_name with your username. 
 %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
 ```
 
