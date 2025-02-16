@@ -176,7 +176,7 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 
 sudo apt install mousepad xfce4-terminal -y
 ```
-
+*
 ```acpid```:                        Handles ACPI events (e.g., lid close, power button).
 
 ```dbus-x11```:                     Essential inter-process communication for X11 applications.
@@ -192,7 +192,7 @@ sudo apt install mousepad xfce4-terminal -y
 ```mousepad```:                     Lightweight text editor.
 
 ```xfce4-terminal```:               Terminal emulator Xfce.
-
+*
 
 - Set Terminal
 
@@ -374,7 +374,7 @@ sudo nano /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=poll nosmt=force pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1 zswap.enabled=0"
 ```
 - Parameters :
-
+*
 ```intel_pstate=passive```          Use the older intel_pstate driver in passive mode (might reduce performance on newer CPUs).
 
 ```intel_idle.max_cstate=0```       Disable all CPU C-states (low-power states).
@@ -392,7 +392,7 @@ GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=po
 ```ipv6.disable=1```                Disable IPv6 networking.
 
 ``` zswap.enabled=0```              Disable kernel feature that provides a compressed RAM cache for swap pages (better performance if enough RAM).
-
+*
 - Reload Grub
 ```
 sudo grub-mkconfig -o /boot/grub/grub.cfg
