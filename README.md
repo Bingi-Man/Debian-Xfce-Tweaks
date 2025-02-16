@@ -75,7 +75,8 @@ exit
 
 **WARNING:** This step significantly reduces system security.  Understand the implications before proceeding.  It allows any user in the `sudo` group to execute *any* command without a password.
 ```
-sudo nano /etc/sudoers
+su -
+nano /etc/sudoers
 ```
 
 - Add and replace with:
@@ -84,8 +85,9 @@ your_user_name ALL=(ALL:ALL) NOPASSWD: ALL # Replace your_user_name with your us
 %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
 ```
 
+*   Close with `Ctrl+x` then `Y` and `Enter`
 
-```NOPASSWD:```  This means no password will be required when using sudo to run the following command.
+`NOPASSWD:`  This means no password will be required when using sudo to run the following command.
 
 - Reboot
 
