@@ -79,7 +79,7 @@ su -
 nano /etc/sudoers
 ```
 
-- Add and replace with:
+- Add and replace with (don't forget to change the username):
 ```
 your_user_name ALL=(ALL:ALL) NOPASSWD: ALL # Replace your_user_name with your username. 
 %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
@@ -276,7 +276,7 @@ Open to Applications > Settings > Session and Startup > Application Autostart.
 
 *   Click "+ Add".
 *   Set Name: xset_noblank
-*   Set Command: Clic on File icon and find "/home/your_user_name/xset_noblank.sh" # Where your_user_name is your user name
+*   Set Command: Clic on File icon and find "/home/your_user_name/xset_noblank.sh"
 *   Uncheck "screen-locker"
 
 - Reboot
@@ -636,7 +636,8 @@ sudo chmod +x /home/$USER/GpuTweaks.sh
 
 *   Click "+ Add".
 *   Set Name: GpuTweaks
-*   Set Command: Clic on File icon and find "/home/your_user_name/GpuTweaks.sh" # Where your_user_name is your user name
+*   Set Command: Clic on File icon and find "/home/your_user_name/GpuTweaks.sh"
+  
 
 - Reboot
 
@@ -729,7 +730,7 @@ WARNING: Enabling autologin is a security risk.  Anyone with physical access to 
 sudo nano /etc/lightdm/lightdm.conf
 ```
 
-- Find or add the following lines within the appropriate sections:
+- Find or add the following lines within the appropriate sections (don't forget to change the username):
 
 ```
 [LightDM]
