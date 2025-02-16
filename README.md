@@ -344,13 +344,20 @@ sudo nano /etc/sysfs.conf
 
 - Add the following lines:
 ```
-devices/system/cpu/cpufreq/ondemand/up_threshold = 99 # Percentage CPU utilization before scaling up frequency. Higher values mean more responsiveness.
-devices/system/cpu/cpufreq/ondemand/sampling_down_factor = 6 # How aggressively the CPU scales down frequency. Higher values mean less aggressive scaling down.
-devices/system/cpu/cpufreq/ondemand/sampling_rate = 20000000 # How often the CPU usage is checked. Higher values mean more frequent checks (more responsive).
-vm.swappiness = 10 # Represents the kernel's preference (or avoidance) of swap space.(better performance if enough RAM).
-vm.dirty_background_ratio = 5 # Percentage of "dirty" memory before background write to disk starts.
-vm.dirty_ratio = 10 # # Percentage of "dirty" memory before writes to disk are forced.
-vm.vfs_cache_pressure = 50 # How aggressively the kernel reclaims memory from the VFS cache. Lower values mean less aggressive reclaiming.
+devices/system/cpu/cpufreq/ondemand/up_threshold = 99
+# Percentage CPU utilization before scaling up frequency. Higher values mean more responsiveness.
+devices/system/cpu/cpufreq/ondemand/sampling_down_factor = 6
+# How aggressively the CPU scales down frequency. Higher values mean less aggressive scaling down.
+devices/system/cpu/cpufreq/ondemand/sampling_rate = 20000000
+# How often the CPU usage is checked. Higher values mean more frequent checks (more responsive).
+vm.swappiness = 10
+# Represents the kernel's preference (or avoidance) of swap space.(better performance if enough RAM).
+vm.dirty_background_ratio = 5
+# Percentage of "dirty" memory before background write to disk starts.
+vm.dirty_ratio = 10
+# # Percentage of "dirty" memory before writes to disk are forced.
+vm.vfs_cache_pressure = 50
+# How aggressively the kernel reclaims memory from the VFS cache. Lower values mean less aggressive reclaiming.
 ```
 - Check Temperatures and CPU Frequencies
 ```
