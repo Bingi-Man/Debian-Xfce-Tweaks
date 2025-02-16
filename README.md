@@ -249,9 +249,9 @@ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.ta
 ```
 
 
-### 3.2 Create and Configure xset_noblank Script
+### 3.2 disable screen blanking and DPMS
 
-- Create a script to disable screen blanking and DPMS:
+
 ```
 sudo nano /home/$USER/xset_noblank.sh
 ```
@@ -278,12 +278,15 @@ Open to Applications > Settings > Session and Startup > Application Autostart.
 
 *   Click "+ Add".
 *   Set Name: xset_noblank
-*   Set Command: /home/$USER/xset_noblank.sh
+*   Set Command: /home/your_user_name/xset_noblank.sh # Where your_user_name is your user name
 *   Uncheck "screen-locker"
 
 - Reboot
 
-
+- Check if it work:
+```
+sudo xset -q
+```
 
 ### 3.3 Install cpufrequtils and sysfsutils
 ```
