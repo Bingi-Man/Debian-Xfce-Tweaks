@@ -751,7 +751,7 @@ sudo nano /etc/pulse/daemon.conf
 
 ```
 flat-volumes = no
-avoid-resampling = yes
+avoid-resampling = true
 default-sample-rate = 48000
 ```
 
