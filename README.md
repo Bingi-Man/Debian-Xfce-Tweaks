@@ -140,19 +140,6 @@ deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non
 sudo apt update
 ```
 
-### 1.6 Add user to sudoers
-
-- Install `sudo`:
-```
-su -
-apt install sudo
-exit
-```
-
-- Add your current user to the `sudo` group:
-```
-sudo usermod -aG sudo $USER
-```
 
 ### 1.5 Set Timezone
 
@@ -169,7 +156,7 @@ sudo timedatectl set-timezone Your/Timezone
 
 
 
-### 1.7 Add rights
+### 1.6 Add rights
 
 - Add your user to the `video` and `audio` groups:
 ```
