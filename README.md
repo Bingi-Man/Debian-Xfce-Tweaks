@@ -643,16 +643,15 @@ noatime: This mount option disables updating the access time (atime) for files
 whenever they are read.  This can improve performance, especially on 
 solid-state drives (SSDs), as it reduces unnecessary writes.
 
-barrier=0:  This option disables write barriers. Write barriers ensure data integrity by
+barrier=0:  WARNING Write barriers ensure data integrity by
  forcing writes to be completed in a specific order. Disabling them can 
-significantly improve performance, especially on SSDs, but it comes with
- a risk: if your system crashes or loses power during a write operation,
+significantly improve performance, especially on SSDs, but if your system crashes or loses power during a write operation,
  data corruption can occur.  Use with caution!  If you're unsure, leave barrier=1 (the default).
 
 
 - Add options
 ```
-UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,errors=remount-ro 0 1
+UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,barrier=0,errors=remount-ro 0 1
 ```
 
 
