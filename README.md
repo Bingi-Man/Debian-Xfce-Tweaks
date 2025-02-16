@@ -70,25 +70,17 @@ apt install sudo
 exit
 ```
 
-- Add your current user to the `sudo` group:
-```
-sudo usermod -aG sudo $USER
-```
 
 ### 1.3 Allow members of group sudo to execute any command
 
 **WARNING:** This step significantly reduces system security.  Understand the implications before proceeding.  It allows any user in the `sudo` group to execute *any* command without a password.
 ```
 sudo nano /etc/sudoers
-```
 
-- Locate the line:
-```
-%sudo   ALL=(ALL:ALL) ALL
-```
 
-- And replace with:
+- Add and replace with:
 ```
+your_user_name ALL=(ALL:ALL) ALL # Replace your_user_name with your username. 
 %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
 ```
 
