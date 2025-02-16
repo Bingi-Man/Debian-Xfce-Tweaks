@@ -58,7 +58,7 @@ https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-ne
 *   From Windows : https://devtutorial.io/how-to-create-bootable-usb-installer-for-debian-12-p3123.html
 
 
-*   WARNING: Boot from the Debian 12 Netinst image. During the installation process, *only* select "standard system utilities". This ensures a minimal installation with fewer unnecessary packages.
+**Boot from the Debian 12 Netinst image. During the installation process, *only* select "standard system utilities". This ensures a minimal installation with fewer unnecessary packages.**
 
 
 ### 1.2 Add user to sudoers
@@ -369,7 +369,7 @@ vm.vfs_cache_pressure = 50
 
 ### 3.7 Grub Configuration
 
-WARNING: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is not recommended and significantly reduces system security.  Understand the risks before proceeding.
+**WARNING**: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is not recommended and significantly reduces system security.  Understand the risks before proceeding.
 ```
 sudo nano /etc/default/grub
 ```
@@ -428,7 +428,7 @@ allowed_users=anybody
 needs_root_rights=yes
 ```
 
-WARNING: ```allowed_users=anybody```: This setting allows any user on the system to run X server applications (graphical programs) as root. This means if any user account is compromised, the attacker gains full root access to your graphical environment and, consequently, your entire system.
+**WARNING**: ```allowed_users=anybody```: This setting allows any user on the system to run X server applications (graphical programs) as root. This means if any user account is compromised, the attacker gains full root access to your graphical environment and, consequently, your entire system.
 ```needs_root_rights=yes```: This explicitly grants root privileges to X server applications. Combined with allowed_users=anybody, a malicious program run by any user would have full root access.
 
 
@@ -465,7 +465,7 @@ sudo nano /etc/sudoers
 ```
 %cuda ALL=(ALL) NOPASSWD: /usr/bin/nvidia-smi
 ```
-WARNING: The modification was overly permissive. 
+**WARNING**: The modification was overly permissive. 
 
 ### 4.4 Nvidia
 
@@ -540,7 +540,7 @@ sudo bash ./patch.sh
 
 ### 4.6 Overclocking
 
-WARNING: Overclocking can damage your hardware.  
+**WARNING**: Overclocking can damage your hardware.  
 Proceed with extreme caution, and increase values incrementally, testing
 thoroughly after each change.  Monitor temperatures closely.
 
@@ -664,7 +664,7 @@ noatime: This mount option disables updating the access time (atime) for files
 whenever they are read.  This can improve performance, especially on 
 solid-state drives (SSDs), as it reduces unnecessary writes.
 
-barrier=0:  WARNING Write barriers ensure data integrity by
+barrier=0:  **WARNING** Write barriers ensure data integrity by
  forcing writes to be completed in a specific order. Disabling them can 
 significantly improve performance, especially on SSDs, but if your system crashes or loses power during a write operation,
  data corruption can occur.  Use with caution!  If you're unsure, leave barrier=1 (the default).
@@ -715,7 +715,7 @@ sudo dd if=~/Downloads /rescuezilla-2.5.1-64bit.noble.iso of=/dev/nvme0n1 bs=1M 
 
 #### 5.2.2 Disable journalling on Ext4
 
-WARNING: This can lead to data loss!  Ensure you have a complete backup before proceeding.
+**WARNING**: This can lead to data loss!  Ensure you have a complete backup before proceeding.
 ```
 lsblk    # Identify your root partition (e.g., /dev/nvme0n1p2)
 
@@ -725,7 +725,7 @@ sudo tune2fs -O ^has_journal /dev/nvme0nXXX    # Replace /dev/nvme0nXXX with you
 
 ### 5.3 Autologin Lightdm
 
-WARNING: Enabling autologin is a security risk.  Anyone with physical access to your computer will be automatically logged in.
+**WARNING**: Enabling autologin is a security risk.  Anyone with physical access to your computer will be automatically logged in.
 ```
 sudo nano /etc/lightdm/lightdm.conf
 ```
