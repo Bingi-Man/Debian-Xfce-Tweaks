@@ -120,6 +120,7 @@ sudo nano /etc/apt/sources.list
 ```
 
 - Replace the entire content of the file with the following:
+
 ```
 deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
 deb-src http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
