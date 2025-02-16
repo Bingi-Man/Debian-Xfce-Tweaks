@@ -177,21 +177,21 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 sudo apt install mousepad xfce4-terminal -y
 ```
 
-acpid:                        Handles ACPI events (e.g., lid close, power button).
+```acpid```:                        Handles ACPI events (e.g., lid close, power button).
 
-dbus-x11:                     Essential inter-process communication for X11 applications.
+```dbus-x11```:                     Essential inter-process communication for X11 applications.
 
-accountsservice:              Manages user accounts and login sessions.
+```accountsservice```:              Manages user accounts and login sessions.
 
-apt-transport-https:          Enables APT to download packages over HTTPS for secure updates.
+```apt-transport-https```:          Enables APT to download packages over HTTPS for secure updates.
 
-ca-certificates:              Provides root certificates for verifying the authenticity of SSL/TLS connections.
+```ca-certificates```:              Provides root certificates for verifying the authenticity of SSL/TLS connections.
 
-software-properties-common:   Tools for managing software repositories (PPAs).
+```software-properties-common```:   Tools for managing software repositories (PPAs).
 
-mousepad:                     Lightweight text editor.
+```mousepad```:                     Lightweight text editor.
 
-xfce4-terminal:               Terminal emulator Xfce.
+```xfce4-terminal```:               Terminal emulator Xfce.
 
 
 - Set Terminal
@@ -373,13 +373,21 @@ GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=po
 - Parameters :
 
 ```intel_pstate=passive```          Use the older intel_pstate driver in passive mode (might reduce performance on newer CPUs).
+
 ```intel_idle.max_cstate=0```       Disable all CPU C-states (low-power states).
+
 ```idle=poll```                     Use polling for idle instead of interrupts (can increase power consumption but reduce latency).
+
 ```nosmt=force```                   Disable Symmetric Multi-Threading (Hyperthreading may hurt the performance, do benchmarks).
+
 ```pcie_aspm=off```                 Disable PCIe Active State Power Management (can improve latency but increase power consumption).
+
 ```mitigations=off```               Disable kernel mitigations for CPU vulnerabilities (increases risk but might improve performance).
+
 ```kernel.randomize_va_space=0```   Disable address space layout randomization (security risk, might slightly improve performance).
+
 ```ipv6.disable=1```                Disable IPv6 networking.
+
 ``` zswap.enabled=0```              Disable kernel feature that provides a compressed RAM cache for swap pages (better performance if enough RAM).
 
 - Reload Grub
