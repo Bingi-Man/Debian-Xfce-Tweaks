@@ -61,62 +61,7 @@ https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-ne
 *   Boot from the Debian 12 Netinst image. During the installation process, *only* select "standard system utilities". This ensures a minimal installation with fewer unnecessary packages.
 
 
-
-### 1.2 Install Xfce4
-
-- After the base system installation, log in as root and install XFCE:
-```
-su -
-apt install xfce4
-```
-
-- Reboot
-
-
-
-### 1.3 Configure apt sources
-
-- Edit the apt sources list to include `contrib`, `non-free`, and `non-free-firmware` repositories:
-```
-su -
-nano /etc/apt/sources.list
-```
-
-- Replace the entire content of the file with the following:
-```
-deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
-deb-src http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
-
-deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
-deb-src http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
-
-deb http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
-deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
-```
-
-
-### 1.4 Update Apt
-
-- Update the package lists:
-```
-sudo apt update
-```
-
-
-### 1.5 Set Timezone
-
-- List available timezones:
-```
-sudo timedatectl list-timezones
-```
-
-- Set your timezone (replace `Your/Timezone` with your actual timezone, e.g., `Europe/Paris`):
-```
-sudo timedatectl set-timezone Your/Timezone
-```
-
-
-### 1.6 Add user to sudoers
+### 1.2 Add user to sudoers
 
 - Install `sudo`:
 ```
@@ -130,17 +75,7 @@ exit
 sudo usermod -aG sudo $USER
 ```
 
-
-### 1.7 Add rights
-
-- Add your user to the `video` and `audio` groups:
-```
-sudo usermod -aG video $USER
-sudo usermod -aG audio $USER
-```
-
-
-### 1.8 Allow members of group sudo to execute any command
+### 1.3 Allow members of group sudo to execute any command
 
 **WARNING:** This step significantly reduces system security.  Understand the implications before proceeding.  It allows any user in the `sudo` group to execute *any* command without a password.
 ```
@@ -164,6 +99,95 @@ sudo nano /etc/sudoers
 
   
 
+### 1.4 Install Xfce4
+
+- After the base system installation, log in as root and install XFCE:
+```
+su -
+apt install xfce4
+```
+
+- Reboot
+
+
+- Set Terminal
+```
+sudo apt install mousepad xfce4-terminal -y
+```
+- Go to Settings > Default Applications > Utilities
+
+*   Set "Terminal Emulator" to "Xfce Terminal".
+
+
+
+### 1.3 Configure apt sources
+
+- Edit the apt sources list to include `contrib`, `non-free`, and `non-free-firmware` repositories:
+```
+sudo nano /etc/apt/sources.list
+```
+
+- Replace the entire content of the file with the following:
+```
+deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
+deb-src http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
+
+deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+deb-src http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+
+deb http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
+deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
+```
+
+
+### 1.4 Update Apt
+
+- Update the package lists:
+```
+sudo apt update
+```
+
+### 1.6 Add user to sudoers
+
+- Install `sudo`:
+```
+su -
+apt install sudo
+exit
+```
+
+- Add your current user to the `sudo` group:
+```
+sudo usermod -aG sudo $USER
+```
+
+### 1.5 Set Timezone
+
+- List available timezones:
+```
+sudo timedatectl list-timezones
+```
+
+- Set your timezone (replace `Your/Timezone` with your actual timezone, e.g., `Europe/Paris`):
+```
+sudo timedatectl set-timezone Your/Timezone
+```
+
+
+
+
+### 1.7 Add rights
+
+- Add your user to the `video` and `audio` groups:
+```
+sudo usermod -aG video $USER
+sudo usermod -aG audio $USER
+```
+
+
+
+  
+
 ## Step 2: Essential Utilities and Desktop Configuration
 
 
@@ -174,8 +198,8 @@ sudo nano /etc/sudoers
 ```
 sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certificates software-properties-common -y
 
-sudo apt install mousepad xfce4-terminal -y
 ```
+
 
 > ```acpid```:                        _Handles ACPI events (e.g., lid close, power button)._ 
 
@@ -189,16 +213,8 @@ sudo apt install mousepad xfce4-terminal -y
 
 > ```software-properties-common```:   _Tools for managing software repositories (PPAs)._ 
 
-> ```mousepad```:                     _Lightweight text editor._ 
-
-> ```xfce4-terminal```:               _Terminal emulator Xfce._ 
 
 
-- Set Terminal
-
-Go to Settings > Default Applications > Utilities
-
-*   Set "Terminal Emulator" to "Xfce Terminal".
 
 
 ### 2.2 Disable Apparmor
