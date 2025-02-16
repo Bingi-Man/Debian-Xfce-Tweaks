@@ -324,7 +324,7 @@ sudo sysctl -p /etc/sysctl.d/50-coredump.conf
 sudo nano /etc/init.d/cpufrequtils
 ```
 
-- Find and modify these lines:
+- Find and modify these lines (don't forget to change the ```XXXXXXX``` value):
 ```
 ENABLE="true"
 GOVERNOR="ondemand"
@@ -573,22 +573,22 @@ sudo nvidia-settings -a '[gpu:0]/GpuPowerMizerMode=1'
 - Set fan control:
 ```
 sudo nvidia-settings -a '[gpu:0]/GPUFanControlState=1'
-sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=100'  # 100% fan speed
+sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=XXX'   # XXX% fan speed
 ```
 
-- Set power limit (replace XXX with your GPU's maximum power limit, found using sudo nvidia-smi -q):
+- Set power limit:
 ```
-sudo nvidia-smi --power-limit=XXX
+sudo nvidia-smi --power-limit=XXX   # Replace XXX with your GPU's maximum power limit, found using sudo nvidia-smi -q
 ```
 
 - Graphics overclocking (replace XXX with the desired offset, starting with small values like 10):
 ```
-sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'  #  Where XXX is the value added to the maximum Memory clocks (exp:120 = +120MHZ)
+sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'   # Where XXX is the value added to the maximum Memory clocks (exp:120 = +120MHZ)
 ```
 
 - Memory overclocking (replace XXXX with the desired offset, starting with small values like 100):
 ```
-sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX' #  Where XXXX is the value added to the maximum Memory clocks (exp:1000 = +1000MHz) 
+sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX'  # Where XXXX is the value added to the maximum Memory clocks (exp:1000 = +1000MHz) 
 ```
 
 #### 4.6.3 Make changes permanents
@@ -605,7 +605,7 @@ sudo nano /home/$USER/GpuTweaks.sh
 
 ##Set power limit to maximum
 
-sudo nvidia-smi --power-limit=XXX #  Where XXX is value for power-limit
+sudo nvidia-smi --power-limit=XXX    # Where XXX is value for power-limit
 
 ##Set maximum performance mode
 
@@ -619,11 +619,11 @@ sudo nvidia-settings -a '[fan:0]/GPUTargetFanSpeed=XXX' # Where XXX is % of Fan 
 
 ##Graphics overclocking
 
-sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX' #  Where XXX is the value added to the maximum graphics clocks
+sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'    # Where XXX is the value added to the maximum graphics clocks
 
 ##Memory overclocking
 
-sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX' #  Where XXXX is the value added to the maximum Memory clocks
+sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX'    # Where XXXX is the value added to the maximum Memory clocks
 
 ```
 
@@ -719,7 +719,7 @@ sudo dd if=~/Downloads /rescuezilla-2.5.1-64bit.noble.iso of=/dev/nvme0n1 bs=1M 
 ```
 lsblk    # Identify your root partition (e.g., /dev/nvme0n1p2)
 
-sudo tune2fs -O ^has_journal /dev/nvme0nXXX    # Replace /dev/nvme0nXXX with your actual root partition! (you can find it with : " lsblk ")
+sudo tune2fs -O ^has_journal /dev/nvme0nXXX    # Replace /dev/nvme0nXXX with your actual root ( / ) partition (you can find it with : " lsblk ")
 ```
 
 
