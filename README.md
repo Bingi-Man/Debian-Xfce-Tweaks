@@ -278,7 +278,7 @@ Open to Applications > Settings > Session and Startup > Application Autostart.
 
 *   Click "+ Add".
 *   Set Name: xset_noblank
-*   Set Command: /home/your_user_name/xset_noblank.sh # Where your_user_name is your user name
+*   Set Command: Clic on File icon and find "/home/your_user_name/xset_noblank.sh" # Where your_user_name is your user name
 *   Uncheck "screen-locker"
 
 - Reboot
@@ -626,7 +626,7 @@ sudo chmod +x /home/$USER/GpuTweaks.sh
 
 *   Click "+ Add".
 *   Set Name: GpuTweaks
-*   Set Command: /home/your_user_name/GpuTweaks.sh # Where your_user_name is your user name
+*   Set Command: Clic on File icon and find "/home/your_user_name/GpuTweaks.sh" # Where your_user_name is your user name
 
 - Reboot
 
