@@ -376,7 +376,7 @@ sudo nano /etc/default/grub
 
 - Modify the GRUB_CMDLINE_LINUX_DEFAULT line to:
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=poll nosmt=force pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1 zswap.enabled=0"
+GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=poll nosmt=force pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1 zswap.enabled=0 nvidia-drm.modeset=1"
 ```
 - Parameters :
 
@@ -397,6 +397,11 @@ GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=po
 > ```ipv6.disable=1```                _Disable IPv6 networking._
 
 > ``` zswap.enabled=0```              _Disable kernel feature that provides a compressed RAM cache for swap pages (better performance if enough RAM)._
+
+> ``` nvidia-drm.modeset=1```         _enabling DRM (Direct Rendering Manager) kernel mode setting is required to allow for Xorg#Rootless Xorg.
+._
+
+
 
 - Reload Grub
 ```
