@@ -379,7 +379,7 @@ GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=po
 ```
 - Parameters :
 
-> ```intel_pstate=passive```          _Use the older intel_pstate driver in passive mode (might reduce performance on newer CPUs)._
+> ```intel_pstate=passive```          _Use the older intel_pstate driver in passive mode._
 
 > ```intel_idle.max_cstate=0```       _Disable all CPU C-states (low-power states)._
 
