@@ -195,7 +195,6 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 
 > ```software-properties-common```:   _Tools for managing software repositories (PPAs)._ 
 
-> ```git```:                          _Git enable you to keep track of your software at the source level._
 
 
 
