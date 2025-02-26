@@ -1,13 +1,15 @@
-Minimal Debian Xfce performance tuning Guide for benchmarks
+Minimal Debian Xfce performance tuning Guide for benchmark
 
 
 
-This tutorial guides you through optimizing and install a Debian 12 XFCE system.
+This tutorial guides you through optimizing and install a Debian 12 XFCE system for testing purpose.
 It covers system installation, essential utilities, Overclocking and CPU tuning.
 
 
-This is for experienced Linux users who want to testing the performances and understanding the system modifications.
-This guide focuses on performance, potentially at the cost of system stability and security.
+WARNING: This is intended for experienced
+ Linux users who want to test performance and understand system 
+modifications. This guide focuses on performance, potentially at the 
+cost of system stability and SECURITY. Proceed with extreme caution and at your own risk.
 
 
 Prerequisites:
@@ -25,7 +27,7 @@ Understanding of system configuration files.
 
 
 
-Willingness to accept potential risks associated with advanced system modifications.
+Willingness to accept potential risks associated with advanced system modifications, including SECURITY VULNERABILITIES and hardware damage.
 
 
 
@@ -79,7 +81,10 @@ exit
 
 
 
-WARNING: This step significantly reduces system security.  Understand the implications before proceeding.  It allows any user in the sudo group to execute any command without a password.
+WARNING: This step significantly reduces system SECURITY. 
+Understand the implications before proceeding. It allows any user in the
+ sudo group to execute any command without a password. This is NOT 
+RECOMMENDED for production systems.
 
 
 su -
@@ -351,9 +356,9 @@ software-properties-common:   Tools for managing software repositories (PPAs).
 
 
 
-WARNING: Disabling AppArmor reduces 
-system security.  Understand the implications before proceeding.  
-Consider configuring AppArmor profiles instead of disabling it entirely.
+WARNING: Disabling AppArmor reduces system SECURITY. 
+Understand the implications before proceeding. Consider configuring 
+AppArmor profiles instead of disabling it entirely.
 
 
 sudo systemctl stop apparmor
@@ -745,8 +750,8 @@ vm.vfs_cache_pressure = 50
 
 
 WARNING: Disabling security mitigations 
-(mitigations=off kernel.randomize_va_space=0) is not recommended and 
-significantly reduces system security.  Understand the risks before 
+(mitigations=off kernel.randomize_va_space=0) is NOT RECOMMENDED and 
+significantly reduces system SECURITY. Understand the risks before 
 proceeding.
 
 
@@ -1193,9 +1198,9 @@ memory transfer rate to test stability after each overclocking step.
 
 
 
-EXTREME CAUTION: Increase offset values incrementally and 
-RUN BENCHMARK AFTER EACH CHANGES.  Start with small increases (e.g., +10
- MHz for graphics clock, +100 MHz for memory clock).
+EXTREME CAUTION: Increase offset values 
+incrementally and RUN BENCHMARK AFTER EACH CHANGES.  Start with small 
+increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
 
 
 Set maximum performance:
@@ -1428,11 +1433,11 @@ sudo systemctl daemon-reload
 
 
 
-EXTREME CAUTION: Disabling journaling significantly 
-increases the risk of data loss in case of a power failure or system 
-crash.  This is not recommended for most users.  The following steps 
-involve creating a backup of your system, which is essential before 
-disabling journaling.
+EXTREME CAUTION: Disabling journaling 
+significantly increases the risk of data loss in case of a power failure
+ or system crash.  This is NOT RECOMMENDED for most users.  The 
+following steps involve creating a backup of your system, which is 
+essential before disabling journaling.
 
 
 5.2.1 Backup your system
@@ -1915,8 +1920,11 @@ module/snd_hda_intel/parameters/power_save_controller = N
   
 
 
-Static Driver Loading (Use with Caution, This will prevent pulse audio from needing to probe the hardware):
+Static Driver Loading
 
+
+
+Use with Caution, This will prevent pulse audio from needing to probe the hardware
 
 
 sudo aplay -l
