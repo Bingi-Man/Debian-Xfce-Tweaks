@@ -115,7 +115,7 @@ sudo apt install mousepad xfce4-terminal -y
 
 
 
-### 1.3 Configure apt sources
+### 1.5 Configure apt sources
 
 - Edit the apt sources list to include `contrib`, `non-free`, and `non-free-firmware` repositories:
 ```
@@ -136,7 +136,7 @@ deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non
 ```
 
 
-### 1.4 Update Apt
+### 1.6 Update Apt
 
 - Update the package lists:
 ```
@@ -144,7 +144,7 @@ sudo apt update
 ```
 
 
-### 1.5 Set Timezone
+### 1.7 Set Timezone
 
 - List available timezones:
 ```
@@ -159,7 +159,7 @@ sudo timedatectl set-timezone Your/Timezone
 
 
 
-### 1.6 Add rights
+### 1.8 Add rights
 
 - Add your user to the `video` and `audio` groups:
 ```
@@ -208,32 +208,6 @@ sudo systemctl stop apparmor
 sudo systemctl disable apparmor
 sudo aa-teardown
 ```
-
-
-
-### 2.3 Install and Configure Firefox ESR
-```
-sudo apt install firefox-esr
-```
-
-- Firefox Dark Mode
-
-
-Go to Settings > General > Manage Colors...
-
-*   Set Text: White
-*   Set Background: dark grey
-*   Set Unvisited Links: White
-*   Set Visited Links: light gray
-*   Choose "Always"
-
-
-- Tweaks Firefox ESR
-
-Add Ublock Origin and set it : https://codeberg.org/celenity/Phoenix/wiki/Content-Blocking
-Refer to the Betterfox project for potential Firefox ESR tweaks: [https://github.com/yokoffing/Betterfox/tree/esr128](https://github.com/yokoffing/Betterfox/tree/esr128)
-
-
 
 
 
@@ -379,7 +353,7 @@ vm.vfs_cache_pressure = 50
 # How aggressively the kernel reclaims memory from the VFS cache. Lower values mean less aggressive reclaiming.
 ```
 
-### 3.7 Grub Configuration
+### 3.8 Grub Configuration
 
 **WARNING**: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is NOT RECOMMENDED and significantly reduces system SECURITY. Understand the risks before proceeding.
 ```
@@ -540,7 +514,7 @@ options nvidia-current NVreg_RestrictProfilingToAdminUsers=0
 
 
 
-#### 4.4.4 Update Initramfs
+#### 4.4.3 Update Initramfs
 ```
 sudo update-initramfs -u
 ```
@@ -700,13 +674,77 @@ UUID=YOUR_ROOT_PARTITION_UUID / ext4 noatime,barrier=0,errors=remount-ro 0 1
 sudo systemctl daemon-reload
 ```
 
+### 5.2 Install and Configure Firefox ESR
 
-### 5.2 Disable Journaling on ext4
+```
+sudo apt install firefox-esr
+```
+
+- Firefox Dark Mode
+
+
+Go to Settings > General > Manage Colors...
+
+*   Set Text: White
+*   Set Background: dark grey
+*   Set Unvisited Links: White
+*   Set Visited Links: light gray
+*   Choose "Always"
+
+
+- Add Ublock Origin and set it : https://codeberg.org/celenity/Phoenix/wiki/Content-Blocking
+
+
+#### 5.2.1 Enable Acceleration GPU Firefox
+
+```
+sudo nano /etc/environment
+```
+
+- Add the following lines :
+```
+LIBVA_DRIVER_NAME=nvidia
+VDPAU_DRIVER=nvidia
+```
+
+- Open Firefox Profile Folder: Go to about:profiles in Firefox, find your active profile, and click "Open Folder."
+  
+- Create user.js: In the profile folder, create a new text file named user.js.
+
+- Add the following lines :
+```
+// --- GRAPHICS & PERFORMANCE ---
+
+// **WebRender (Graphics Rendering)**
+// WebRender is a modern GPU-based rendering engine.  Enabling it can improve performance,
+// especially on systems with dedicated graphics cards.  However, it may cause compatibility
+// issues on some older hardware or with certain drivers.
+user_pref("gfx.webrender.all", true); // Force enable WebRender on all pages.
+user_pref("gfx.webrender.compositor.force-enabled", true); // Force enable the WebRender compositor.
+user_pref("gfx.webrender.force-enabled", true); // Force enable WebRender.
+user_pref("gfx.x11-egl.force-enabled", true); // Force enable EGL on X11 (NO WAYLAND).  Improves graphics performance.
+user_pref("gfx.canvas.accelerated", true); // Enable canvas acceleration.
+user_pref("gfx.layers.acceleration.force-enabled", true); // Force enable layer acceleration.
+user_pref("gfx.skia.force_enabled", true);  // Force enable the Skia graphics library.
+
+// **Hardware Video Decoding**
+// Using hardware acceleration for video decoding can significantly reduce CPU usage and improve
+// battery life.  However, compatibility varies depending on your hardware and drivers.
+user_pref("media.hardware-video-decoding.force-enabled", true); // Force enable hardware video decoding.
+user_pref("media.gpu-process-decoder", true); // Enable GPU process decoding.
+
+// **Image Decoding**
+user_pref("image.mem.decode_bytes_at_a_time", 32768); // Memory used for decoding images at a time.
+
+
+
+
+### 5.3 Disable Journaling on ext4
 
 **EXTREME CAUTION**: Disabling journaling significantly increases the risk of data loss in case of a power failure or system crash.  This is NOT RECOMMENDED for most users.  The following steps involve creating a backup of your system, which is essential before disabling journaling.
 
 
-#### 5.2.1 Backup your system
+#### 5.3.1 Backup your system
 
 - Download Rescuezilla ( https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1/rescuezilla-2.5.1-64bit.noble.iso ).
 
@@ -731,7 +769,7 @@ sudo dd if=~/Downloads /rescuezilla-2.5.1-64bit.noble.iso of=/dev/nvme0n1 bs=1M 
 (USB drive, external hard drive, etc.).  Do not proceed without a complete backup.
 
 
-#### 5.2.2 Disable journalling on Ext4
+#### 5.3.2 Disable journalling on Ext4
 
 **WARNING**: This can lead to data loss!  Ensure you have a complete backup before proceeding.
 ```
@@ -741,7 +779,7 @@ sudo tune2fs -O ^has_journal /dev/nvme0nXXX    # Replace /dev/nvme0nXXX with you
 ```
 
 
-### 5.3 Autologin Lightdm
+### 5.4 Autologin Lightdm
 
 **WARNING**: Enabling autologin is a security risk.  Anyone with physical access to your computer will be automatically logged in.
 ```
@@ -760,7 +798,7 @@ autologin-user-timeout=0
 ```
 
 
-### 5.4 PulseAudio Configuration
+### 5.5 PulseAudio Configuration
 ```
 sudo nano /etc/pulse/daemon.conf
 ```
@@ -773,7 +811,7 @@ avoid-resampling = true
 ```
 
 
-#### 5.4.1 Disable idle and tsched
+#### 5.5.1 Disable idle and tsched
 ```
 sudo nano /etc/pulse/system.pa
 ```
@@ -786,7 +824,7 @@ load-module module-udev-detect tsched=0
 ```
 
 
-### 5.5 Disable Services
+### 5.6 Disable Services
 
 - Disable unnecessary services to reduce boot time and resource usage. 
 ```
@@ -829,111 +867,6 @@ Rescuezilla - https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1
 
 ## Troubleshootings
 
-
-
-### Enable Acceleration GPU Firefox
-
-
-- Open Firefox Profile Folder: Go to about:profiles in Firefox, find your active profile, and click "Open Folder."
-  
-- Create user.js: In the profile folder, create a new text file named user.js.
-
-- Add the following lines :
-```
-// Enable WebRender and related features for improved graphics performance.
-user_pref("gfx.webrender.compositor.force-enabled", true);
-user_pref("gfx.x11-egl.force-enabled", true);
-user_pref("gfx.canvas.accelerated", true);
-user_pref("media.gpu-process-decoder", true);
-user_pref("gfx.layers.acceleration.force-enabled", true);
-user_pref("gfx.skia.force_enabled", true);
-user_pref("gfx.webrender.all", true);
-user_pref("gfx.webrender.force-enabled", true);
-user_pref("media.hardware-video-decoding.force-enabled", true);
-// Media:
-user_pref("media.ffvpx.enabled", false); // Disable FFvpx codec
-user_pref("media.av1.enabled", false);
-```
-
-
-### Firefox Performance
-
-
-```
-// Disable animations and some timing APIs to make the browser feel faster.
-user_pref("dom.animations-api.animations.enabled", true); //Keep animations enabled, but other timing disabled.
-user_pref("image.animation_mode", "none"); // Stop images from moving (like GIFs) to save CPU.
-user_pref("dom.enable_event_timing", false); // Turns off a feature that tracks how long website actions take (less work for your computer).
-user_pref("dom.enable_resource_timing", false); // Stops tracking how long it takes to load website parts (saves resources).
-user_pref("dom.enable_user_timing", false); // Stops tracking custom website performance (less background work).
-
-// Network optimizations: Adjust settings to load websites faster.
-user_pref("network.buffer.cache.size", 262144); // Makes the browser hold more website data in memory for faster loading.
-user_pref("network.http.fast-fallback-to-IPv4", true); // Helps websites load faster if they have older internet connections.
-user_pref("network.http.max-persistent-connections-per-proxy", 15); // Lets the browser keep more connections open for faster loading.
-user_pref("network.http.max-persistent-connections-per-server", 15); //Allows more connections to one server for faster loading.
-user_pref("network.http.max-connections", 900); // Increases how many connections the browser can make at once.
-user_pref("network.http.max-urgent-start-excessive-connections-per-host", 5); // Allows a few more connections for very important website parts.
-user_pref("network.http.pacing.requests.enabled", false); // Turns off a feature that slows down website loading (for faster speeds).
-user_pref("network.dnsCacheExpiration", 36000); // Makes the browser remember website addresses for 10 hours (faster loading).
-user_pref("network.ssl_tokens_cache_capacity", 10240); // Makes the browser remember secure website information longer.
-user_pref("network.dns.disablePrefetchFromHTTPS", true); // Stops the browser from guessing website addresses from secure sites (less work).
-user_pref("network.predictor.enabled", false); // Turns off a feature that tries to guess which websites you'll visit (saves resources).
-user_pref("browser.cache.disk.enable", true); // Allows the browser to store website data on your computer (faster loading).
-user_pref("browser.cache.memory.capacity", 131072); // Sets how much memory the browser uses to store website data.
-user_pref("media.memory_cache_max_size", 262144); // Sets how much memory the browser uses to store videos and audio.
-user_pref("browser.cache.jsbc_compression_level", 3); // Compresses website code more efficiently (saves space).
-user_pref("media.cache_readahead_limit", 7200); // Makes the browser load videos and audio further ahead.
-user_pref("media.cache_resume_threshold", 3600); // Lets you resume videos and audio from further back.
-user_pref("content.notify.interval", 20000); // Makes the browser check for updates on websites less often (saves resources).
-user_pref("network.dns.disablePrefetch", true); // Stops the browser from guessing website addresses (less work).
-user_pref("network.predictor.enable-prefetch", false); // Turns off another website guessing feature (saves resources).
-user_pref("network.prefetch-next", false); // Stops the browser from loading the next page before you click (saves resources).
-user_pref("browser.urlbar.speculativeConnect.enabled", false); // Stops the browser from connecting to websites before you type them (saves resources).
-user_pref("browser.sessionstore.interval", 60000); // Saves your tabs and windows less often (saves resources).
-user_pref("browser.sessionstore.resume_from_crash", false); // Stops the browser from trying to restore your session after a crash (saves resources).
-user_pref("browser.newtab.preload", false); // Stops the browser from loading the new tab page early (saves resources).
-user_pref("browser.newtabpage.preload", false); //Stops the browser from loading the new tab page early (saves resources).
-user_pref("browser.startup.page", 0); //Sets the browser to start with a blank page.
-user_pref("browser.newtabpage.enabled", false); //Disables the new tab page.
-user_pref("fission.autostart", false); // Turns off a feature that separates websites (less security, but faster).
-user_pref("dom.ipc.processCount", 1); // Limits how many website processes the browser uses (saves resources).
-user_pref("dom.ipc.processCount.webIsolated", 1); // Limits how many isolated website processes the browser uses.
-user_pref("dom.ipc.processCount.webCOOP+COEP", 0); // Disables processes for special websites (saves resources).
-user_pref("dom.ipc.processPrelaunch.fission.number", 0); // Stops the browser from starting website processes early (saves resources).
-user_pref("dom.ipc.processCount.inference", 0); // Disables processes that try to guess what you'll do (saves resources).
-user_pref("widget.dmabuf.force-enabled", true); // Makes graphics faster (if your computer supports it).
-```
-
-####  Firefox Privacy and Security 
-```
-user_pref("privacy.globalprivacycontrol.enabled", true); // Tells websites you don't want to be tracked.
-user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true); // Makes the browser more strict about secure connections.
-user_pref("browser.xul.error_pages.expert_bad_cert", true); // Shows you more details about website security problems.
-user_pref("security.tls.enable_0rtt_data", false); // Turns off a feature that can be risky (more secure).
-user_pref("browser.privatebrowsing.forceMediaMemoryCache", true); // Makes the browser store videos and audio in memory when you're in private mode.
-user_pref("privacy.history.custom", true); // Lets you choose what the browser remembers.
-user_pref("dom.security.https_first", true); // Always tries to load websites securely.
-user_pref("dom.security.https_first_schemeless", true); // Always tries to load websites securely, even without https://.
-user_pref("signon.formlessCapture.enabled", false); // Stops the browser from saving login information from some websites.
-user_pref("signon.privateBrowsingCapture.enabled", false); // Stops the browser from saving login information in private mode.
-user_pref("security.mixed_content.block_display_content", true); // Stops websites from showing unsafe parts (like pictures).
-user_pref("extensions.postDownloadThirdPartyPrompt", false); // Stops extra messages after you download add-ons.
-user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Tells websites less about where you came from.
-user_pref("privacy.userContext.ui.enabled", true); // Lets you use containers (like separate profiles) for privacy.
-user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true); // Makes video calls more private.
-user_pref("media.peerconnection.ice.default_address_only", true); // Makes video calls more private.
-user_pref("browser.safebrowsing.downloads.remote.enabled", false); // Stops the browser from checking downloaded files with Google.
-user_pref("permissions.default.desktop-notification", 2); // Blocks website notifications.
-user_pref("permissions.default.geo", 2); // Blocks websites from knowing your location.
-user_pref("permissions.manager.defaultsUrl", ""); // Clears default website permissions.
-user_pref("webchannel.allowObject.urlWhitelist", ""); // Stops websites from using a feature that can be risky.
-user_pref("datareporting.policy.dataSubmissionEnabled", false); // Stops the browser from sending data to Mozilla.
-user_pref("datareporting.healthreport.uploadEnabled", false); // Stops the browser from sending health reports to Mozilla.
-user_pref("toolkit.telemetry.unified", false); // Stops the browser from sending data to Mozilla.
-user_pref("toolkit.telemetry.enabled", false); // Stops the browser from sending data to Mozilla.
-user_pref("toolkit.telemetry.server", "data:,
-```
 
 
 
