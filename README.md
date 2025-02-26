@@ -826,7 +826,10 @@ Rescuezilla - https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1
 
 ## Troubleshootings
 
-### Enable Acceleration GPU 
+
+
+### Enable Acceleration GPU Firefox
+
 
 - Open Firefox Profile Folder: Go to about:profiles in Firefox, find your active profile, and click "Open Folder."
   
@@ -851,415 +854,83 @@ user_pref("media.av1.enabled", false);
 ```
 
 
-### Tweaks for offloading cpu in Firefox
+### Firefox Performance
+
 
 ```
-// Disable animations and some timing APIs to reduce potential fingerprinting surface and improve performance.
-user_pref("dom.animations-api.animations.enabled", true);
-user_pref("image.animation_mode", "none"); // Don't animate images
-user_pref("dom.enable_event_timing", false);
-user_pref("dom.enable_resource_timing", false);
-user_pref("dom.enable_user_timing", false);
-
-// Network optimizations: adjust cache size, and tune connection limits.
-user_pref("network.buffer.cache.size", 262144); // Increased buffer cache size
-user_pref("network.http.fast-fallback-to-IPv4", true);
-
-// Session and Tab Management:  Disable undoing closed tabs, disable auto-updates, and disable crash reporter.
-user_pref("browser.sessionstore.max_tabs_undo", 0);
-user_pref("extensions.update.autoUpdateDefault", false);
-user_pref("extensions.update.enabled", false);
-user_pref("toolkit.crashreporter.enabled", false);
-
-// Accessibility: Force accessibility services to be disabled.
-user_pref("accessibility.force_disabled", 1);
-
-// URL Bar and Search: Disable search suggestions and history suggestions in the URL bar.
-user_pref("browser.urlbar.suggest.searches", false);
-user_pref("browser.urlbar.suggest.history", false);
-
-// Media: Disable Encrypted Media Extensions (EME) for DRM, but enable OpenH264.  Clear GMP manager URL.
-user_pref("media.eme.enabled", false);
-user_pref("media.gmp-gmpopenh264.enabled", true);
-user_pref("media.gmp-manager.url", "");
-
-// Reader Mode: Disable automatic reader mode parsing.
-user_pref("reader.parse-on-load.enabled", false);
-
-// Default Browser Check: Disable default browser check.
-user_pref("browser.shell.checkDefaultBrowser", false);
-
-// Disable Activity Stream in the library.
-user_pref("browser.library.activity-stream.enabled", false);
-
-// Enable Global Privacy Control.
-user_pref("privacy.globalprivacycontrol.enabled", true);
-
-// Image Decoding: Adjust the amount of memory used for decoding images at a time.
-user_pref("image.mem.decode_bytes_at_a_time", 32768);
-
-// Increase the number of persistent connections per proxy.
-user_pref("network.http.max-persistent-connections-per-proxy", 15);
-
-// Enable Masonry layout in CSS Grid.
-user_pref("layout.css.grid-template-masonry-value.enabled", true);
-
-// Enable web task scheduling and the Sanitizer API.
-user_pref("dom.enable_web_task_scheduling", true);
-user_pref("dom.security.sanitizer.enabled", true);
-
-// Security: Treat unsafe negotiation as broken, enable strict transport security, and disable 0-RTT data.
-user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
-user_pref("browser.xul.error_pages.expert_bad_cert", true); // Show advanced information on certificate errors
-user_pref("security.tls.enable_0rtt_data", false);
-
-// Caching: Force media caching in memory during private browsing.
-user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
-
-// Session Restore: Increase the interval between session saves.
-user_pref("browser.sessionstore.interval", 60000); // Save session every 60 seconds (instead of the default 15)
-
-// Privacy: Enable custom history settings.
-user_pref("privacy.history.custom", true);
-
-// UI Tweaks: Separate private search defaults, refresh engine alias, disable URL bar group labels.
-user_pref("browser.search.separatePrivateDefault.ui.enabled", true);
-user_pref("browser.urlbar.update2.engineAliasRefresh", true);
-user_pref("browser.urlbar.groupLabels.enabled", false);
-
-// HTTPS-First Mode: Always try to connect using HTTPS.
-user_pref("dom.security.https_first", true);
-user_pref("dom.security.https_first_schemeless", true);
-
-// Disable formless login capture and private browsing capture.
-user_pref("signon.formlessCapture.enabled", false);
-user_pref("signon.privateBrowsingCapture.enabled", false);
-
-// Network Authentication: Allow HTTP authentication for subresources.
-user_pref("network.auth.subresource-http-auth-allow", 1);
-
-// Disable truncating user pastes in the editor.
-user_pref("editor.truncate_user_pastes", false);
-
-// Block mixed content (non-HTTPS resources on HTTPS pages).
-user_pref("security.mixed_content.block_display_content", true);
-
-// Disable scripting in PDF.js.
-user_pref("pdfjs.enableScripting", false);
-
-// Disable third-party prompts after extension downloads.
-user_pref("extensions.postDownloadThirdPartyPrompt", false);
-
-// Referrer Policy:  Reduce referrer information sent to different origins.
-user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
-
-// Enable user context (containers) UI.
-user_pref("privacy.userContext.ui.enabled", true);
-
-// WebRTC: Only use ICE proxy if behind a proxy, and only use default addresses.
-user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true);
-user_pref("media.peerconnection.ice.default_address_only", true);
-
-// Disable remote Safe Browsing lookups for downloads.
-user_pref("browser.safebrowsing.downloads.remote.enabled", false);
-
-// Permissions: Block desktop notifications and geolocation by default.  Clear default permissions URL.
-user_pref("permissions.default.desktop-notification", 2); // 2 = Block
-user_pref("permissions.default.geo", 2); // 2 = Block
-user_pref("permissions.manager.defaultsUrl", "");
-
-// Disable whitelisting for web channels.
-user_pref("webchannel.allowObject.urlWhitelist", "");
-
-// Telemetry and Data Reporting: Disable all telemetry and data submission.
-user_pref("datareporting.policy.dataSubmissionEnabled", false);
-user_pref("datareporting.healthreport.uploadEnabled", false);
-user_pref("toolkit.telemetry.unified", false);
-user_pref("toolkit.telemetry.enabled", false);
-user_pref("toolkit.telemetry.server", "data:,");
-user_pref("toolkit.telemetry.archive.enabled", false);
-user_pref("toolkit.telemetry.newProfilePing.enabled", false);
-user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
-user_pref("toolkit.telemetry.updatePing.enabled", false);
-user_pref("toolkit.telemetry.bhrPing.enabled", false);
-user_pref("toolkit.telemetry.firstShutdownPing.enabled", false);
-user_pref("toolkit.coverage.opt-out", true);
-user_pref("toolkit.coverage.endpoint.base", "");
-user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
-user_pref("browser.newtabpage.activity-stream.telemetry", false);
-
-// Studies and Experiments: Disable Shield studies, Normandy, and related features.
-user_pref("app.shield.optoutstudies.enabled", false);
-user_pref("app.normandy.enabled", false);
-user_pref("app.normandy.api_url", "");
-
-// Crash Reporting: Disable Breakpad crash reporting and automatic submission.
-user_pref("breakpad.reportURL", "");
-user_pref("browser.tabs.crashReporting.sendReport", false);
-user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
-
-// Captive Portal Detection: Disable captive portal detection.
-user_pref("captivedetect.canonicalURL", "");
-user_pref("network.captive-portal-service.enabled", false);
-
-// Network Connectivity Service: Disable connectivity service.
-user_pref("network.connectivity-service.enabled", false);
-//Disable Private Attribution Token
-user_pref("dom.private-attribution.submission.enabled", false);
-
-// Disable VPN promotion URL.
-user_pref("browser.privatebrowsing.vpnpromourl", "");
-
-// Add-ons and Recommendations: Disable add-on recommendations and discovery.
-user_pref("extensions.getAddons.showPane", false); // Hide the "Get Add-ons" panel
-user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
-user_pref("browser.discovery.enabled", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
-
-// UI: Disable "More from Mozilla" in preferences, tab manager, about:config warning, and about:welcome.
-user_pref("browser.preferences.moreFromMozilla", false);
-user_pref("browser.tabs.tabmanager.enabled", false);
-user_pref("browser.aboutConfig.showWarning", false);
-user_pref("browser.aboutwelcome.enabled", false);
-
-// Cookie Banner Handling: Enable cookie banner handling service (but don't automatically reject).
-user_pref("cookiebanners.service.mode", 1);
-user_pref("cookiebanners.service.mode.privateBrowsing", 1);
-
-// Full Screen API: Disable full-screen transitions and warnings.
-user_pref("full-screen-api.transition-duration.enter", "0 0");
-user_pref("full-screen-api.transition-duration.leave", "0 0");
-user_pref("full-screen-api.warning.delay", -1);
-user_pref("full-screen-api.warning.timeout", 0);
-
-// URL Bar: Enable calculator and unit conversion suggestions, but disable trending searches.
-user_pref("browser.urlbar.suggest.calculator", true);
-user_pref("browser.urlbar.unitConversion.enabled", true);
-user_pref("browser.urlbar.trending.featureGate", false);
-
-// New Tab Page: Disable top sites, top stories, Pocket, and snippets.
-user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
-user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
-user_pref("extensions.pocket.enabled", false); // Disable Pocket integration
-user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.providers.snippets", "");
-
-// Downloads: Always ask before handling new types, don't add to recent documents, and open PDFs inline.
-user_pref("browser.download.always_ask_before_handling_new_types", true);
-user_pref("browser.download.manager.addToRecentDocs", false);
-user_pref("browser.download.open_pdf_attachments_inline", true);
-
-// Bookmarks: Don't close the bookmarks menu when opening a bookmark in a new tab.
-user_pref("browser.bookmarks.openInTabClosesMenu", false);
-
-// Context Menu: Show "View Image Info" in the context menu.
-user_pref("browser.menu.showViewImageInfo", true);
-
-// Find Bar: Highlight all matches in the find bar.
-user_pref("findbar.highlightAll", true);
-
-// Word Selection: Don't eat spaces when selecting words.
-user_pref("layout.word_select.eat_space_to_next_word", false);
-
-// Search Suggestions: Disable search suggestions in general and specifically QuickSuggest.
-user_pref("browser.search.suggest.enabled", false);
-user_pref("browser.urlbar.quicksuggest.enabled", false);
-user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false);
-user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", false);
-
-// Security: Enable CRLite for certificate revocation checking and remote settings for CRLite filters.
-user_pref("security.pki.crlite_mode", 2);
-user_pref("security.remote_settings.crlite_filters.enabled", true);
-
-// Add-ons Discovery: Disable add-ons discovery.
-user_pref("extensions.htmlaboutaddons.discover.enabled", false);
-
-// Privacy: Enable user context (containers) and new tab segregation.
-user_pref("privacy.userContext.enabled", true);
-user_pref("privacy.usercontext.about_newtab_segregation.enabled", true);
-
-// Query Stripping: Enable query stripping to remove tracking parameters from URLs.
-user_pref("privacy.query_stripping.enabled", true);
-user_pref("privacy.query_stripping.enabled.pbmode", true);
-
-// Screenshots: Disable uploading screenshots.
-user_pref("extensions.screenshots.upload-disabled", true);
-
-// Page Thumbnails: Disable capturing page thumbnails.
-user_pref("browser.pagethumbnails.capturing_disabled", true);
-
-// WebRTC: Disable WebRTC entirely, including peer connection, video, identity, and navigator.
-user_pref("media.peerconnection.enabled", false);
-user_pref("media.peerconnection.video.enabled", false);
-user_pref("media.peerconnection.identity.enabled", false);
-user_pref("media.navigator.enabled", false);
-user_pref("media.navigator.video.enabled", false);
-
-// New Tab Page: Disable search, sponsored content, snippets, and highlights on the new tab page.
-user_pref("browser.newtabpage.activity-stream.showSearch", false);
-user_pref("browser.newtabpage.activity-stream.showSponsored", false);
-user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
-user_pref("browser.newtabpage.activity-stream.section.highlights.includeBookmarks", false);
-user_pref("browser.newtabpage.activity-stream.section.highlights.includeDownloads", false);
-user_pref("browser.newtabpage.activity-stream.section.highlights.includeVisited", false);
-user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
-
-// Onboarding: Disable onboarding.
-user_pref("browser.onboarding.enabled", false);
-
-// New Tab Preload: Disable preloading of the new tab page.
-user_pref("browser.newtab.preload", false);
-
-// Startup: Set the homepage to a blank page and disable the startup page.
-user_pref("browser.startup.homepage", "about:blank");
-user_pref("browser.newtabpage.enabled", false);
-user_pref("browser.startup.page", 0);
-
-// WebSpeech: Disable WebSpeech synthesis.
-user_pref("media.webspeech.synth.enabled", false);
-
-// Media: Enable RDD-FFmpeg and disable FFvpx.
-user_pref("media.rdd-ffmpeg.enabled", true);
-user_pref("media.ffvpx.enabled", false);
-
-// Content Notify Interval: Increase the interval for content notifications.
-user_pref("content.notify.interval", 20000); // 20 seconds
-
-// Prefetching: Disable DNS prefetching, link prefetching, and speculative connections.
-user_pref("network.dns.disablePrefetch", true);
-user_pref("network.predictor.enable-prefetch", false);
-user_pref("network.prefetch-next", false);
-user_pref("browser.urlbar.speculativeConnect.enabled", false);
-
-// Session Restore: Disable resuming from crashes.
-user_pref("browser.sessionstore.resume_from_crash", false);
-
-// JavaScript Bytecode Cache: Adjust the compression level.
-user_pref("browser.cache.jsbc_compression_level", 3);
-
-// Media Cache: Adjust readahead and resume thresholds.
-user_pref("media.cache_readahead_limit", 7200); // seconds
-user_pref("media.cache_resume_threshold", 3600); // seconds
-
-// Network Connections: Increase the maximum number of connections and adjust excessive connections per host.
-user_pref("network.http.max-connections", 900);
-user_pref("network.http.max-urgent-start-excessive-connections-per-host", 5);
-
-// HTTP Pacing: Disable HTTP request pacing.
-user_pref("network.http.pacing.requests.enabled", false);
-
-// DNS Cache: Increase DNS cache expiration time.
-user_pref("network.dnsCacheExpiration", 36000); // 10 hours
-
-// SSL Token Cache: Increase SSL token cache capacity.
-user_pref("network.ssl_tokens_cache_capacity", 10240);
-
-// Disable DNS prefetching from HTTPS.
-user_pref("network.dns.disablePrefetchFromHTTPS", true);
-
-// Network Predictor: Disable network predictor.
-user_pref("network.predictor.enabled", false);
-
-// Content Blocking: Set content blocking category to strict.
-user_pref("browser.contentblocking.category", "strict");
-
-// Cookies: Require SameSite=None cookies to be secure.
-user_pref("network.cookie.sameSite.noneRequiresSecure", true);
-
-// URL Bar: Trim HTTPS from the URL bar.
-user_pref("browser.urlbar.trimHttps", true);
-
-// Form Fill: Disable form filling.
-user_pref("browser.formfill.enable", false);
-
-// Insecure Connection Text: Show warnings for insecure connections.
-user_pref("security.insecure_connection_text.enabled", true);
-user_pref("security.insecure_connection_text.pbmode.enabled", true);
-
-// Punycode: Show Punycode for internationalized domain names.
-user_pref("network.IDN_show_punycode", true);
-
-// Graphics Caching: Adjust cache sizes for accelerated canvases and Skia fonts.
-user_pref("gfx.canvas.accelerated.cache-items", 4096);
-user_pref("gfx.canvas.accelerated.cache-size", 512);
-user_pref("gfx.content.skia-font-cache-size", 20);
-
-// Custom Stylesheets: Enable support for user stylesheets.
-user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-
-// Compact Mode: Show compact mode option in the UI.
-user_pref("browser.compactmode.show", true);
-
-// Focus Ring: Customize the focus ring style and width.
-user_pref("browser.display.focus_ring_on_anything", true);
-user_pref("browser.display.focus_ring_style", 0); // Solid
-user_pref("browser.display.focus_ring_width", 0); // No width
-
-// Color Scheme: Prefer dark color scheme.
-user_pref("layout.css.prefers-color-scheme.content-override", 2);
-
-// Clipboard Events: Disable clipboard events.
-user_pref("dom.event.clipboardevents.enabled", false);
-
-// URL Bar: Do not trim URLs completely.
-user_pref("browser.urlbar.trimURLs", false);
-
-// Keyword Search: Enable keyword search.
-user_pref("keyword.enabled", true);
-
-// Downloads: Start downloads in the temporary directory.
-user_pref("browser.download.start_downloads_in_tmp_dir", true);
-
-// Helper Apps: Delete temporary files on exit.
-user_pref("browser.helperApps.deleteTempFileOnExit", true);
-
-// UITour: Disable UITour.
-user_pref("browser.uitour.enabled", false);
-
-// DMA-BUF: Force enable DMA-BUF (Direct Memory Access Buffer) for graphics.
-user_pref("widget.dmabuf.force-enabled", true);
-
-// OCSP: Disable OCSP (Online Certificate Status Protocol) stapling.
-user_pref("security.OCSP.enabled", 0);
-
-// Caching: Enable disk caching, set memory cache capacity, and adjust media memory cache size.
-user_pref("browser.cache.disk.enable", true);
-user_pref("browser.cache.memory.capacity", 131072);  // 128MB,  -1=default , 262144= 256MB
-user_pref("media.memory_cache_max_size", 262144); // 256MB
-user_pref("network.http.max-persistent-connections-per-server", 15); // More connections
-
-// Geolocation: Disable geolocation.
-user_pref("geo.enable", false);
-
-// Search Region: Set the search region.
-user_pref("browser.search.region", "US");
-
-// Process Management and Isolation:
-user_pref("fission.autostart", false); // Disable Fission (site isolation)
-user_pref("dom.ipc.processCount", 1); // Limit general content processes
-user_pref("dom.ipc.processCount.webIsolated", 1); // Limit isolated web content processes
-user_pref("dom.ipc.processCount.webCOOP+COEP", 0); // Disable processes for COOP/COEP sites
-user_pref("dom.ipc.processPrelaunch.fission.number", 0); // Disable Fission process pre-launching
-user_pref("dom.ipc.processCount.inference", 0); // Disable inference processes
-
-// Network and Connectivity:
-user_pref("network.captive-portal-service.enabled", false); // Disable captive portal detection
-user_pref("browser.search.geoip.url", ""); // Disable GeoIP URL
-user_pref("browser.aboutHomeSnippets.updateUrl", ""); // Disable home snippets update URL
-
-// Privacy and Tracking:
-user_pref("privacy.trackingprotection.enabled", false); // Disable tracking protection
-user_pref("dom.enable_performance_timing", false); // Disable performance timing API
-user_pref("dom.enable_event_timing", false); // Disable event timing API
-user_pref("dom.enable_resource_timing", false); // Disable resource timing API
-user_pref("dom.enable_user_timing", false); // Disable user timing API
-
-// Updates and Features:
-user_pref("browser.search.update", false); // Disable search engine updates
-user_pref("app.update.enabled", false); // Disable Firefox updates
-user_pref("browser.casting.enabled", false); // Disable casting
-user_pref("browser.newtab.preload", false); // Disable new tab preloading
+// Disable animations and some timing APIs to make the browser feel faster.
+user_pref("dom.animations-api.animations.enabled", true); //Keep animations enabled, but other timing disabled.
+user_pref("image.animation_mode", "none"); // Stop images from moving (like GIFs) to save CPU.
+user_pref("dom.enable_event_timing", false); // Turns off a feature that tracks how long website actions take (less work for your computer).
+user_pref("dom.enable_resource_timing", false); // Stops tracking how long it takes to load website parts (saves resources).
+user_pref("dom.enable_user_timing", false); // Stops tracking custom website performance (less background work).
+
+// Network optimizations: Adjust settings to load websites faster.
+user_pref("network.buffer.cache.size", 262144); // Makes the browser hold more website data in memory for faster loading.
+user_pref("network.http.fast-fallback-to-IPv4", true); // Helps websites load faster if they have older internet connections.
+user_pref("network.http.max-persistent-connections-per-proxy", 15); // Lets the browser keep more connections open for faster loading.
+user_pref("network.http.max-persistent-connections-per-server", 15); //Allows more connections to one server for faster loading.
+user_pref("network.http.max-connections", 900); // Increases how many connections the browser can make at once.
+user_pref("network.http.max-urgent-start-excessive-connections-per-host", 5); // Allows a few more connections for very important website parts.
+user_pref("network.http.pacing.requests.enabled", false); // Turns off a feature that slows down website loading (for faster speeds).
+user_pref("network.dnsCacheExpiration", 36000); // Makes the browser remember website addresses for 10 hours (faster loading).
+user_pref("network.ssl_tokens_cache_capacity", 10240); // Makes the browser remember secure website information longer.
+user_pref("network.dns.disablePrefetchFromHTTPS", true); // Stops the browser from guessing website addresses from secure sites (less work).
+user_pref("network.predictor.enabled", false); // Turns off a feature that tries to guess which websites you'll visit (saves resources).
+user_pref("browser.cache.disk.enable", true); // Allows the browser to store website data on your computer (faster loading).
+user_pref("browser.cache.memory.capacity", 131072); // Sets how much memory the browser uses to store website data.
+user_pref("media.memory_cache_max_size", 262144); // Sets how much memory the browser uses to store videos and audio.
+user_pref("browser.cache.jsbc_compression_level", 3); // Compresses website code more efficiently (saves space).
+user_pref("media.cache_readahead_limit", 7200); // Makes the browser load videos and audio further ahead.
+user_pref("media.cache_resume_threshold", 3600); // Lets you resume videos and audio from further back.
+user_pref("content.notify.interval", 20000); // Makes the browser check for updates on websites less often (saves resources).
+user_pref("network.dns.disablePrefetch", true); // Stops the browser from guessing website addresses (less work).
+user_pref("network.predictor.enable-prefetch", false); // Turns off another website guessing feature (saves resources).
+user_pref("network.prefetch-next", false); // Stops the browser from loading the next page before you click (saves resources).
+user_pref("browser.urlbar.speculativeConnect.enabled", false); // Stops the browser from connecting to websites before you type them (saves resources).
+user_pref("browser.sessionstore.interval", 60000); // Saves your tabs and windows less often (saves resources).
+user_pref("browser.sessionstore.resume_from_crash", false); // Stops the browser from trying to restore your session after a crash (saves resources).
+user_pref("browser.newtab.preload", false); // Stops the browser from loading the new tab page early (saves resources).
+user_pref("browser.newtabpage.preload", false); //Stops the browser from loading the new tab page early (saves resources).
+user_pref("browser.startup.page", 0); //Sets the browser to start with a blank page.
+user_pref("browser.newtabpage.enabled", false); //Disables the new tab page.
+user_pref("fission.autostart", false); // Turns off a feature that separates websites (less security, but faster).
+user_pref("dom.ipc.processCount", 1); // Limits how many website processes the browser uses (saves resources).
+user_pref("dom.ipc.processCount.webIsolated", 1); // Limits how many isolated website processes the browser uses.
+user_pref("dom.ipc.processCount.webCOOP+COEP", 0); // Disables processes for special websites (saves resources).
+user_pref("dom.ipc.processPrelaunch.fission.number", 0); // Stops the browser from starting website processes early (saves resources).
+user_pref("dom.ipc.processCount.inference", 0); // Disables processes that try to guess what you'll do (saves resources).
+user_pref("widget.dmabuf.force-enabled", true); // Makes graphics faster (if your computer supports it).
+```
+
+####  Firefox Privacy and Security 
+```
+user_pref("privacy.globalprivacycontrol.enabled", true); // Tells websites you don't want to be tracked.
+user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true); // Makes the browser more strict about secure connections.
+user_pref("browser.xul.error_pages.expert_bad_cert", true); // Shows you more details about website security problems.
+user_pref("security.tls.enable_0rtt_data", false); // Turns off a feature that can be risky (more secure).
+user_pref("browser.privatebrowsing.forceMediaMemoryCache", true); // Makes the browser store videos and audio in memory when you're in private mode.
+user_pref("privacy.history.custom", true); // Lets you choose what the browser remembers.
+user_pref("dom.security.https_first", true); // Always tries to load websites securely.
+user_pref("dom.security.https_first_schemeless", true); // Always tries to load websites securely, even without https://.
+user_pref("signon.formlessCapture.enabled", false); // Stops the browser from saving login information from some websites.
+user_pref("signon.privateBrowsingCapture.enabled", false); // Stops the browser from saving login information in private mode.
+user_pref("security.mixed_content.block_display_content", true); // Stops websites from showing unsafe parts (like pictures).
+user_pref("extensions.postDownloadThirdPartyPrompt", false); // Stops extra messages after you download add-ons.
+user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Tells websites less about where you came from.
+user_pref("privacy.userContext.ui.enabled", true); // Lets you use containers (like separate profiles) for privacy.
+user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true); // Makes video calls more private.
+user_pref("media.peerconnection.ice.default_address_only", true); // Makes video calls more private.
+user_pref("browser.safebrowsing.downloads.remote.enabled", false); // Stops the browser from checking downloaded files with Google.
+user_pref("permissions.default.desktop-notification", 2); // Blocks website notifications.
+user_pref("permissions.default.geo", 2); // Blocks websites from knowing your location.
+user_pref("permissions.manager.defaultsUrl", ""); // Clears default website permissions.
+user_pref("webchannel.allowObject.urlWhitelist", ""); // Stops websites from using a feature that can be risky.
+user_pref("datareporting.policy.dataSubmissionEnabled", false); // Stops the browser from sending data to Mozilla.
+user_pref("datareporting.healthreport.uploadEnabled", false); // Stops the browser from sending health reports to Mozilla.
+user_pref("toolkit.telemetry.unified", false); // Stops the browser from sending data to Mozilla.
+user_pref("toolkit.telemetry.enabled", false); // Stops the browser from sending data to Mozilla.
+user_pref("toolkit.telemetry.server", "data:,
 ```
 
 
@@ -1271,6 +942,7 @@ user_pref("browser.newtab.preload", false); // Disable new tab preloading
 
 
 - Use pavucontrol to change the port to your desired one. Then find the internal name of the port with this command:
+  
 ```
 $ pacmd list | grep "active port"
     active port: <hdmi-output-0>
@@ -1279,6 +951,7 @@ $ pacmd list | grep "active port"
 ```
 
 - Using this information about the internal name of the port, change it with :
+  
 ```
 pacmd set-sink-port 0 analog-output-lineout
 ```
@@ -1286,6 +959,7 @@ If you have multiple cards, try changing the 0 to a 1.
 
 
 - If this works, you can put:
+  
 ```
 set-sink-port 0 analog-output-lineout
 ```
@@ -1300,6 +974,7 @@ sudo nano /etc/sysfs.conf
 ```
 
 - Add the following lines :
+  
 ```
 module/snd_hda_intel/parameters/power_save = 0
 module/snd_hda_intel/parameters/power_save_controller = N
@@ -1318,6 +993,7 @@ sudo nano /etc/pulse/default.pa
 ```
 
 - Replace the following lines :
+  
 ```
 load-module module-alsa-sink device=hw:0,0   # Replace "hw:0,0" with your numbers card
 load-module module-alsa-source device=hw:0,0   # Replace "hw:0,0" with your numbers card
