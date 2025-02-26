@@ -767,7 +767,6 @@ sudo nano /etc/pulse/daemon.conf
 ```
 flat-volumes = no
 avoid-resampling = true
-default-sample-rate = 48000
 ```
 
 
@@ -1270,6 +1269,7 @@ user_pref("browser.newtab.preload", false); // Disable new tab preloading
 
 ### Sound output is wrong (headphones/lineout...)
 
+
 - Use pavucontrol to change the port to your desired one. Then find the internal name of the port with this command:
 ```
 $ pacmd list | grep "active port"
@@ -1277,11 +1277,13 @@ $ pacmd list | grep "active port"
     active port: <analog-output-lineout>
     active port: <analog-input-linein>
 ```
+
 - Using this information about the internal name of the port, change it with :
 ```
 pacmd set-sink-port 0 analog-output-lineout
 ```
 If you have multiple cards, try changing the 0 to a 1.
+
 
 - If this works, you can put:
 ```
@@ -1289,12 +1291,93 @@ set-sink-port 0 analog-output-lineout
 ```
 in your /etc/pulse/default.pa file to have it across reboots.
 
-- Disable Idle in Intel sound card :
+
+### Disable Idle in Intel sound card :
+
+
 ```
 sudo nano /etc/sysfs.conf
 ```
+
 - Add the following lines :
 ```
 module/snd_hda_intel/parameters/power_save = 0
 module/snd_hda_intel/parameters/power_save_controller = N
 ```
+
+### Static Driver Loading (Use with Caution, This will prevent pulse audio from needing to probe the hardware):
+
+
+```
+sudo aplay -l
+```
+Note "card" and "device" numbers (if you see card 0 and device 0, that corresponds to hw:0,0)
+
+```
+sudo nano /etc/pulse/default.pa
+```
+
+- Replace the following lines :
+```
+load-module module-alsa-sink device=hw:0,0   # Replace "hw:0,0" with your numbers card
+load-module module-alsa-source device=hw:0,0   # Replace "hw:0,0" with your numbers card
+```
+
+
+### Default Sink and Source
+
+
+- List Sources (Input Devices):
+
+```
+pactl list sources short
+```
+
+
+- This will list available audio input sources (microphones, line-in, etc.).  Example output:
+
+```
+0   alsa_input.pci-0000_00_1b.0.analog-stereo
+1   alsa_input.usb-Generic_USB_Audio-00.analog-stereo
+```
+
+- List Sinks (Input Devices):
+
+```
+pactl list sinks short
+```
+
+
+- This will list available audio output sources (headphones, line-out, etc.).  Example output:
+
+```
+0   alsa_output.pci-0000_00_1b.0.analog-stereo
+```
+
+
+- Set the Default Sink and Source : 
+
+
+```
+sudo nano ~/.config/pulse/default.pa  # (User-Specific):  This is generally the recommended approach for user-specific settings.
+```
+
+- Replace the following lines :
+
+```
+set-default-sink <sink_name_or_index>
+set-default-source <source_name_or_index>
+```
+
+
+Replace <sink_name_or_index> with the name or index you got from pactl list sinks short. For example, if you want to use the sink named alsa_output.pci-0000_00_1b.0.analog-stereo, you would use:
+
+```
+set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo
+set-default-source alsa_output.pci-0000_00_1b.0.analog-stereo
+```
+
+
+
+
+
