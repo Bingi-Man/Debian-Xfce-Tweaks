@@ -230,6 +230,7 @@ Go to Settings > General > Manage Colors...
 
 - Tweaks Firefox ESR
 
+Add Ublock Origin and set it : https://codeberg.org/celenity/Phoenix/wiki/Content-Blocking
 Refer to the Betterfox project for potential Firefox ESR tweaks: [https://github.com/yokoffing/Betterfox/tree/esr128](https://github.com/yokoffing/Betterfox/tree/esr128)
 
 
