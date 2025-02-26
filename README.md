@@ -1370,10 +1370,9 @@ set-default-source <source_name_or_index>
 ```
 
 
-Replace <sink_name_or_index> with the name or index you got from pactl list sinks short. For example, if you want to use the sink named alsa_output.pci-0000_00_1b.0.analog-stereo, you would use:
-
+Replace <sink_name_or_index> with the name or index you got from pactl list sinks short. For example : 
 ```
-set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo
+set-default-sink alsa_input.pci-0000_00_1b.0.analog-stereo
 set-default-source alsa_output.pci-0000_00_1b.0.analog-stereo
 ```
 
