@@ -479,10 +479,8 @@ Section "OutputClass"
     Option "DPMS" "false"
     ModulePath "/usr/lib/nvidia/current"    # Verify this path exists and adjust if necessary
     ModulePath "/usr/lib/xorg/modules"
-    Option     "Coolbits" "28"
+    Option     "Coolbits" "28"              # "Coolbits" "28"  Enable Overclocking and FanControl
 EndSection
-
-# "Coolbits" "28"  Enable Overclocking and FanControl
 ```
 
 
@@ -697,6 +695,12 @@ Go to Settings > General > Manage Colors...
 
 #### 5.2.1 Enable Acceleration GPU Firefox
 
+
+```
+sudo apt install nvidia-vaapi-driver vainfo nvidia-vdpau-driver libva-drm2 libva-glx2 libva-x11-2
+sudo apt install meson gstreamer1.0-plugins-bad libffmpeg-nvenc-dev libva-dev libegl-dev libgstreamer-plugins-bad1.0-dev libnvcuvid1 libnvidia-encode1 libvdpau-va-gl1
+```
+
 ```
 sudo nano /etc/environment
 ```
@@ -735,8 +739,379 @@ user_pref("media.gpu-process-decoder", true); // Enable GPU process decoding.
 
 // **Image Decoding**
 user_pref("image.mem.decode_bytes_at_a_time", 32768); // Memory used for decoding images at a time.
+```
 
+#### 5.2.1 Performance and Privacy Firefox Cpu Offloading
 
+```
+// --- NETWORK & CONNECTIVITY ---
+
+// **Connection Settings**
+user_pref("network.http.max-connections", 500); // Maximum number of HTTP connections.  Higher values can improve loading of pages with many resources, but can also be more aggressive.
+user_pref("network.http.max-persistent-connections-per-proxy", 15); // Persistent connections per proxy.
+user_pref("network.http.max-persistent-connections-per-server", 15); // More connections
+user_pref("network.http.max-urgent-start-excessive-connections-per-host", 5); // Adjust excessive connections per host.
+user_pref("network.auth.subresource-http-auth-allow", 1); // Allow HTTP authentication for subresources.
+
+// **Prefetching & Speculative Connections (IMPORTANT: Privacy Implications)**
+// Prefetching and speculative connections can speed up browsing by loading resources before
+// they are explicitly requested.  However, this can also reveal information about your browsing
+// habits to websites and trackers.  DISABLE these if you prioritize privacy.
+user_pref("network.dns.disablePrefetch", true); // Disable DNS prefetching.  HIGHLY RECOMMENDED for privacy.
+user_pref("network.predictor.enable-prefetch", false); // Disable prefetching by the network predictor.  HIGHLY RECOMMENDED for privacy.
+user_pref("network.prefetch-next", false); // Disable link prefetching.  HIGHLY RECOMMENDED for privacy.
+user_pref("browser.urlbar.speculativeConnect.enabled", false); // Disable speculative connections from the URL bar.  RECOMMENDED for privacy.
+user_pref("network.predictor.enabled", false); // Disable network predictor. HIGHLY RECOMMENDED for privacy.
+user_pref("network.dns.disablePrefetchFromHTTPS", true); // Disable DNS prefetching from HTTPS links.  RECOMMENDED for privacy.
+
+// **Caching**
+user_pref("browser.cache.disk.enable", true); // Enable disk caching.  Generally improves performance.
+user_pref("browser.cache.memory.capacity", 512288);  // 512MB,  -1=default , 262144= 256MB.  Memory cache capacity.  Larger values can improve performance, but use more RAM.
+user_pref("media.memory_cache_max_size", 512288); // 512MB.  Media memory cache size.
+user_pref("browser.privatebrowsing.forceMediaMemoryCache", true); // Force media caching in memory during private browsing.
+user_pref("network.buffer.cache.size", 262144); // Increased buffer cache size.
+user_pref("media.cache_readahead_limit", 7200); // seconds.  Media cache readahead limit.
+user_pref("media.cache_resume_threshold", 3600); // seconds.  Media cache resume threshold.
+user_pref("browser.cache.jsbc_compression_level", 3); // JavaScript bytecode cache compression level.
+
+// **DNS Cache**
+user_pref("network.dnsCacheExpiration", 36000); // 10 hours.  DNS cache expiration time.  Longer values can reduce DNS lookups, but may cause issues if websites change IP addresses frequently.
+
+// **SSL Token Cache**
+user_pref("network.ssl_tokens_cache_capacity", 10240); // Increase SSL token cache capacity.
+
+// **HTTP Pacing**
+user_pref("network.http.pacing.requests.enabled", false); // Disable HTTP request pacing.
+
+// **IPv4 Fallback**
+user_pref("network.http.fast-fallback-to-IPv4", true); // Enable fast fallback to IPv4 if IPv6 is slow.
+
+// **Captive Portal Detection (IMPORTANT: Privacy Implications)**
+// Captive portal detection checks if you are connected to a network that requires login
+// (e.g., public Wi-Fi).  This involves sending requests to a specific URL.  Disable this if
+// you are concerned about privacy.
+user_pref("captivedetect.canonicalURL", ""); // Disable captive portal detection.  RECOMMENDED for privacy.
+user_pref("network.captive-portal-service.enabled", false); // Disable captive portal service.  RECOMMENDED for privacy.
+
+// **Network Connectivity Service**
+user_pref("network.connectivity-service.enabled", false); // Disable connectivity service.
+
+// --- PRIVACY & SECURITY ---
+
+// **Telemetry & Data Reporting (IMPORTANT: Privacy)**
+// Telemetry and data reporting send usage data to Mozilla.  This data is used to improve
+// Firefox, but it can also be a privacy concern.  DISABLE all of these settings if you
+// prioritize privacy.
+user_pref("datareporting.policy.dataSubmissionEnabled", false); // Disable data submission.  HIGHLY RECOMMENDED for privacy.
+user_pref("datareporting.healthreport.uploadEnabled", false); // Disable health report uploading.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.unified", false); // Disable unified telemetry.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.enabled", false); // Disable telemetry.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.server", "data:,"); // Set telemetry server to an invalid address.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.archive.enabled", false); // Disable telemetry archiving.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.newProfilePing.enabled", false); // Disable new profile ping.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.shutdownPingSender.enabled", false); // Disable shutdown ping sender.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.updatePing.enabled", false); // Disable update ping.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.bhrPing.enabled", false); // Disable background hang reporting ping.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.telemetry.firstShutdownPing.enabled", false); // Disable first shutdown ping.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.coverage.opt-out", true); // Opt-out of coverage telemetry.  HIGHLY RECOMMENDED for privacy.
+user_pref("toolkit.coverage.endpoint.base", ""); // Clear coverage endpoint.  HIGHLY RECOMMENDED for privacy.
+user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false); // Disable telemetry on the new tab page.  RECOMMENDED for privacy.
+user_pref("browser.newtabpage.activity-stream.telemetry", false); // Disable telemetry on the new tab page.  RECOMMENDED for privacy.
+
+// **Studies & Experiments (IMPORTANT: Privacy)**
+// Studies and experiments allow Mozilla to test new features and collect data.  Disable these
+// if you do not want to participate.
+user_pref("app.shield.optoutstudies.enabled", false); // Disable Shield studies.  RECOMMENDED for privacy.
+user_pref("app.normandy.enabled", false); // Disable Normandy.  RECOMMENDED for privacy.
+user_pref("app.normandy.api_url", ""); // Clear Normandy API URL.  RECOMMENDED for privacy.
+
+// **Crash Reporting (IMPORTANT: Privacy)**
+// Crash reporting sends information about crashes to Mozilla.  This can help improve Firefox,
+// but it can also be a privacy concern.
+user_pref("breakpad.reportURL", ""); // Clear Breakpad report URL.  RECOMMENDED for privacy.
+user_pref("browser.tabs.crashReporting.sendReport", false); // Disable sending crash reports.  RECOMMENDED for privacy.
+user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false); // Disable automatic submission of unsubmitted crash reports.  RECOMMENDED for privacy.
+user_pref("toolkit.crashreporter.enabled", false);// Disable crash reporter. RECOMMENDED for privacy.
+
+// **Safe Browsing (IMPORTANT: Security)**
+// Safe Browsing helps protect you from malicious websites and downloads.  It is generally
+// recommended to keep this enabled.  However, the remote lookup feature can send information
+// about the files you download to Google.
+user_pref("browser.safebrowsing.downloads.remote.enabled", false); // Disable remote Safe Browsing lookups for downloads.  RECOMMENDED for privacy, but slightly reduces security.
+
+// **Permissions (IMPORTANT: Security & Privacy)**
+// These settings control default permissions for websites.  Blocking notifications and geolocation
+// by default is a good privacy practice.
+user_pref("permissions.default.desktop-notification", 2); // 2 = Block.  Block desktop notifications by default.
+user_pref("permissions.default.geo", 2); // 2 = Block.  Block geolocation by default.
+user_pref("permissions.manager.defaultsUrl", ""); // Clear default permissions URL.
+
+// **Web Channels (IMPORTANT: Security)**
+user_pref("webchannel.allowObject.urlWhitelist", ""); // Disable whitelisting for web channels.  Improves security.
+
+// **HTTPS-First Mode (IMPORTANT: Security)**
+// HTTPS-First Mode attempts to connect to all websites using HTTPS, which is more secure than HTTP.
+user_pref("dom.security.https_first", true); // Always try to connect using HTTPS.  HIGHLY RECOMMENDED for security.
+user_pref("dom.security.https_first_schemeless", true); // Apply HTTPS-First to URLs without a scheme. HIGHLY RECOMMENDED for security.
+
+// **Mixed Content Blocking (IMPORTANT: Security)**
+// Mixed content occurs when an HTTPS page loads resources (e.g., images, scripts) over HTTP.
+// This is a security risk.
+user_pref("security.mixed_content.block_display_content", true); // Block mixed display content (e.g., images).  HIGHLY RECOMMENDED for security.
+
+// **Referrer Policy (IMPORTANT: Privacy)**
+// The referrer header tells websites where you came from.  Reducing this information improves privacy.
+user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Reduce referrer information sent to different origins.
+
+// **Global Privacy Control (GPC) (IMPORTANT: Privacy)**
+// GPC is a signal that you can send to websites to indicate that you do not want your data
+// to be sold or shared.
+user_pref("privacy.globalprivacycontrol.enabled", true); // Enable Global Privacy Control.
+
+// **Query Stripping (IMPORTANT: Privacy)**
+// Query stripping removes tracking parameters from URLs.
+user_pref("privacy.query_stripping.enabled", true); // Enable query stripping.
+user_pref("privacy.query_stripping.enabled.pbmode", true); // Enable query stripping in private browsing mode.
+
+// **Certificate Revocation (IMPORTANT: Security)**
+user_pref("security.pki.crlite_mode", 2); // Enable CRLite for certificate revocation checking.
+user_pref("security.remote_settings.crlite_filters.enabled", true); // Enable remote settings for CRLite filters.
+user_pref("security.OCSP.enabled", 0);// Disable OCSP (Online Certificate Status Protocol) stapling.
+
+// **Security Hardening**
+user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true); // Treat unsafe negotiation as broken.  Improves security.
+user_pref("browser.xul.error_pages.expert_bad_cert", true); // Show advanced information on certificate errors.  Helpful for troubleshooting.
+user_pref("security.tls.enable_0rtt_data", false); // Disable 0-RTT data.  Improves security, but may slightly increase latency.
+user_pref("security.insecure_connection_text.enabled", true); // Show warnings for insecure connections (HTTP).
+user_pref("security.insecure_connection_text.pbmode.enabled", true); // Show warnings for insecure connections in private browsing mode.
+user_pref("network.IDN_show_punycode", true); // Show Punycode for internationalized domain names (IDNs).  Helps prevent phishing attacks.
+
+// **Cookies**
+user_pref("network.cookie.sameSite.noneRequiresSecure", true); // Require SameSite=None cookies to be secure.  Improves security.
+
+// **Content Blocking**
+user_pref("browser.contentblocking.category", "strict"); // Set content blocking category to strict.  Blocks more trackers, but may break some websites.
+
+// **WebRTC (Web Real-Time Communication) (IMPORTANT: Privacy)**
+// WebRTC allows real-time communication (e.g., video chat) in the browser.  However, it can
+// leak your IP address, even when using a VPN.  Disable it if you prioritize privacy and
+// do not need WebRTC functionality.
+user_pref("media.peerconnection.enabled", false); // Disable WebRTC entirely.  HIGHLY RECOMMENDED for privacy if you don't use WebRTC.
+user_pref("media.peerconnection.video.enabled", false); // Disable WebRTC video.
+user_pref("media.peerconnection.identity.enabled", false); // Disable WebRTC identity.
+user_pref("media.navigator.enabled", false); // Disable media navigator.
+user_pref("media.navigator.video.enabled", false); // Disable video in media navigator
+user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true); // Only use ICE proxy if behind a proxy.
+user_pref("media.peerconnection.ice.default_address_only", true); // Only use default addresses for ICE.
+
+// **Geolocation (IMPORTANT: Privacy)**
+user_pref("geo.enable", false); // Disable geolocation.  HIGHLY RECOMMENDED for privacy.
+user_pref("browser.search.geoip.url", "");// Disable Geo-specific search results.
+
+// **PDF.js (Built-in PDF Viewer)**
+user_pref("pdfjs.enableScripting", false); // Disable scripting in PDF.js.  Improves security.
+
+// **Sanitizer API**
+user_pref("dom.security.sanitizer.enabled", true); // Enable the Sanitizer API.  Improves security.
+
+// **Web Speech (IMPORTANT: Privacy)**
+user_pref("media.webspeech.synth.enabled", false); // Disable WebSpeech synthesis.
+
+// **Private Attribution Token**
+user_pref("dom.private-attribution.submission.enabled", false); // Disable Private Attribution Token
+
+// --- UI (USER INTERFACE) & FUNCTIONALITY ---
+
+// **URL Bar & Search**
+user_pref("browser.urlbar.suggest.searches", false); // Disable search suggestions in the URL bar.  Improves privacy.
+user_pref("browser.urlbar.suggest.history", false); // Disable history suggestions in the URL bar.  Improves privacy.
+user_pref("browser.search.suggest.enabled", false); // Disable search suggestions in general.  Improves privacy.
+user_pref("browser.urlbar.quicksuggest.enabled", false); // Disable QuickSuggest.  Improves privacy.
+user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false); // Disable sponsored QuickSuggest suggestions.
+user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", false); // Disable non-sponsored QuickSuggest suggestions.
+user_pref("browser.urlbar.trimHttps", true); // Trim HTTPS from the URL bar display.  Cosmetic change.
+user_pref("browser.urlbar.trimURLs", false); // Do not trim URLs completely.
+user_pref("browser.urlbar.groupLabels.enabled", false); // Disable URL bar group labels.
+user_pref("browser.urlbar.update2.engineAliasRefresh", true); // Refresh engine alias.
+user_pref("browser.urlbar.suggest.calculator", true); // Enable calculator suggestions in the URL bar.
+user_pref("browser.urlbar.unitConversion.enabled", true); // Enable unit conversion suggestions in the URL bar.
+user_pref("browser.urlbar.trending.featureGate", false); // Disable trending searches in the URL bar.
+
+// **Search**
+user_pref("browser.search.separatePrivateDefault.ui.enabled", true); // Separate private search defaults.
+user_pref("browser.search.region", "US"); // Set the search region.  Change to your region.
+user_pref("browser.search.update", false); // Disable search updates.
+user_pref("keyword.enabled", true); // Enable keyword search (using bookmarks and the URL bar).
+
+// **New Tab Page**
+user_pref("browser.newtabpage.activity-stream.feeds.topsites", false); // Disable top sites on the new tab page.
+user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false); // Disable top stories on the new tab page.
+user_pref("extensions.pocket.enabled", false); // Disable Pocket integration.  RECOMMENDED for privacy.
+user_pref("browser.newtabpage.activity-stream.feeds.snippets", false); // Disable snippets on the new tab page.
+user_pref("browser.newtabpage.activity-stream.asrouter.providers.snippets", ""); // Clear snippets provider.
+user_pref("browser.newtabpage.activity-stream.showSearch", false); // Disable search on the new tab page.
+user_pref("browser.newtabpage.activity-stream.showSponsored", false); // Disable sponsored content on the new tab page.
+user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // Disable sponsored top sites on the new tab page.
+user_pref("browser.newtabpage.activity-stream.section.highlights.includeBookmarks", false); // Don't include bookmarks in highlights.
+user_pref("browser.newtabpage.activity-stream.section.highlights.includeDownloads", false); // Don't include downloads in highlights.
+user_pref("browser.newtabpage.activity-stream.section.highlights.includeVisited", false); // Don't include visited pages in highlights.
+user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false); // Don't include Pocket in highlights.
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false); // Disable add-on recommendations.
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false); // Disable feature recommendations.
+user_pref("browser.newtab.preload", false); // Disable preloading of the new tab page.
+
+// **Downloads**
+user_pref("browser.download.always_ask_before_handling_new_types", true); // Always ask before handling new file types.  Improves security.
+user_pref("browser.download.manager.addToRecentDocs", false); // Don't add downloaded files to the recent documents list.
+user_pref("browser.download.open_pdf_attachments_inline", true); // Open PDF attachments inline in the browser.
+user_pref("browser.download.start_downloads_in_tmp_dir", true); // Start downloads in the temporary directory.
+
+// **Bookmarks**
+user_pref("browser.bookmarks.openInTabClosesMenu", false); // Don't close the bookmarks menu when opening a bookmark in a new tab.
+
+// **Context Menu**
+user_pref("browser.menu.showViewImageInfo", true); // Show "View Image Info" in the context menu.
+
+// **Find Bar**
+user_pref("findbar.highlightAll", true); // Highlight all matches in the find bar.
+
+// **Word Selection**
+user_pref("layout.word_select.eat_space_to_next_word", false); // Don't eat spaces when selecting words.
+
+// **Form Filling**
+user_pref("browser.formfill.enable", false); // Disable form filling.  Improves privacy.
+user_pref("signon.formlessCapture.enabled", false); // Disable formless login capture.
+user_pref("signon.privateBrowsingCapture.enabled", false); // Disable private browsing capture.
+
+// **Reader Mode**
+user_pref("reader.parse-on-load.enabled", false); // Disable automatic reader mode parsing.
+
+// **Full Screen API**
+user_pref("full-screen-api.transition-duration.enter", "0 0"); // Disable full-screen transitions.
+user_pref("full-screen-api.transition-duration.leave", "0 0"); // Disable full-screen transitions.
+user_pref("full-screen-api.warning.delay", -1); // Disable full-screen warning delay.
+user_pref("full-screen-api.warning.timeout", 0); // Disable full-screen warning timeout.
+
+// **Cookie Banner Handling**
+user_pref("cookiebanners.service.mode", 1); // Enable cookie banner handling service (but don't automatically reject).  1 = Warn, 2 = Reject if possible, otherwise warn.
+user_pref("cookiebanners.service.mode.privateBrowsing", 1); // Enable cookie banner handling in private browsing mode.
+
+// **Clipboard Events**
+user_pref("dom.event.clipboardevents.enabled", false); // Disable clipboard events (websites can't see what you copy/paste).  Improves privacy.
+
+// **Editor**
+user_pref("editor.truncate_user_pastes", false); // Disable truncating user pastes in the editor.
+
+// **Accessibility**
+user_pref("accessibility.force_disabled", 1); // Force accessibility services to be disabled.
+
+// **Session & Tab Management**
+user_pref("browser.sessionstore.max_tabs_undo", 0); // Disable undoing closed tabs.  Improves privacy.
+user_pref("browser.sessionstore.interval", 60000); // Save session every 60 seconds (instead of the default 15).
+user_pref("browser.sessionstore.resume_from_crash", false); // Disable resuming from crashes.
+
+// **User Context (Containers)**
+user_pref("privacy.userContext.enabled", true); // Enable user context (containers).  Allows you to separate browsing contexts (e.g., work, personal).
+user_pref("privacy.userContext.ui.enabled", true); // Enable the user context UI.
+user_pref("privacy.usercontext.about_newtab_segregation.enabled", true); // Enable new tab segregation for containers.
+
+// **Web Task Scheduling**
+user_pref("dom.enable_web_task_scheduling", true); // Enable web task scheduling.
+
+// **Animations**
+user_pref("dom.animations-api.animations.enabled", true); // Enable animations API.
+user_pref("image.animation_mode", "none"); // Don't animate images.  Improves performance and reduces distractions.
+
+// **Timing APIs (IMPORTANT: Privacy - Fingerprinting)**
+// These APIs can be used for fingerprinting (identifying your browser uniquely).  Disabling
+// them improves privacy, but may break some websites that rely on them.
+user_pref("dom.enable_event_timing", false); // Disable event timing.
+user_pref("dom.enable_resource_timing", false); // Disable resource timing.
+user_pref("dom.enable_user_timing", false); // Disable user timing.
+user_pref("dom.enable_performance_timing", false) // Disable performance timing
+
+// **Default Browser Check**
+user_pref("browser.shell.checkDefaultBrowser", false); // Disable default browser check.
+
+// **Activity Stream (Library)**
+user_pref("browser.library.activity-stream.enabled", false); // Disable Activity Stream in the library.
+
+// **Add-ons & Recommendations**
+user_pref("extensions.getAddons.showPane", false); // Hide the "Get Add-ons" panel.
+user_pref("extensions.htmlaboutaddons.recommendations.enabled", false); // Disable add-on recommendations.
+user_pref("browser.discovery.enabled", false); // Disable add-on and theme discovery.
+user_pref("extensions.postDownloadThirdPartyPrompt", false); // Disable third-party prompts after extension downloads.
+user_pref("extensions.update.autoUpdateDefault", false); // Disable automatic updates for extensions.  IMPORTANT: Keep extensions updated manually for security.
+user_pref("extensions.update.enabled", false); // Disable extension update checks.  IMPORTANT: Keep extensions updated manually for security.
+user_pref("extensions.htmlaboutaddons.discover.enabled", false); // Disable add-ons discovery.
+
+// **UI Tweaks**
+user_pref("browser.preferences.moreFromMozilla", false); // Disable "More from Mozilla" in preferences.
+user_pref("browser.tabs.tabmanager.enabled", false); // Disable tab manager.
+user_pref("browser.aboutConfig.showWarning", false); // Disable about:config warning.  BE CAREFUL in about:config!
+user_pref("browser.aboutwelcome.enabled", false); // Disable about:welcome.
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true); // Enable support for user stylesheets (userChrome.css, userContent.css).
+user_pref("browser.compactmode.show", true); // Show compact mode option in the UI.
+user_pref("browser.display.focus_ring_on_anything", true); // Show focus ring on any focused element.
+user_pref("browser.display.focus_ring_style", 0); // Solid focus ring style.
+user_pref("browser.display.focus_ring_width", 0); // No width for the focus ring.
+user_pref("browser.uitour.enabled", false); // Disable UITour.
+user_pref("layout.css.prefers-color-scheme.content-override", 2); // Prefer dark color scheme for web content.  0=system, 1=light, 2=dark, 3=follow browser theme
+
+// **Onboarding**
+user_pref("browser.onboarding.enabled", false); // Disable onboarding.
+
+// **Startup**
+user_pref("browser.startup.homepage", "about:blank"); // Set the homepage to a blank page.
+user_pref("browser.newtabpage.enabled", false); // Disable the default new tab page.  Use about:blank or a custom new tab extension.
+user_pref("browser.startup.page", 0); // 0 = blank page, 1 = homepage, 3 = last session.
+
+// **VPN Promotion**
+user_pref("browser.privatebrowsing.vpnpromourl", "");// Disable VPN promotion URL.
+
+// **Screenshots**
+user_pref("extensions.screenshots.upload-disabled", true); // Disable uploading screenshots.
+
+// **Page Thumbnails**
+user_pref("browser.pagethumbnails.capturing_disabled", true); // Disable capturing page thumbnails.
+
+// **Helper Apps**
+user_pref("browser.helperApps.deleteTempFileOnExit", true); // Delete temporary files on exit.
+
+// **AV1 Video Codec**
+user_pref("media.av1.enabled", false); // Disable AV1 video codec.  May improve compatibility on older hardware.
+
+// **Media Foundation**
+user_pref("media.rdd-ffmpeg.enabled", true); // Enable RDD-FFmpeg.
+user_pref("media.ffvpx.enabled", false); // Disable FFvpx.
+
+// **Content Notify Interval**
+user_pref("content.notify.interval", 20000); // 20 seconds.  Increase the interval for content notifications.
+
+// **Fission (Site Isolation) (IMPORTANT: Security)**
+// Fission is a security feature that isolates websites into separate processes.  This can
+// prevent one website from accessing data from another.
+user_pref("fission.autostart", false); 	// Disable Fission.  WARNING ! May improve compatibility, but reduces security.
+
+// **Process Count (IMPORTANT: Security & Performance)**
+// These settings control the number of processes used by Firefox.  More processes can improve
+// security and stability, but also use more memory.
+user_pref("dom.ipc.processCount.inference", 0); // Disable process count inference.
+user_pref("dom.ipc.processCount.webIsolated", 1); // Number of processes for isolated web content.
+user_pref("dom.ipc.processCount", 1); // Number of processes.  Lower values use less memory, but reduce security and may impact performance.
+user_pref("dom.ipc.processCount.webCOOP+COEP", 0); // Disable processes for COOP+COEP.
+user_pref("dom.ipc.processPrelaunch.fission.number", 0); // Disable Fission process prelaunch.
+
+// **Privacy: History**
+user_pref("privacy.history.custom", true);
+
+// --- Uncategorized ---
+// (Settings that need further review and categorization)
+user_pref("browser.aboutHomeSnippets.updateUrl", "");
+user_pref("privacy.trackingprotection.enabled", false);
+user_pref("media.gmp-manager.url", "");
+user_pref("media.gmp-gmpopenh264.enabled", true);
+```
 
 
 ### 5.3 Disable Journaling on ext4
