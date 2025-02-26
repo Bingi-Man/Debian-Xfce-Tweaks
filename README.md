@@ -9,7 +9,7 @@
 
 
 
-## Minimal Debian Xfce performance tuning Guide
+## Minimal Debian Xfce performance tuning Guide for benchmarks
 
 
 
