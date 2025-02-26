@@ -9,19 +9,18 @@
 
 
 
-## Minimal Debian Xfce performance tuning Guide for benchmarks
+## Minimal Debian Xfce performance tuning Guide for benchmark
 
 
 
 
                                               
 
-This tutorial guides you through optimizing and install a Debian 12 XFCE system.
+This tutorial guides you through optimizing and install a Debian 12 XFCE system for testing purpose.
 It covers system installation, essential utilities, Overclocking and CPU tuning.
 
 
-This is for experienced Linux users who want to testing the performances and understanding the system modifications. 
-This guide focuses on performance, potentially at the cost of system stability and security.
+**WARNING:** This is intended for experienced Linux users who want to test performance and understand system modifications. This guide focuses on performance, potentially at the cost of system stability and **SECURITY**. Proceed with extreme caution and at your own risk.
 
 
 
@@ -33,7 +32,8 @@ This guide focuses on performance, potentially at the cost of system stability a
 
 *   Understanding of system configuration files.
 
-*   Willingness to accept potential risks associated with advanced system modifications.
+*   Willingness to accept potential risks associated with advanced system modifications, including **SECURITY VULNERABILITIES** and hardware damage.
+
 
 
 
@@ -73,7 +73,8 @@ exit
 
 ### 1.3 Allow members of group sudo to execute any command
 
-**WARNING:** This step significantly reduces system security.  Understand the implications before proceeding.  It allows any user in the `sudo` group to execute *any* command without a password.
+WARNING: This step significantly reduces system SECURITY. Understand the implications before proceeding. It allows any user in the sudo group to execute any command without a password. This is NOT RECOMMENDED for production systems.
+
 ```
 su -
 nano /etc/sudoers
@@ -200,7 +201,8 @@ sudo apt install acpid dbus-x11 accountsservice apt-transport-https ca-certifica
 
 ### 2.2 Disable Apparmor
 
-**WARNING:** Disabling AppArmor reduces system security.  Understand the implications before proceeding.  Consider configuring AppArmor profiles instead of disabling it entirely.
+WARNING: Disabling AppArmor reduces system SECURITY. Understand the implications before proceeding. Consider configuring AppArmor profiles instead of disabling it entirely.
+
 ```
 sudo systemctl stop apparmor
 sudo systemctl disable apparmor
@@ -378,7 +380,7 @@ vm.vfs_cache_pressure = 50
 
 ### 3.7 Grub Configuration
 
-**WARNING**: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is not recommended and significantly reduces system security.  Understand the risks before proceeding.
+**WARNING**: Disabling security mitigations (mitigations=off kernel.randomize_va_space=0) is NOT RECOMMENDED and significantly reduces system SECURITY. Understand the risks before proceeding.
 ```
 sudo nano /etc/default/grub
 ```
@@ -577,7 +579,7 @@ memory transfer rate to test stability after each overclocking step.
 
 #### 4.6.2 Overclock
 
-EXTREME CAUTION: Increase offset values incrementally and RUN BENCHMARK AFTER EACH CHANGES.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
+**EXTREME CAUTION**: Increase offset values incrementally and RUN BENCHMARK AFTER EACH CHANGES.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
 
 
 - Set maximum performance:
@@ -700,7 +702,7 @@ sudo systemctl daemon-reload
 
 ### 5.2 Disable Journaling on ext4
 
-EXTREME CAUTION: Disabling journaling significantly increases the risk of data loss in case of a power failure or system crash.  This is not recommended for most users.  The following steps involve creating a backup of your system, which is essential before disabling journaling.
+**EXTREME CAUTION**: Disabling journaling significantly increases the risk of data loss in case of a power failure or system crash.  This is NOT RECOMMENDED for most users.  The following steps involve creating a backup of your system, which is essential before disabling journaling.
 
 
 #### 5.2.1 Backup your system
@@ -836,7 +838,6 @@ Rescuezilla - https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1
 - Create user.js: In the profile folder, create a new text file named user.js.
 
 - Add the following lines :
-
 ```
 // Enable WebRender and related features for improved graphics performance.
 user_pref("gfx.webrender.compositor.force-enabled", true);
@@ -942,7 +943,6 @@ user_pref("toolkit.telemetry.server", "data:,
 
 
 - Use pavucontrol to change the port to your desired one. Then find the internal name of the port with this command:
-  
 ```
 $ pacmd list | grep "active port"
     active port: <hdmi-output-0>
@@ -951,7 +951,6 @@ $ pacmd list | grep "active port"
 ```
 
 - Using this information about the internal name of the port, change it with :
-  
 ```
 pacmd set-sink-port 0 analog-output-lineout
 ```
@@ -959,7 +958,6 @@ If you have multiple cards, try changing the 0 to a 1.
 
 
 - If this works, you can put:
-  
 ```
 set-sink-port 0 analog-output-lineout
 ```
@@ -974,26 +972,26 @@ sudo nano /etc/sysfs.conf
 ```
 
 - Add the following lines :
-  
 ```
 module/snd_hda_intel/parameters/power_save = 0
 module/snd_hda_intel/parameters/power_save_controller = N
 ```
 
-### Static Driver Loading (Use with Caution, This will prevent pulse audio from needing to probe the hardware):
+### Static Driver Loading
+
+
+Use with Caution, This will prevent pulse audio from needing to probe the hardware
 
 
 ```
 sudo aplay -l
 ```
 Note "card" and "device" numbers (if you see card 0 and device 0, that corresponds to hw:0,0)
-
 ```
 sudo nano /etc/pulse/default.pa
 ```
 
 - Replace the following lines :
-  
 ```
 load-module module-alsa-sink device=hw:0,0   # Replace "hw:0,0" with your numbers card
 load-module module-alsa-source device=hw:0,0   # Replace "hw:0,0" with your numbers card
@@ -1004,42 +1002,35 @@ load-module module-alsa-source device=hw:0,0   # Replace "hw:0,0" with your numb
 
 
 - List Sources (Input Devices):
-
 ```
 pactl list sources short
 ```
 
 
 - This will list available audio input sources (microphones, line-in, etc.).  Example output:
-
 ```
 0   alsa_input.pci-0000_00_1b.0.analog-stereo
 1   alsa_input.usb-Generic_USB_Audio-00.analog-stereo
 ```
 
 - List Sinks (Input Devices):
-
 ```
 pactl list sinks short
 ```
 
 
 - This will list available audio output sources (headphones, line-out, etc.).  Example output:
-
 ```
 0   alsa_output.pci-0000_00_1b.0.analog-stereo
 ```
 
 
 - Set the Default Sink and Source : 
-
-
 ```
 sudo nano ~/.config/pulse/default.pa  # (User-Specific):  This is generally the recommended approach for user-specific settings.
 ```
 
 - Replace the following lines :
-
 ```
 set-default-sink <sink_name_or_index>
 set-default-source <source_name_or_index>
