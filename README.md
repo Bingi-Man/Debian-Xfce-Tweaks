@@ -695,20 +695,32 @@ Go to Settings > General > Manage Colors...
 
 #### 5.2.1 Enable Acceleration GPU Firefox
 
-
+1. nv-codec-headers
 ```
-sudo apt install nvidia-vaapi-driver vainfo nvidia-vdpau-driver libva-drm2 libva-glx2 libva-x11-2
-sudo apt install meson gstreamer1.0-plugins-bad libffmpeg-nvenc-dev libva-dev libegl-dev libgstreamer-plugins-bad1.0-dev libnvcuvid1 libnvidia-encode1 libvdpau-va-gl1
-```
-
-```
-sudo nano /etc/environment
+git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+cd nv-codec-headers
+make && sudo make install
 ```
 
-- Add the following lines :
+2. Then install all dependencies needed (extended version - you probably already have some of these packages)
 ```
-LIBVA_DRIVER_NAME=nvidia
-VDPAU_DRIVER=nvidia
+sudo apt install build-essential git gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev libffmpeg-nvenc-dev libva-dev libegl-dev meson
+```
+
+4. Now you can clone the repo, build the driver and install it
+```
+git clone https://github.com/elFarto/nvidia-vaapi-driver
+cd nvidia-vaapi-driver/
+meson setup build
+meson install -C build
+```
+
+5. Set all the needed environment variables. Look at the custom entries in my ~/.profile:
+```
+# Enable elFarto's nvidia-vaapi-driver on Firefox
+export MOZ_DISABLE_RDD_SANDBOX=1
+export LIBVA_DRIVER_NAME=nvidia
+export NVD_BACKEND=direct
 ```
 
 - Open Firefox Profile Folder: Go to about:profiles in Firefox, find your active profile, and click "Open Folder."
@@ -725,11 +737,15 @@ VDPAU_DRIVER=nvidia
 // issues on some older hardware or with certain drivers.
 user_pref("gfx.webrender.all", true); // Force enable WebRender on all pages.
 user_pref("gfx.webrender.compositor.force-enabled", true); // Force enable the WebRender compositor.
-user_pref("gfx.webrender.force-enabled", true); // Force enable WebRender.
+// user_pref("gfx.webrender.force-enabled", true); // Force enable WebRender if gfx.webrender.all not work.
 user_pref("gfx.x11-egl.force-enabled", true); // Force enable EGL on X11 (NO WAYLAND).  Improves graphics performance.
 user_pref("gfx.canvas.accelerated", true); // Enable canvas acceleration.
 user_pref("gfx.layers.acceleration.force-enabled", true); // Force enable layer acceleration.
 user_pref("gfx.skia.force_enabled", true);  // Force enable the Skia graphics library.
+user_pref("media.ffmpeg.vaapi.enabled", true);  // Enable VA-API
+
+// DMA-BUF: Force enable DMA-BUF (Direct Memory Access Buffer) for graphics.
+user_pref("widget.dmabuf.force-enabled", true);
 
 // **Hardware Video Decoding**
 // Using hardware acceleration for video decoding can significantly reduce CPU usage and improve
@@ -737,11 +753,14 @@ user_pref("gfx.skia.force_enabled", true);  // Force enable the Skia graphics li
 user_pref("media.hardware-video-decoding.force-enabled", true); // Force enable hardware video decoding.
 user_pref("media.gpu-process-decoder", true); // Enable GPU process decoding.
 
-// **Image Decoding**
-user_pref("image.mem.decode_bytes_at_a_time", 32768); // Memory used for decoding images at a time.
+// Media: Disable RDD-FFmpeg, FFvpx and av1.
+user_pref("media.rdd-ffmpeg.enabled", false);
+user_pref("media.ffvpx.enabled", false);
+user_pref("media.av1.enabled", false);
+
 ```
 
-#### 5.2.1 Performance and Privacy Firefox Cpu Offloading
+#### 5.2.1 Performance and Privacy Firefox for CPU Offloading
 
 ```
 // --- NETWORK & CONNECTIVITY ---
@@ -765,7 +784,7 @@ user_pref("network.predictor.enabled", false); // Disable network predictor. HIG
 user_pref("network.dns.disablePrefetchFromHTTPS", true); // Disable DNS prefetching from HTTPS links.  RECOMMENDED for privacy.
 
 // **Caching**
-user_pref("browser.cache.disk.enable", true); // Enable disk caching.  Generally improves performance.
+user_pref("browser.cache.disk.enable", true); // Enable disk caching.  improves CPU performance.
 user_pref("browser.cache.memory.capacity", 512288);  // 512MB,  -1=default , 262144= 256MB.  Memory cache capacity.  Larger values can improve performance, but use more RAM.
 user_pref("media.memory_cache_max_size", 512288); // 512MB.  Media memory cache size.
 user_pref("browser.privatebrowsing.forceMediaMemoryCache", true); // Force media caching in memory during private browsing.
@@ -1199,14 +1218,7 @@ load-module module-udev-detect tsched=0
 ```
 
 
-### 5.6 Disable Services
 
-- Disable unnecessary services to reduce boot time and resource usage. 
-```
-sudo systemctl disable systemd-networkd.service  # Only if using a static network configuration
-sudo systemctl disable upower.service  # Only if you don't need battery monitoring or power management
-sudo systemctl disable nftables.service  # Only if you're not using nftables
-```
 
 
 ## Further reading
