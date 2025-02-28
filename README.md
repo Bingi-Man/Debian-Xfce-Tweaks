@@ -295,7 +295,7 @@ sudo sysctl -p /etc/sysctl.d/50-coredump.conf
 
 ### 3.5 Configure CPU Governor and Frequencies
 
-- Note: It's generally recommended to use /etc/default/cpufrequtils for configuration if it exists.  This tutorial uses /etc/init.d/cpufrequtils for consistency with the original, but check for the preferred file first.
+- Note: It's generally recommended to use /etc/default/cpufrequtils for configuration if it exists.
 ```
 sudo nano /etc/init.d/cpufrequtils
 ```
