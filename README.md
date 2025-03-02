@@ -1265,10 +1265,111 @@ VA-API - https://github.com/elFarto/nvidia-vaapi-driver
 ## Troubleshootings
 
 
+### Limit Firefox CPU Time
+
+create a user-level systemd service for Firefox with resource limits:
+
+    Stop Firefox: Ensure Firefox is not running. Close all Firefox windows.
+
+    Create User Service Unit File:
+    Open a terminal and use a text editor (like nano) to create a new file named firefox-limited.service in the user's systemd configuration directory:
+    Bash
+
+nano ~/.config/systemd/user/firefox-limited.service
+
+Paste Service Unit Configuration:
+Copy and paste the following configuration into the nano editor:
+Ini, TOML
+
+[Unit]
+Description=Firefox Browser with Resource Limits
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/lib/firefox-esr/firefox-esr
+CPUQuota=70%
+CPUQuotaPeriodSec=70ms
+Slice=firefox-user-limited.slice
+
+[Install]
+WantedBy=graphical-session.target
+
+Important: Double-check that the ExecStart path /usr/lib/firefox-esr/firefox-esr is correct for your Firefox ESR installation. You can verify this by running which firefox-esr in the terminal and using that path in ExecStart.
+
+Create User Slice Unit File:
+Create a new file named firefox-user-limited.slice in the same directory:
+Bash
+
+nano ~/.config/systemd/user/firefox-user-limited.slice
+
+Paste Slice Unit Configuration:
+Copy and paste the following configuration into the firefox-user-limited.slice file:
+Ini, TOML
+
+[Slice]
+# Resource limits are defined in firefox-limited.service
+
+This slice unit itself doesn't need resource limits, as they are defined in the service unit.
+
+Save and Close Files:
+In nano, press Ctrl+O to save, then Enter to confirm the filename, and Ctrl+X to exit. Do this for both firefox-limited.service and firefox-user-limited.slice files.
+
+Reload Systemd User Daemon:
+Inform systemd about the new unit files:
+Bash
+
+systemctl --user daemon-reload
+
+Start the User Service:
+Launch Firefox using the newly created user service:
+Bash
+
+systemctl --user start firefox-limited.service
+
+Check Service Status:
+Verify that the service started without errors:
+Bash
+
+systemctl --user status firefox-limited.service
+
+systemctl show firefox-limited.service | grep CPUQuota
 
 
+Look for "active (running)" in the output and ensure there are no error messages.
+
+Verify Slice Placement:
+Check if Firefox processes are now running under the firefox-user-limited.slice using systemd-cgls (no sudo needed now):
+Bash
+
+systemd-cgls user-firefox-limited.slice
+
+Or just systemd-cgls and navigate to the user slice section. You should see Firefox processes listed under user-firefox-limited.slice.
+
+Test Resource Limits:
+Perform memory and CPU stress tests in Firefox as you did before. Monitor htop and systemd-cgtop again.
+
+    Memory Test: Check if Firefox's memory usage (and specifically the user-firefox-limited.slice memory in systemd-cgtop) is limited to around 1GB.
+    CPU Test: Check if Firefox's CPU usage (and user-firefox-limited.slice CPU usage in systemd-cgtop) is limited to approximately 20% of one CPU core.
+
+ - integrate systemd-run into your Firefox launcher :
+
+mkdir -p ~/.local/share/applications  # Create the directory if it doesn't exist
+cp /usr/share/applications/firefox-esr.desktop ~/.local/share/applications/
+nano ~/.local/share/applications/firefox-esr.desktop
+
+- Replace the following line :
+
+Exec=systemd-run --user --slice=firefox-user.slice /usr/lib/firefox-esr/firefox-esr %u
 
 
+mkdir -p ~/.config/systemd/user/
+
+nano ~/.config/systemd/user/firefox-user.slice
+
+[Slice]
+CPUQuota=70%   # mean 70% of 
+
+systemctl --user daemon-reload
 
 ### Sound output is wrong (headphones/lineout...)
 
