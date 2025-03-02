@@ -866,9 +866,12 @@ user_pref("toolkit.crashreporter.enabled", false);// Disable crash reporter. REC
 
 // **Safe Browsing (IMPORTANT: Security)**
 // Safe Browsing helps protect you from malicious websites and downloads.  It is generally
-// recommended to keep this enabled.  However, the remote lookup feature can send information
+// recommended to keep this enabled.  However it may send user information (e.g. URL, file hashes, etc.) to third parties like Google. RECOMMENDED for privacy, but slightly reduces security.
 // about the files you download to Google.
-user_pref("browser.safebrowsing.downloads.remote.enabled", false); // Disable remote Safe Browsing lookups for downloads.  RECOMMENDED for privacy, but slightly reduces security.
+user_pref("browser.safebrowsing.downloads.remote.enabled", false); // Disable remote Safe Browsing lookups for downloads.  
+user_pref("browser.safebrowsing.malware.enabled", false); // disable the Safe Browsing service
+user_pref("browser.safebrowsing.phishing.enabled", false); // disable the Safe Browsing service
+user_pref("browser.safebrowsing.downloads.enabled", false); // Disable Safe Browsing lookups for downloads
 
 // **Permissions (IMPORTANT: Security & Privacy)**
 // These settings control default permissions for websites.  Blocking notifications and geolocation
