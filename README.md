@@ -1162,7 +1162,7 @@ Create a bootable USB drive with Rescuezilla :
 
 - Find USB device name :
 ```
-lsblk # Identify your Debian disk (e.g., /dev/nvme0n1)
+lsblk # Identify your Debian disk (e.g., /dev/sda)
 ```
 
 - Unmount USB
