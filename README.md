@@ -406,14 +406,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## Step 4: NVIDIA Tweaks
 
 
-
-### 4.1 Disable compositor
-
-Open to Applications > Settings > Windows Manager Tweaks > Compositor
-
-*   Uncheck  "Enable display compositing"
-
-### 4.2 Xorg Configuration
+### 4.1 Xorg Configuration
 ```
 sudo usermod -a -G input $USER
 sudo nano /etc/X11/Xwrapper.config
@@ -432,7 +425,7 @@ needs_root_rights=yes
     
 
 
-### 4.3 Install Nvidia Driver and CUDA
+### 4.2 Install Nvidia Driver and CUDA
 ```
 sudo apt install -y linux-headers-amd64 nvidia-driver firmware-misc-nonfree
 ```
@@ -464,10 +457,10 @@ sudo nano /etc/sudoers
 ```
 **WARNING**: The modification was overly permissive. 
 
-### 4.4 Nvidia
+### 4.43 Nvidia
 
 
-#### 4.4.1 Nvidia Xorg conf
+3#### 4.4.1 Nvidia Xorg conf
 
 
 - Configuring the 10-nvidia-drm-outputclass :
@@ -491,7 +484,7 @@ EndSection
 
 
 
-#### 4.4.2 Modprobe conf
+#### 4.3.2 Modprobe conf
 ```
 sudo nano /etc/modprobe.d/nvidia-options.conf
 ```
@@ -517,7 +510,7 @@ options nvidia-current NVreg_RestrictProfilingToAdminUsers=0
 
 
 
-#### 4.4.3 Update Initramfs
+#### 4.43.3 Update Initramfs
 ```
 sudo update-initramfs -u
 ```
@@ -525,7 +518,7 @@ sudo update-initramfs -u
 
 
 
-### 4.5 Nvidia Patch (removes restriction on maximum number of simultaneous NVENC video encoding sessions)
+### 4.4 Nvidia Patch (removes restriction on maximum number of simultaneous NVENC video encoding sessions)
 ```
 git clone https://github.com/keylase/nvidia-patch.git
 cd nvidia-patch
@@ -533,14 +526,14 @@ sudo bash ./patch.sh
 ```
 
 
-### 4.6 Overclocking
+### 4.5 Overclocking
 
 **WARNING**: Overclocking can damage your hardware.  
 Proceed with extreme caution, and increase values incrementally, testing
 thoroughly after each change.  Monitor temperatures closely.
 
 
-#### 4.6.1 Benchmark
+#### 4.5.1 Benchmark
 
 - Download the Unigine Heaven benchmark: https://benchmark.unigine.com/heaven
 ```
@@ -555,7 +548,7 @@ cd Unigine_Heaven-4.0
 memory transfer rate to test stability after each overclocking step.
 
 
-#### 4.6.2 Overclock
+#### 4.5.2 Overclock
 
 **EXTREME CAUTION**: Increase offset values incrementally and RUN BENCHMARK AFTER EACH CHANGES.  Start with small increases (e.g., +10 MHz for graphics clock, +100 MHz for memory clock).
 
@@ -586,7 +579,7 @@ sudo nvidia-settings -a '[gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=XXX'
 sudo nvidia-settings -a '[gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=XXXX'  # Where XXXX is the value added to the maximum Memory clocks (exp:1000 = +1000MHz) 
 ```
 
-#### 4.6.3 Make changes permanents
+#### 4.5.3 Make changes permanents
 
 - Create a script to apply overclocking settings on startup:
 ```
