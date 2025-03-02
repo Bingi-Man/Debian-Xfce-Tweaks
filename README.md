@@ -356,7 +356,10 @@ vm.vfs_cache_pressure = 50
 Reload
 ```
 sudo sysctl -p
+
+sudo systemctl daemon-reload
 ```
+
 
 ### 3.8 Grub Configuration
 
