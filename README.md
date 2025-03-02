@@ -696,19 +696,19 @@ Go to Settings > General > Manage Colors...
 
 #### 5.2.1 Enable Acceleration GPU Firefox
 
-1. nv-codec-headers
+##### 1. nv-codec-headers
 ```
 git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
 cd nv-codec-headers
 make && sudo make install
 ```
 
-2. Then install all dependencies needed (extended version - you probably already have some of these packages)
+##### 2. Then install all dependencies needed (extended version - you probably already have some of these packages)
 ```
 sudo apt install build-essential git gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev libffmpeg-nvenc-dev libva-dev libegl-dev meson
 ```
 
-4. Now you can clone the repo, build the driver and install it
+##### 4. Now you can clone the repo, build the driver and install it
 ```
 git clone https://github.com/elFarto/nvidia-vaapi-driver
 cd nvidia-vaapi-driver/
@@ -716,7 +716,14 @@ meson setup build
 meson install -C build
 ```
 
-5. Set all the needed environment variables. Look at the custom entries in my ~/.profile:
+##### 5. Set all the needed environment variables
+
+```
+sudo nano ~/.profile
+```
+
+
+- Add the following lines
 ```
 # Enable elFarto's nvidia-vaapi-driver on Firefox
 export MOZ_DISABLE_RDD_SANDBOX=1
@@ -724,7 +731,9 @@ export LIBVA_DRIVER_NAME=nvidia
 export NVD_BACKEND=direct
 ```
 
-- Open Firefox Profile Folder: Go to about:profiles in Firefox, find your active profile, and click "Open Folder."
+##### 6 Firefox configuration
+
+Open Firefox Profile Folder: Go to about:profiles in Firefox, find your active profile, and click "Open Folder."
   
 - Create user.js: In the profile folder, create a new text file named user.js.
 
