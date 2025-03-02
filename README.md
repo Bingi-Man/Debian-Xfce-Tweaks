@@ -1172,7 +1172,7 @@ sudo umount /dev/sdX # Where sdX is your USB
 
 - Create the disk image with dd :
 ```
-sudo dd if=~/Downloads /rescuezilla-2.5.1-64bit.noble.iso of=/dev/sdX bs=1M status=progress   # Where sdX is your USB device name
+sudo dd if=~/Downloads/rescuezilla-2.5.1-64bit.noble.iso of=/dev/sdX bs=1M status=progress   # Where sdX is your USB device name
 ```
 - Boot from it, and back up your entire Debian disk to another storage device 
 (USB drive, external hard drive, etc.).  Do not proceed without a complete backup.
