@@ -1266,6 +1266,13 @@ VA-API - https://github.com/elFarto/nvidia-vaapi-driver
 
 
 ### Limit Firefox CPU Time
+Create a Cgroup:
+
+    First, ensure the cgroupfs is mounted:
+    Bash
+
+sudo mount -t cgroup -o cpu,cpuset cgroup /sys/fs/cgroup
+
 
 create a user-level systemd service for Firefox with resource limits:
 
