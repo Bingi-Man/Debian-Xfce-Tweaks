@@ -1366,7 +1366,7 @@ nano ~/.local/share/applications/firefox-esr.desktop
 
 - Replace the following line :
 
-Exec=systemd-run --user --slice=firefox-user.slice /usr/lib/firefox-esr/firefox-esr %u
+Exec=systemctl --user start firefox-limited.service
 
 
 mkdir -p ~/.config/systemd/user/
