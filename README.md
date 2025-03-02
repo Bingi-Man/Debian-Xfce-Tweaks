@@ -1250,7 +1250,7 @@ Unigine Heaven benchmark - https://benchmark.unigine.com/heaven
 
 Rescuezilla - https://github.com/rescuezilla/rescuezilla/releases/download/2.5.1/rescuezilla-2.5.1-64bit.noble.iso
 
-
+VA-API - https://github.com/elFarto/nvidia-vaapi-driver
 
 
 ## Troubleshootings
