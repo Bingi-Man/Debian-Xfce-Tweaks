@@ -1062,7 +1062,7 @@ user_pref("image.animation_mode", "none"); // Don't animate images.  Improves pe
 user_pref("dom.enable_event_timing", false); // Disable event timing.
 user_pref("dom.enable_resource_timing", false); // Disable resource timing.
 user_pref("dom.enable_user_timing", false); // Disable user timing.
-user_pref("dom.enable_performance_timing", false) // Disable performance timing
+user_pref("dom.enable_performance_timing", false); // Disable performance timing
 
 // **Default Browser Check**
 user_pref("browser.shell.checkDefaultBrowser", false); // Disable default browser check.
