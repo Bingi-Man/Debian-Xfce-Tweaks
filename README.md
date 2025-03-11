@@ -1112,13 +1112,6 @@ user_pref("browser.pagethumbnails.capturing_disabled", true); // Disable capturi
 // **Helper Apps**
 user_pref("browser.helperApps.deleteTempFileOnExit", true); // Delete temporary files on exit.
 
-// **AV1 Video Codec**
-user_pref("media.av1.enabled", false); // Disable AV1 video codec.  May improve compatibility on older hardware.
-
-// **Media Foundation**
-user_pref("media.rdd-ffmpeg.enabled", true); // Enable RDD-FFmpeg.
-user_pref("media.ffvpx.enabled", false); // Disable FFvpx.
-
 // **Content Notify Interval**
 user_pref("content.notify.interval", 20000); // 20 seconds.  Increase the interval for content notifications.
 
