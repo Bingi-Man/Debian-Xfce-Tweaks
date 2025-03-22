@@ -372,15 +372,13 @@ sudo nano /etc/default/grub
 
 - Modify the GRUB_CMDLINE_LINUX_DEFAULT line to:
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 idle=poll cpufreq.default_governor=ondemand nosmt=force pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1 zswap.enabled=0 nvidia-drm.modeset=1"
+GRUB_CMDLINE_LINUX_DEFAULT="intel_pstate=passive intel_idle.max_cstate=0 cpufreq.default_governor=ondemand pcie_aspm=off mitigations=off kernel.randomize_va_space=0 ipv6.disable=1 zswap.enabled=0 nvidia-drm.modeset=1"
 ```
 - Parameters :
 
 > ```intel_pstate=passive```          _Use the older intel_pstate driver in passive mode._
 
 > ```intel_idle.max_cstate=0```       _Disable all CPU C-states (low-power states)._
-
-> ```idle=poll```                     _Use polling for idle instead of interrupts (can increase power consumption but reduce latency)._
 
 > ```nosmt=force```                   _Disable Symmetric Multi-Threading (Hyperthreading may hurt the performance, do benchmarks)._
 
